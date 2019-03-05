@@ -37,6 +37,7 @@
     "dev": "gatsby develop -o",
     "develop": "gatsby develop",
     "build": "gatsby build",
+    "deploy": "gatsby build && gh-pages -d public -b master",
     "lint": "eslint . --ext .js,.jsx --ignore-path .gitignore",
     "lint:fix": "eslint . --ext .js,.jsx --fix --ignore-path .gitignore",
     "lint:ci": "yarn lint --format junit -o results/eslint/result.xml"
@@ -50,6 +51,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "gh-pages": "^2.0.1",
     "prettier": "^1.16.4"
   },
   "repository": {
