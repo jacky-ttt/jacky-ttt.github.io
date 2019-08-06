@@ -9,7 +9,7 @@ module.exports = {
   siteHeadline: 'Personal website of Tsang Sze Chun', // Headline for schema.org JSONLD
   siteUrl: 'https://tsangszechun.com/', // Domain of your site. No trailing slash!
   siteLanguage: 'en', // Language Tag on <html> element
-  siteLogo: '/logo.png', // Used for SEO and manifest
+  siteLogo: '/logo.jpg', // Used for SEO and manifest
   siteDescription: 'Personal website of Tsang Sze Chun',
   author: 'JackyTsang', // Author for schema.org JSONLD
 
