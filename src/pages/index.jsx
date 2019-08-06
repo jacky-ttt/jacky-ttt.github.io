@@ -65,7 +65,7 @@ const Index = () => (
         <BigTitle>
           Hello, <br /> I'm Tsang Sze Chun.
         </BigTitle>
-        <Subtitle>I'm passionate about Android and React Native.😊</Subtitle>
+        <Subtitle>Android Engineer. Full Stack Developer.😊</Subtitle>
         <ProjectsWrapper>
           <ProjectCard
             title="Medium"
