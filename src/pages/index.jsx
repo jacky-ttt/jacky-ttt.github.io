@@ -60,15 +60,12 @@ const Footer = styled.footer`
 const Index = () => (
   <>
     <Layout />
-    <Parallax pages={3}>
+    <Parallax pages={1}>
       <Hero offset={0}>
         <BigTitle>
           Hello, <br /> I'm Tsang Sze Chun.
         </BigTitle>
         <Subtitle>I'm passionate about Android and React Native.😊</Subtitle>
-      </Hero>
-      <Projects offset={1}>
-        {/* <Title>Repository</Title> */}
         <ProjectsWrapper>
           <ProjectCard
             title="Medium"
@@ -85,8 +82,7 @@ const Index = () => (
             A developer needs a Github to support him somewhere in his life.
           </ProjectCard>
         </ProjectsWrapper>
-      </Projects>
-
+      </Hero>
     </Parallax>
   </>
 )
