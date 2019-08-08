@@ -9,6 +9,7 @@ module.exports = {
   },
   /* Plugins */
   plugins: [
+    'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     {
