@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-portfolio-cara",
-  "description": "Playful & Colorful One-Page website with Parallax effect powered by react-spring, TailwindCSS.",
+  "name": "tsangszechun.com",
+  "description": "Personal website of Tsang Sze Chun",
   "version": "3.0.0",
-  "author": "LekoArts <hello@lekoarts.de> (https://www.lekoarts.de)",
+  "author": "Jacky Tsang",
   "license": "MIT",
   "dependencies": {
     "babel-plugin-styled-components": "^1.10.0",
@@ -54,13 +54,5 @@
     "eslint-plugin-react": "^7.12.4",
     "gh-pages": "^2.0.1",
     "prettier": "^1.16.4"
-  },
-  "repository": {
-    "url": "https://github.com/LekoArts/gatsby-starter-portfolio-cara",
-    "type": "git"
-  },
-  "bugs": {
-    "url": "https://github.com/LekoArts/gatsby-starter-portfolio-cara/issues"
-  },
-  "homepage": "https://cara.lekoarts.de"
+  }
 }
