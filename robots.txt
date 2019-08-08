@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
-
-sitemap: https://cara.lekoarts.de/sitemap.xml
+Allow: /
+Sitemap: https://tsangszechun.com/sitemap.xml
+Host: https://tsangszechun.com
