@@ -69,7 +69,7 @@ const Index = () => (
         <ProjectsWrapper>
           <ProjectCard
             title="Medium"
-            link="https://medium.com/@jacky_ttt"
+            link="https://jacky-ttt.medium.com/"
             bg="linear-gradient(to right, #D4145A 0%, #FBB03B 100%)"
           >
             I post articles on Medium now and then. Mostly about the dev I used in my work.
