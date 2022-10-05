@@ -68,18 +68,18 @@ const Index = () => (
         <Subtitle>Android Developer. Blogger.😊</Subtitle>
         <ProjectsWrapper>
           <ProjectCard
-            title="Medium"
-            link="https://jacky-ttt.medium.com/"
-            bg="linear-gradient(to right, #D4145A 0%, #FBB03B 100%)"
-          >
-            I post articles on Medium now and then. Mostly about the dev I used in my work.
-          </ProjectCard>
-          <ProjectCard
             title="GitHub"
             link="https://github.com/jacky-ttt/"
             bg="linear-gradient(to right, #662D8C 0%, #ED1E79 100%)"
           >
             A developer needs a Github to support him somewhere in his life.
+          </ProjectCard>
+          <ProjectCard
+            title="Medium"
+            link="https://jacky-ttt.medium.com/"
+            bg="linear-gradient(to right, #D4145A 0%, #FBB03B 100%)"
+          >
+            I post articles on Medium now and then. Mostly about the dev I used in my work.
           </ProjectCard>
         </ProjectsWrapper>
       </Hero>
