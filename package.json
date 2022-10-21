@@ -3,7 +3,9 @@
   "description": "Personal website of Tsang Sze Chun",
   "version": "4.0.0",
   "author": "Jacky Tsang",
-  "license": "MIT",
+  "keywords": [
+    "gatsby"
+  ],
   "dependencies": {
     "gatsby": "^4.24.4",
     "gatsby-plugin-manifest": "^4.24.0",
