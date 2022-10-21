@@ -5,7 +5,7 @@ import websiteConfig from "../config/config"
 type BigTitleProps = {
   children: React.ReactNode,
 };
-export const BigTitle = ({ children }: BigTitleProps) => (<h1 className="text-5xl lg:text-6xl font-serif text-white mb-6 tracking-wide">
+export const BigTitle = ({ children }: BigTitleProps) => (<h1 className="text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
   {children}
 </h1>)
 
@@ -24,8 +24,8 @@ type ProjectCardProps = {
 }
 const ProjectCard = ({ title, subtitle, link, gradientBg }: ProjectCardProps) => (
   <a href={link} target="_blank" rel="noopener noreferrer"
-    className={`w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white hover:duration-200 hover:animate-pulse hover:-translate-y-6 ${gradientBg}`} >
-    <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-sans">{title}</div>
+    className={`w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white hover:duration-200 hover:animate-pulse hover:-translate-y-2 ${gradientBg}`} >
+    <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
     <div className="opacity-75 font-sans text-sm md:text-base">{subtitle}</div>
   </a>
 )
