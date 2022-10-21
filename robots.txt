@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://tsangszechun.com/sitemap.xml
-Host: https://tsangszechun.com
