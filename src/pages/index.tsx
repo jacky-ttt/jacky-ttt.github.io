@@ -40,17 +40,24 @@ const projects = [
   },
   {
     name: 'Cruzr',
-    year: '2017',
+    year: '2019',
     description: 'A navigation app that lives on a robot',
     skill: 'Google Cloud Speech-to-Text, DialogFlow and Google Text-to-speech',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
   },
   {
     name: 'Stay focused',
-    year: '2017',
+    year: '2019',
     description: 'Interactive 3D model viewer',
     skill: 'React Native, Javascript, three.js',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+  },
+  {
+    name: 'Volumetric lighting',
+    year: '2018',
+    description: 'Artistic visualization installation',
+    skill: 'C++, OpenCV, VTK, Rhinoceros 3D',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
   },
   {
     name: 'Web Scrapper',
