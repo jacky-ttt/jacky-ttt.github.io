@@ -32,9 +32,9 @@ const ProjectCard = ({ title, subtitle, link, gradientBg }: ProjectCardProps) =>
 
 const projects = [
   {
-    name: 'Life of A Jacky',
+    name: 'Daily Journal',
     year: '2022',
-    description: 'NFT that records daily journals encrypted with aes256',
+    description: 'On-chain NFT that holds daily journals',
     skill: 'typescript, hardhat',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
   },
@@ -42,7 +42,7 @@ const projects = [
     name: 'Cruzr',
     year: '2019',
     description: 'A navigation app that lives on a robot',
-    skill: 'Google Cloud Speech-to-Text, DialogFlow and Google Text-to-speech',
+    skill: 'Google Cloud Speech-to-Text, DialogFlow, Google Text-to-speech',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
   },
   {
