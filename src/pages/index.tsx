@@ -32,60 +32,60 @@ const ProjectCard = ({ title, subtitle, link, gradientBg }: ProjectCardProps) =>
 
 const projects = [
   {
-    name: 'NFT',
+    name: 'Life of A Jacky',
     year: '2022',
-    description: 'Daily Journal encrypted with sha256',
+    description: 'NFT that records daily journals encrypted with aes256',
+    skill: 'typescript, hardhat',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-    imageAlt: 'Daily Journal encrypted with sha256',
   },
   {
     name: 'Cruzr',
     year: '2017',
-    description: 'Google Cloud Speech-to-Text, DialogFlow and Google Text-to-speech',
+    description: 'A navigation app that lives on a robot',
+    skill: 'Google Cloud Speech-to-Text, DialogFlow and Google Text-to-speech',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-    imageAlt: 'Google Cloud Speech-to-Text, DialogFlow and Google Text-to-speech',
   },
   {
     name: 'Stay focused',
     year: '2017',
-    description: 'interactive 3D viewer',
+    description: 'Interactive 3D model viewer',
+    skill: 'React Native, Javascript, three.js',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-    imageAlt: 'interactive 3D viewer',
   },
   {
     name: 'Web Scrapper',
     year: '2017',
     description: 'Automated web scrapper',
+    skill: 'Python, Scrapy, selenium, Beautiful Soup, Javascript, Puppeteer, Playwright',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt: 'Web Scrapper',
   },
   {
     name: 'Greyed out',
     year: '2015',
-    description: 'Android grey icon pack',
+    description: 'Android all grey icon pack',
+    skill: 'Android, Java',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt: 'Android grey icon pack',
   },
   {
     name: 'HKJC data grid',
     year: '2015',
-    description: 'Data visualizator',
+    description: 'Data visualization desktop application',
+    skill: 'Javascript, Electron, ag-grid',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt: 'Web Scrapper',
   },
   {
     name: 'HK G-Share',
     year: '2014',
-    description: 'Second hand trade platform',
+    description: 'Second hand trading platform',
+    skill: 'Android, Java',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt: 'Web Scrapper',
   },
   {
     name: 'UNI Match',
     year: '2014',
     description: 'Networking and events promotion platform exclusively for universities',
+    skill: 'Android, Java',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt: 'Web Scrapper',
   },
 ]
 
@@ -114,7 +114,8 @@ const IndexPage = () => {
             gradientBg="bg-gradient-to-r from-violet-800 to-fuchsia-500" />
         </div>
 
-        <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-20">
+        <p className="mt-20 mb-4 text-2xl font-sans text-white">Projects</p>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {projects.map((project, index) => (
             <div key={index} className="group bg-gradient-to-r from-red-900 to-orange-500 rounded-lg overflow-hidden hover:duration-200 hover:skew-x-1">
               <div className="mx-4 my-4">
