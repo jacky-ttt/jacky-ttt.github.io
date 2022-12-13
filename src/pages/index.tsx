@@ -117,13 +117,6 @@ const IndexPage = () => {
         <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-20">
           {projects.map((project, index) => (
             <div key={index} className="group bg-gradient-to-r from-red-900 to-orange-500 rounded-lg overflow-hidden hover:duration-200 hover:skew-x-1">
-              <div className="aspect-w-1 aspect-h-1 w-full xl:aspect-w-7 xl:aspect-h-8">
-                <img
-                  src={project.imageSrc}
-                  alt={project.imageAlt}
-                  className="h-full w-full object-cover object-center group-hover:opacity-75"
-                />
-              </div>
               <div className="mx-4 my-4">
                 <h3 className="text-lg font-sans font-medium text-white">{project.name}</h3>
                 <p className="text-sm font-sans font-light text-white">{project.year}</p>
