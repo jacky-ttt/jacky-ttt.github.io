@@ -35,7 +35,7 @@ const projects = [
     name: 'HSBC',
     year: '2022',
     description: 'International payment module of HSBC mobile banking application',
-    skill: 'Android, kotlin, Coroutines, MVP, MVVM, Jenkins, SonarQube',
+    skill: 'Android, kotlin, Coroutines, MVP, MVVM, Retrofit, Jenkins, SonarQube',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
   },
   {
@@ -49,7 +49,7 @@ const projects = [
     name: 'Hase',
     year: '2019',
     description: 'Hong Kong Hang Seng Bank application',
-    skill: 'Android, Kotlin, MVP',
+    skill: 'Android, Kotlin, MVP, Retrofit',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
   },
   {
