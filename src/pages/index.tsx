@@ -35,14 +35,14 @@ const projects = [
     name: 'HSBC',
     year: '2022',
     description: 'International payment module of HSBC mobile banking application',
-    skill: 'Android, Kotlin, Coroutines, MVP',
+    skill: 'Android, kotlin, Coroutines, MVP, MVVM, Jenkins, SonarQube',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
   },
   {
     name: 'Daily Journal',
     year: '2022',
     description: 'On-chain NFT that holds daily journals',
-    skill: 'Typescript, hardhat',
+    skill: 'Typescript, Hardhat, Serverless, Ethers.js, AWS lambda',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
   },
   {
@@ -56,14 +56,14 @@ const projects = [
     name: 'Cruzr',
     year: '2019',
     description: 'A navigation app that lives on a robot',
-    skill: 'Google Cloud Speech-to-Text, DialogFlow, Google Text-to-speech',
+    skill: 'Google Cloud speech-to-text, DialogFlow, Google text-to-speech',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
   },
   {
     name: 'Stay focused',
     year: '2019',
     description: 'Interactive 3D model viewer',
-    skill: 'React Native, Javascript, three.js',
+    skill: 'React Native, Expo, Javascript, Three.js',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
   },
   {
@@ -77,7 +77,7 @@ const projects = [
     name: 'Web Scrapper',
     year: '2017',
     description: 'Automated web scrapper',
-    skill: 'Python, Scrapy, selenium, Beautiful Soup, Javascript, Puppeteer, Playwright',
+    skill: 'Python, Scrapy, Selenium, Beautiful Soup, Javascript, Puppeteer, Playwright',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
   },
   {
@@ -91,7 +91,7 @@ const projects = [
     name: 'HKJC data grid',
     year: '2015',
     description: 'Data visualization desktop application',
-    skill: 'Javascript, Electron, ag-grid',
+    skill: 'Javascript, Electron, Ag-grid',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
   },
   {
