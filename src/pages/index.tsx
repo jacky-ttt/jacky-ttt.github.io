@@ -16,13 +16,13 @@ export const Subtitle = ({ children }: SubtitleProps) => (<h1 className="text-2x
   {children}
 </h1>)
 
-type ProjectCardProps = {
+type LinkCardProps = {
   title: string
   subtitle: string
   link: string
   gradientBg: string
 }
-const ProjectCard = ({ title, subtitle, link, gradientBg }: ProjectCardProps) => (
+const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   <a href={link} target="_blank" rel="noopener noreferrer"
     className={`w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white hover:duration-200 hover:animate-pulse hover:skew-x-1 ${gradientBg}`} >
     <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
@@ -123,12 +123,12 @@ const IndexPage = () => {
         </Subtitle>
 
         <div className="grid grid-rows-2 xl:grid-rows-1 xl:grid-cols-2 gap-4 mt-20">
-          <ProjectCard
+          <LinkCard
             title="GitHub"
             subtitle="A developer needs a Github to support him somewhere in his life."
             link="https://github.com/jacky-ttt/"
             gradientBg="bg-gradient-to-r from-blue-800 to-cyan-500" />
-          <ProjectCard
+          <LinkCard
             title="Medium"
             subtitle="I post articles on Medium now and then. Mostly about the dev I used in my work."
             link="https://jacky-ttt.medium.com/"
