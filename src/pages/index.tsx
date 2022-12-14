@@ -110,6 +110,33 @@ const projects = [
   },
 ]
 
+type ProjectCardProps = {
+  title: string
+  subtitle: string
+  description: string
+  backDescription: string
+}
+const ProjectCard = ({ title, subtitle, description, backDescription }: ProjectCardProps) => {
+  return (
+    <div className="group perspective cursor-pointer">
+      <div className="w-full h-full preserve-3d group-hover:rotate3d-y-180 duration-500">
+        <div className="h-full bg-gradient-to-r from-red-900 to-orange-500 rounded-lg overflow-hidden ">
+          <div className="mx-4 my-4">
+            <h3 className="text-lg font-sans font-medium text-white">{title}</h3>
+            <p className="text-sm font-sans font-light text-white">{subtitle}</p>
+            <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
+          </div>
+        </div>
+        <div className="absolute -inset-px rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-y-180 backface-hidden overflow-hidden">
+          <div className="w-full h-full flex items-center">
+            <p className="text-sm font-sans font-light text-white">{backDescription}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 const IndexPage = () => {
   return (
@@ -138,13 +165,12 @@ const IndexPage = () => {
         <p className="mt-20 mb-4 text-2xl font-sans text-white">Projects</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {projects.map((project, index) => (
-            <div key={index} className="group bg-gradient-to-r from-red-900 to-orange-500 rounded-lg overflow-hidden hover:duration-200 hover:skew-x-1">
-              <div className="mx-4 my-4">
-                <h3 className="text-lg font-sans font-medium text-white">{project.name}</h3>
-                <p className="text-sm font-sans font-light text-white">{project.year}</p>
-                <p className="mt-4 text-sm font-sans font-light text-white">{project.description}</p>
-              </div>
-            </div>
+            <ProjectCard
+              key={index}
+              title={project.name}
+              subtitle={project.year}
+              description={project.description}
+              backDescription={project.skill} />
           ))}
         </div>
       </div>
