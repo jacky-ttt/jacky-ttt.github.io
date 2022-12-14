@@ -32,10 +32,24 @@ const ProjectCard = ({ title, subtitle, link, gradientBg }: ProjectCardProps) =>
 
 const projects = [
   {
+    name: 'HSBC',
+    year: '2022',
+    description: 'International payment module of HSBC mobile banking application',
+    skill: 'Android, Kotlin, Coroutines, MVP',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+  },
+  {
     name: 'Daily Journal',
     year: '2022',
     description: 'On-chain NFT that holds daily journals',
-    skill: 'typescript, hardhat',
+    skill: 'Typescript, hardhat',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+  },
+  {
+    name: 'Hase',
+    year: '2019',
+    description: 'Hong Kong Hang Seng Bank application',
+    skill: 'Android, Kotlin, MVP',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
   },
   {
@@ -128,7 +142,7 @@ const IndexPage = () => {
               <div className="mx-4 my-4">
                 <h3 className="text-lg font-sans font-medium text-white">{project.name}</h3>
                 <p className="text-sm font-sans font-light text-white">{project.year}</p>
-                <p className="mt-2 text-sm font-sans font-light text-white">{project.description}</p>
+                <p className="mt-4 text-sm font-sans font-light text-white">{project.description}</p>
               </div>
             </div>
           ))}
