@@ -6,6 +6,15 @@ const cardFlipPlugin = plugin(function ({ addUtilities }) {
     ".rotate3d-y-180": {
       transform: "rotateY(180deg)",
     },
+    ".rotate3d-x-10": {
+      transform: "rotateX(10deg)",
+    },
+    ".rotate3d-x-5": {
+      transform: "rotateX(5deg)",
+    },
+    ".rotate3d-x-180": {
+      transform: "rotateX(180deg)",
+    },
     ".preserve-3d": {
       transformStyle: "preserve-3d",
     },
