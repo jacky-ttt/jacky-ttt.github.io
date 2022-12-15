@@ -42,7 +42,7 @@ const projects = [
     name: 'Daily Journal',
     year: '2022',
     description: 'On-chain NFT that holds daily journals',
-    skill: 'Typescript, Hardhat, Serverless, Ethers.js, AWS lambda',
+    skill: 'Typescript, Solidity, Hardhat, Serverless, Ethers.js, AWS lambda',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
   },
   {
