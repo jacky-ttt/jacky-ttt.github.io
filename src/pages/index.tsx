@@ -174,7 +174,7 @@ const ProjectCard = ({ title, subtitle, description, backDescription, bgColor }:
 const IndexPage = () => {
   return (
     <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex z-50">
-      <div className="w-full xl:w-2/3">
+      <div className="w-full xl:w-[88rem]">
         <BigTitle>
         </BigTitle>
         <Subtitle>
