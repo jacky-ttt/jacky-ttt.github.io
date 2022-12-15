@@ -6,6 +6,9 @@ type BigTitleProps = {
   children: React.ReactNode,
 };
 export const BigTitle = ({ children }: BigTitleProps) => (<h1 className="text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
+  <div>Hello,</div>
+  <div className="inline sm:inline-block whitespace-pre">I'm </div>
+  <div className="inline sm:inline-block text-shadow-white duration-500 hover:text-shadow-blue hover:scale-105 hover:cursor-pointer">Tsang Sze Chun</div>.
   {children}
 </h1>)
 
@@ -173,7 +176,6 @@ const IndexPage = () => {
     <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex z-50">
       <div className="w-full xl:w-2/3">
         <BigTitle>
-          Hello, <br /> I'm Tsang Sze Chun.
         </BigTitle>
         <Subtitle>
           Android Developer. Blogger.😊

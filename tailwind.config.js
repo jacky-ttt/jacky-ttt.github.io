@@ -36,6 +36,17 @@ const cardFlipPlugin = plugin(function ({ addUtilities }) {
   })
 });
 
+const textShadowPlugin = plugin(function ({ addUtilities }) {
+  addUtilities({
+    ".text-shadow-white": {
+      'text-shadow': "2px 2px #ef4444"
+    },
+    ".text-shadow-blue": {
+      'text-shadow': "3px 3px #06b6d4"
+    }
+  })
+});
+
 module.exports = {
   content: [
     "./src/pages/**/*.{js,jsx,ts,tsx}",
@@ -44,5 +55,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [cardFlipPlugin],
+  plugins: [cardFlipPlugin, textShadowPlugin],
 }
