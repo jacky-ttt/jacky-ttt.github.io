@@ -126,7 +126,7 @@ const getRGBColor = (hex: string) => {
 }
 
 const bgColor = projects.map((project, index) => {
-  const percentage = index / (projects.length - 1)
+  const percentage = Math.pow(index / (projects.length - 1), 2)
 
   const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
   const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor("#ea580c")
