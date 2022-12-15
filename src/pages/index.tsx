@@ -119,7 +119,7 @@ type ProjectCardProps = {
 const ProjectCard = ({ title, subtitle, description, backDescription }: ProjectCardProps) => {
   return (
     <div className="group perspective cursor-pointer">
-      <div className="w-full h-full preserve-3d group-hover:rotate3d-y-180 duration-500">
+      <div className="w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
         <div className="h-full bg-gradient-to-r from-red-900 to-orange-500 rounded-lg overflow-hidden ">
           <div className="mx-4 my-4">
             <h3 className="text-lg font-sans font-medium text-white">{title}</h3>
@@ -127,7 +127,7 @@ const ProjectCard = ({ title, subtitle, description, backDescription }: ProjectC
             <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
           </div>
         </div>
-        <div className="absolute -inset-px rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-y-180 backface-hidden overflow-hidden">
+        <div className="absolute -inset-px rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
           <div className="w-full h-full flex items-center">
             <p className="text-sm font-sans font-light text-white">{backDescription}</p>
           </div>
@@ -150,7 +150,7 @@ const IndexPage = () => {
         </Subtitle>
 
         <div className="grid grid-rows-2 xl:grid-rows-1 xl:grid-cols-2 gap-4 mt-20">
-        <LinkCard
+          <LinkCard
             title="LinkedIn"
             subtitle="There records my career path, my skills, my language, my whole."
             link="https://www.linkedin.com/in/jacky-tsang-93646a193/"
