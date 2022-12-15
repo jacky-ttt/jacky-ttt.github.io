@@ -25,7 +25,7 @@ type LinkCardProps = {
 const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   <div className="group perspective cursor-pointer">
     <a href={link} target="_blank" rel="noopener noreferrer"
-    // `w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white hover:duration-200 hover:animate-pulse hover:skew-x-1 ${gradientBg}`
+      // `w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white hover:duration-200 hover:animate-pulse hover:skew-x-1 ${gradientBg}`
       className={`w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 ${gradientBg}`} >
       <div className={`w-full h-full `}>
         <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
@@ -115,19 +115,44 @@ const projects = [
   },
 ]
 
+const getRGBColor = (hex: string) => {
+  let color = hex.replace(/#/g, "")
+  // rgb values
+  var r = parseInt(color.substring(0, 2), 16)
+  var g = parseInt(color.substring(2, 4), 16)
+  var b = parseInt(color.substring(4, 6), 16)
+
+  return { r, g, b }
+}
+
+const bgColor = projects.map((project, index) => {
+  const percentage = index / (projects.length - 1)
+
+  const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
+  const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor("#ea580c")
+
+  const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
+  const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
+  const bgColorBlue: number = Math.floor(startColorB + percentage * Math.abs((startColorB - endColorB)))
+  const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
+
+  return newBgColor
+})
+
 type ProjectCardProps = {
   title: string
   subtitle: string
   description: string
   backDescription: string
+  bgColor: string
 }
-const ProjectCard = ({ title, subtitle, description, backDescription }: ProjectCardProps) => {
+const ProjectCard = ({ title, subtitle, description, backDescription, bgColor }: ProjectCardProps) => {
   return (
     <div className="group perspective cursor-pointer">
       <div className="w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
-        <div className="h-full bg-gradient-to-r from-red-900 to-orange-500 rounded-lg overflow-hidden ">
+        <div className={`h-full rounded-lg overflow-hidden`} style={{ backgroundColor: bgColor }}>
           <div className="mx-4 my-4">
-            <h3 className="text-lg font-sans font-medium text-white">{title}</h3>
+            <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
             <p className="text-sm font-sans font-light text-white">{subtitle}</p>
             <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
           </div>
@@ -180,7 +205,8 @@ const IndexPage = () => {
               title={project.name}
               subtitle={project.year}
               description={project.description}
-              backDescription={project.skill} />
+              backDescription={project.skill}
+              bgColor={bgColor[index]} />
           ))}
         </div>
       </div>
