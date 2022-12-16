@@ -152,8 +152,8 @@ type ProjectCardProps = {
 const ProjectCard = ({ title, subtitle, description, backDescription, bgColor }: ProjectCardProps) => {
   return (
     <div className="group perspective cursor-pointer">
-      <div className="w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
-        <div className={`h-full rounded-lg overflow-hidden`} style={{ backgroundColor: bgColor }}>
+      <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
+        <div className={`h-full rounded-lg overflow-hidden backface-hidden`} style={{ backgroundColor: bgColor }}>
           <div className="mx-4 my-4">
             <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
             <p className="text-sm font-sans font-light text-white">{subtitle}</p>
