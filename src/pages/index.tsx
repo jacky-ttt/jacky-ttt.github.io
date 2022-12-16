@@ -181,7 +181,7 @@ const IndexPage = () => {
           Android Developer. Blogger.😊
         </Subtitle>
 
-        <div className="grid grid-rows-2 xl:grid-rows-1 xl:grid-cols-2 gap-4 mt-20">
+        <div className="grid grid-rows-2 xl:grid-rows-1 xl:grid-cols-3 gap-4 mt-20">
           <LinkCard
             title="LinkedIn"
             subtitle="There records my career path, my skills, my language, my whole."
