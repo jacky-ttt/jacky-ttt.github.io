@@ -153,17 +153,13 @@ const ProjectCard = ({ title, subtitle, description, backDescription, bgColor }:
   return (
     <div className="group perspective cursor-pointer">
       <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
-        <div className={`h-full rounded-lg overflow-hidden`} style={{ backgroundColor: bgColor }}>
-          <div className="mx-4 my-4">
-            <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
-            <p className="text-sm font-sans font-light text-white">{subtitle}</p>
-            <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
-          </div>
+        <div className={`h-full rounded-lg overflow-hidden px-4 py-4`} style={{ backgroundColor: bgColor }}>
+          <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
+          <p className="text-sm font-sans font-light text-white">{subtitle}</p>
+          <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
         </div>
-        <div className="absolute -inset-px rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
-          <div className="w-full h-full flex items-center">
-            <p className="text-sm font-sans font-light text-white">{backDescription}</p>
-          </div>
+        <div className="absolute -inset-px flex items-center rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
+          <p className="text-sm font-sans font-light text-white">{backDescription}</p>
         </div>
       </div>
     </div>
