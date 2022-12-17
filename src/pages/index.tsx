@@ -171,13 +171,15 @@ const IndexPage = () => {
   return (
     <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex z-50">
       <div className="w-full xl:w-[88rem]">
-        <BigTitle>
-        </BigTitle>
-        <Subtitle>
-          Android Developer. Blogger.😊
-        </Subtitle>
+        <div className="animate-in fade-in slide-in-from-top-14 duration-1000">
+          <BigTitle>
+          </BigTitle>
+          <Subtitle>
+            Android Developer. Blogger.😊
+          </Subtitle>
+        </div>
 
-        <div className="grid grid-rows-2 xl:grid-rows-1 xl:grid-cols-3 gap-4 mt-20">
+        <div className="grid grid-rows-2 xl:grid-rows-1 xl:grid-cols-3 gap-4 mt-20 animate-in fade-in slide-in-from-top-10 duration-1000">
           <LinkCard
             title="LinkedIn"
             subtitle="There records my career path, my skills, my language, my whole."
@@ -195,17 +197,19 @@ const IndexPage = () => {
             gradientBg="bg-gradient-to-r from-green-800 to-emerald-500" />
         </div>
 
-        <p className="mt-20 mb-4 text-2xl font-sans text-white">Projects</p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              title={project.name}
-              subtitle={project.year}
-              description={project.description}
-              backDescription={project.skill}
-              bgColor={bgColor[index]} />
-          ))}
+        <div className="animate-in fade-in slide-in-from-top-6 duration-1000">
+          <p className="mt-20 mb-4 text-2xl font-sans text-white">Projects</p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                title={project.name}
+                subtitle={project.year}
+                description={project.description}
+                backDescription={project.skill}
+                bgColor={bgColor[index]} />
+            ))}
+          </div>
         </div>
       </div>
     </main>

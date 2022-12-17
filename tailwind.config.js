@@ -55,5 +55,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [cardFlipPlugin, textShadowPlugin],
+  plugins: [
+    cardFlipPlugin,
+    textShadowPlugin,
+    require("tailwindcss-animate"),
+  ],
 }
