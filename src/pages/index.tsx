@@ -29,7 +29,7 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   <div className="group perspective cursor-pointer">
     <a href={link} target="_blank" rel="noopener noreferrer"
       // `w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white hover:duration-200 hover:animate-pulse hover:skew-x-1 ${gradientBg}`
-      className={`w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 ${gradientBg}`} >
+      className={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 ${gradientBg}`} >
       <div className={`w-full h-full `}>
         <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
         <div className="opacity-75 font-sans text-sm md:text-base">{subtitle}</div>
@@ -179,7 +179,7 @@ const IndexPage = () => {
           </Subtitle>
         </div>
 
-        <div className="grid grid-rows-2 xl:grid-rows-1 xl:grid-cols-3 gap-4 mt-20 animate-in fade-in slide-in-from-top-10 duration-1000">
+        <div className="grid lg:grid-rows-1 lg:grid-cols-3 gap-4 mt-20 animate-in fade-in slide-in-from-top-10 duration-1000">
           <LinkCard
             title="LinkedIn"
             subtitle="There records my career path, my skills, my language, my whole."
