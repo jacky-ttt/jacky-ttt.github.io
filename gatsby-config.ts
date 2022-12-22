@@ -1,5 +1,7 @@
 import type { GatsbyConfig } from "gatsby";
 import websiteConfig from "./src/config/config"
+const path = require(`path`)
+
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -29,6 +31,13 @@ const config: GatsbyConfig = {
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`, // Needed for dynamic images
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: path.join(__dirname, `src`, `images`),
+      },
+    },
   ]
 };
 
