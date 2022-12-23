@@ -1,0 +1,16 @@
+[
+  {
+    "name": "HSBC",
+    "year": "2022",
+    "description": "International payment module of HSBC mobile banking application",
+    "skill": "Android, kotlin, Coroutines, MVP, MVVM, Retrofit, Jenkins, SonarQube",
+    "image": "../images/icon.png"
+  },
+  {
+    "name": "Daily Journal",
+    "year": "2022",
+    "description": "On-chain NFT that holds daily journals",
+    "skill": "Typescript, Solidity, Hardhat, Serverless, Ethers.js, AWS lambda",
+    "image": "../images/demo.png"
+  }
+]

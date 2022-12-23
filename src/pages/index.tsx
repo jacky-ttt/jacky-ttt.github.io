@@ -1,6 +1,7 @@
 import * as React from "react"
 import type { HeadFC } from "gatsby"
 import websiteConfig from "../config/config"
+import { graphql, useStaticQuery } from "gatsby"
 
 type BigTitleProps = {
   children: React.ReactNode,
@@ -128,20 +129,6 @@ const getRGBColor = (hex: string) => {
   return { r, g, b }
 }
 
-const bgColor = projects.map((project, index) => {
-  const percentage = Math.pow(index / (projects.length - 1), 2)
-
-  const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
-  const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor("#ea580c")
-
-  const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
-  const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
-  const bgColorBlue: number = Math.floor(startColorB + percentage * Math.abs((startColorB - endColorB)))
-  const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
-
-  return newBgColor
-})
-
 type ProjectCardProps = {
   title: string
   subtitle: string
@@ -166,8 +153,49 @@ const ProjectCard = ({ title, subtitle, description, backDescription, bgColor }:
   )
 }
 
+const projectsQuery = graphql`
+  query Projects {
+    allProjectsJson {
+      nodes {
+        name
+        skill
+        year
+        image {
+          childImageSharp {
+          gatsbyImageData(
+              width: 200
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+            )
+        }
+        }
+      }
+    }
+  }
+`
 
 const IndexPage = () => {
+  const projectsData = useStaticQuery(projectsQuery)
+  console.log(projectsData);
+  console.log(projectsData.allProjectsJson.nodes[0].image);
+  const imageSrc = getImage(projectsData.allProjectsJson.nodes[1].image)
+
+  const projects = projectsData.allProjectsJson.nodes
+
+  const bgColor = projects.map((project, index: number) => {
+    const percentage = Math.pow(index / (projects.length - 1), 2)
+
+    const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
+    const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor("#ea580c")
+
+    const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
+    const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
+    const bgColorBlue: number = Math.floor(startColorB + percentage * Math.abs((startColorB - endColorB)))
+    const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
+
+    return newBgColor
+  })
+
   return (
     <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex z-50">
       <div className="w-full xl:w-[88rem]">
@@ -200,7 +228,7 @@ const IndexPage = () => {
         <div className="animate-in fade-in slide-in-from-top-6 duration-1000">
           <p className="mt-20 mb-4 text-2xl font-sans text-white">Projects</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {projects.map((project, index) => (
+            {projects.map((project, index: number) => (
               <ProjectCard
                 key={index}
                 title={project.name}
