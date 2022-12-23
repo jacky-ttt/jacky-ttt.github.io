@@ -39,85 +39,6 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   </div>
 )
 
-const projects = [
-  {
-    name: 'HSBC',
-    year: '2022',
-    description: 'International payment module of HSBC mobile banking application',
-    skill: 'Android, kotlin, Coroutines, MVP, MVVM, Retrofit, Jenkins, SonarQube',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-  },
-  {
-    name: 'Daily Journal',
-    year: '2022',
-    description: 'On-chain NFT that holds daily journals',
-    skill: 'Typescript, Solidity, Hardhat, Serverless, Ethers.js, AWS lambda',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-  },
-  {
-    name: 'Hase',
-    year: '2019',
-    description: 'Hong Kong Hang Seng Bank application',
-    skill: 'Android, Kotlin, MVP, Retrofit',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-  },
-  {
-    name: 'Cruzr',
-    year: '2019',
-    description: 'A navigation app that lives on a robot',
-    skill: 'Google Cloud speech-to-text, DialogFlow, Google text-to-speech',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-  },
-  {
-    name: 'Stay focused',
-    year: '2019',
-    description: 'Interactive 3D model viewer',
-    skill: 'React Native, Expo, Javascript, Three.js',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-  },
-  {
-    name: 'Volumetric lighting',
-    year: '2018',
-    description: 'Artistic visualization installation',
-    skill: 'C++, OpenCV, VTK, Rhinoceros 3D',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-  },
-  {
-    name: 'Web Scrapper',
-    year: '2017',
-    description: 'Automated web scrapper',
-    skill: 'Python, Scrapy, Selenium, Beautiful Soup, Javascript, Puppeteer, Playwright',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-  },
-  {
-    name: 'Greyed out',
-    year: '2015',
-    description: 'Android all grey icon pack',
-    skill: 'Android, Java',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-  },
-  {
-    name: 'HKJC data grid',
-    year: '2015',
-    description: 'Data visualization desktop application',
-    skill: 'Javascript, Electron, Ag-grid',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-  },
-  {
-    name: 'HK G-Share',
-    year: '2014',
-    description: 'Second hand trading platform',
-    skill: 'Android, Java',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-  },
-  {
-    name: 'UNI Match',
-    year: '2014',
-    description: 'Networking and events promotion platform exclusively for universities',
-    skill: 'Android, Java',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-  },
-]
 
 const getRGBColor = (hex: string) => {
   let color = hex.replace(/#/g, "")
@@ -164,8 +85,9 @@ const projectsQuery = graphql`
     allProjectsJson {
       nodes {
         name
-        skill
         year
+        description
+        skill
         image {
           childImageSharp {
           gatsbyImageData(
