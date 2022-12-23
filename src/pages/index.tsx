@@ -39,6 +39,21 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   </div>
 )
 
+const getBgColors = (projects): [string] => {
+  return projects.map((project, index: number) => {
+    const percentage = Math.pow(index / (projects.length - 1), 2)
+
+    const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
+    const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor("#ea580c")
+
+    const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
+    const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
+    const bgColorBlue: number = Math.floor(startColorB + percentage * Math.abs((startColorB - endColorB)))
+    const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
+
+    return newBgColor
+  })
+}
 
 const getRGBColor = (hex: string) => {
   let color = hex.replace(/#/g, "")
@@ -103,25 +118,13 @@ const projectsQuery = graphql`
 
 const IndexPage = () => {
   const projectsData = useStaticQuery(projectsQuery)
-  console.log(projectsData);
-  console.log(projectsData.allProjectsJson.nodes[0].image);
-  const imageSrc = getImage(projectsData.allProjectsJson.nodes[1].image)
+  // console.log(projectsData);
+  // console.log(projectsData.allProjectsJson.nodes[0].image);
+  // const imageSrc = getImage(projectsData.allProjectsJson.nodes[1].image)
 
   const projects = projectsData.allProjectsJson.nodes
 
-  const bgColor = projects.map((project, index: number) => {
-    const percentage = Math.pow(index / (projects.length - 1), 2)
-
-    const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
-    const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor("#ea580c")
-
-    const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
-    const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
-    const bgColorBlue: number = Math.floor(startColorB + percentage * Math.abs((startColorB - endColorB)))
-    const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
-
-    return newBgColor
-  })
+  const bgColors = getBgColors(projects)
 
   return (
     <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex z-50">
@@ -163,7 +166,7 @@ const IndexPage = () => {
                 description={project.description}
                 backDescription={project.skill}
                 image={project.image}
-                bgColor={bgColor[index]} />
+                bgColor={bgColors[index]} />
             ))}
           </div>
         </div>
