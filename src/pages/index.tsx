@@ -110,7 +110,8 @@ const projectsQuery = graphql`
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
               layout: FULL_WIDTH
-              aspectRatio: 1
+              aspectRatio: 2
+              transformOptions: {cropFocus: ATTENTION}
             )
           }
         }
@@ -120,7 +121,6 @@ const projectsQuery = graphql`
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
               layout: FULL_WIDTH
-              aspectRatio: 1.5
             )
           }
         }
