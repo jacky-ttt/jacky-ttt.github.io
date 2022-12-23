@@ -2,6 +2,7 @@ import * as React from "react"
 import type { HeadFC } from "gatsby"
 import websiteConfig from "../config/config"
 import { graphql, useStaticQuery } from "gatsby"
+import { StaticImage, GatsbyImage, getImage, IGatsbyImageData, ImageDataLike } from "gatsby-plugin-image"
 
 type BigTitleProps = {
   children: React.ReactNode,
