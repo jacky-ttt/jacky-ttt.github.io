@@ -1,5 +1,7 @@
 import * as React from "react"
 import type { HeadFC } from "gatsby"
+import { Fragment, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
 import websiteConfig from "../config/config"
 import { graphql, useStaticQuery } from "gatsby"
 import { StaticImage, GatsbyImage, getImage, IGatsbyImageData, ImageDataLike } from "gatsby-plugin-image"
@@ -40,8 +42,8 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   </div>
 )
 
-const getBgColors = (projects): [string] => {
-  return projects.map((project, index: number) => {
+const getBgColors = (projects: ProjectData[]): string[] => {
+  return projects.map((project: ProjectData, index: number) => {
     const percentage = Math.pow(index / (projects.length - 1), 2)
 
     const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
@@ -67,18 +69,26 @@ const getRGBColor = (hex: string) => {
 }
 
 type ProjectCardProps = {
+  id: number
   title: string
   subtitle: string
   description: string
   backDescription: string
   bgColor: string
   image: ImageDataLike
+  setOpen: React.Dispatch<React.SetStateAction<number>>
 }
-const ProjectCard = ({ title, subtitle, description, backDescription, bgColor, image }: ProjectCardProps) => {
-  console.log(image);
-
+const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColor, image, setOpen }: ProjectCardProps) => {
+  const checkId = (current: number): number => {
+    if (current == id) {
+      return INVALID_PROJECT_ID
+    } else {
+      return id
+    }
+  }
+  const onClickHandler = () => { setOpen(current => checkId(current)) }
   return (
-    <div className="group cursor-pointer">
+    <div className="group cursor-pointer" onClick={onClickHandler}>
       <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
         <div className={`w-full h-full rounded-lg overflow-hidden translate3d-z-20`} style={{ backgroundColor: bgColor }}>
           <GatsbyImage image={getImage(image)} alt={title} />
@@ -129,7 +139,95 @@ const projectsQuery = graphql`
   }
 `
 
+
+type ProjectModalProps = {
+  project: ProjectData | undefined
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<number>>
+}
+const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
+
+  return (
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={() => setOpen(INVALID_PROJECT_ID)}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-800 px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                <div>
+                  {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                    <Dino />
+                    <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                  </div> */}
+                  {/* <Dino /> */}
+                  {/* {image} */}
+                  {/* <StaticImage src={imageSrc} alt={description} /> */}
+                  {project != undefined && getImage(project.fullImage) &&
+                    <GatsbyImage image={getImage(project.fullImage)} alt={project.name} />}
+
+                  <div className="mt-3 sm:mt-5">
+                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-white">
+                      {project?.name ?? ""}
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-white">
+                        {project?.year ?? ""}
+                      </p>
+                      <p className="text-sm text-white">
+                        {project?.description ?? ""}
+                      </p>
+                      <p className="text-sm text-white">
+                        {project?.skill ?? ""}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="mt-5 sm:mt-6">
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
+                    onClick={() => setOpen(false)}
+                  >
+                    Go back to dashboard
+                  </button>
+                </div> */}
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  )
+}
+
+const INVALID_PROJECT_ID = -1
+
+type ProjectData = { name: string; year: string; description: string; skill: string; image: ImageDataLike, fullImage: ImageDataLike }
+
 const IndexPage = () => {
+  const [openModal, setOpenModal] = useState(false)
+  const [selectedProjectId, setSelectedProjectId] = useState(INVALID_PROJECT_ID)
+
   const projectsData = useStaticQuery(projectsQuery)
   // console.log(projectsData);
   // console.log(projectsData.allProjectsJson.nodes[0].image);
@@ -171,18 +269,27 @@ const IndexPage = () => {
         <div className="animate-in fade-in slide-in-from-top-6 duration-1000">
           <p className="mt-20 mb-4 text-2xl font-sans text-white">Projects</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {projects.map((project, index: number) => (
+            {projects.map((project: ProjectData, index: number) => (
               <ProjectCard
                 key={index}
+                id={index}
                 title={project.name}
                 subtitle={project.year}
                 description={project.description}
                 backDescription={project.skill}
                 image={project.image}
-                bgColor={bgColors[index]} />
+                bgColor={bgColors[index]}
+                setOpen={setSelectedProjectId}
+              />
             ))}
           </div>
         </div>
+
+        <Modal
+          project={projects[selectedProjectId]}
+          open={selectedProjectId != INVALID_PROJECT_ID}
+          setOpen={setSelectedProjectId}
+        />
       </div>
     </main>
   )
