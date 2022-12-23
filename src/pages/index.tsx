@@ -109,6 +109,18 @@ const projectsQuery = graphql`
             gatsbyImageData(
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
+              layout: FULL_WIDTH
+              aspectRatio: 1
+            )
+          }
+        }
+        fullImage: image {
+          childImageSharp {
+            gatsbyImageData(
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+              layout: FULL_WIDTH
+              aspectRatio: 1.5
             )
           }
         }
