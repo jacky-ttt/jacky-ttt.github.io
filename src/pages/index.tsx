@@ -135,15 +135,21 @@ type ProjectCardProps = {
   description: string
   backDescription: string
   bgColor: string
+  image: ImageDataLike
 }
-const ProjectCard = ({ title, subtitle, description, backDescription, bgColor }: ProjectCardProps) => {
+const ProjectCard = ({ title, subtitle, description, backDescription, bgColor, image }: ProjectCardProps) => {
+  console.log(image);
+
   return (
     <div className="group cursor-pointer">
       <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
-        <div className={`w-full h-full rounded-lg overflow-hidden px-4 py-4 translate3d-z-20`} style={{ backgroundColor: bgColor }}>
-          <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
-          <p className="text-sm font-sans font-light text-white">{subtitle}</p>
-          <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
+        <div className={`w-full h-full rounded-lg overflow-hidden translate3d-z-20`} style={{ backgroundColor: bgColor }}>
+          <GatsbyImage image={getImage(image)} alt={title} />
+          <div className="px-4 py-4">
+            <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
+            <p className="text-sm font-sans font-light text-white">{subtitle}</p>
+            <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
+          </div>
         </div>
         <div className="absolute inset-0 flex items-center rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
           <p className="text-sm font-sans font-light text-white">{backDescription}</p>
@@ -163,7 +169,6 @@ const projectsQuery = graphql`
         image {
           childImageSharp {
           gatsbyImageData(
-              width: 200
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
             )
@@ -235,6 +240,7 @@ const IndexPage = () => {
                 subtitle={project.year}
                 description={project.description}
                 backDescription={project.skill}
+                image={project.image}
                 bgColor={bgColor[index]} />
             ))}
           </div>
