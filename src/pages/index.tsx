@@ -105,11 +105,11 @@ const projectsQuery = graphql`
         skill
         image {
           childImageSharp {
-          gatsbyImageData(
+            gatsbyImageData(
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
             )
-        }
+          }
         }
       }
     }
