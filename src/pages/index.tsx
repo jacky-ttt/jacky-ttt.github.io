@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import websiteConfig from "../config/config"
 import { graphql, useStaticQuery } from "gatsby"
-import { StaticImage, GatsbyImage, getImage, IGatsbyImageData, ImageDataLike } from "gatsby-plugin-image"
+import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image"
 
 type BigTitleProps = {
   children: React.ReactNode,
@@ -32,7 +32,6 @@ type LinkCardProps = {
 const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   <div className="group perspective cursor-pointer">
     <a href={link} target="_blank" rel="noopener noreferrer"
-      // `w-full block shadow-lg relative no-underline rounded-lg px-8 py-8 md:py-24 text-white hover:duration-200 hover:animate-pulse hover:skew-x-1 ${gradientBg}`
       className={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 ${gradientBg}`} >
       <div className={`w-full h-full `}>
         <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
@@ -193,15 +192,6 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
                     </p>
                   </div>
                 </div>
-                {/* <div className="mt-5 sm:mt-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
-                    onClick={() => setOpen(false)}
-                  >
-                    Go back to dashboard
-                  </button>
-                </div> */}
               </Dialog.Panel>
             </Transition.Child>
           </div>
