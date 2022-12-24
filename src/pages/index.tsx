@@ -106,7 +106,7 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
         <GatsbyImage className="bg-neutral-500" image={getImage(image)} alt={title} />
         <div className="px-4 py-4">
           <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
-          <p className="text-sm font-sans font-light text-white">{subtitle}</p>
+          <p className="text-sm font-sans font-light text-white leading-3">{subtitle}</p>
           <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
         </div>
       </div>
@@ -193,13 +193,13 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
                     <Dialog.Title as="h3" className="text-3xl uppercase font-mono font-medium text-white">
                       {project?.name ?? ""}
                     </Dialog.Title>
-                    <p className="text-lg font-sans font-light text-white leading-3">
+                    <p className="text-sm sm:text-base font-sans font-light text-white leading-3">
                       {project?.year ?? ""}
                     </p>
-                    <p className="text-lg font-sans font-light text-white mt-6">
+                    <p className="text-base sm:text-lg font-sans font-light text-white mt-6">
                       {project?.description ?? ""}
                     </p>
-                    <p className="text-lg font-sans font-light text-white mt-4">
+                    <p className="text-base sm:text-lg font-sans font-light text-white mt-4">
                       {project?.skill ?? ""}
                     </p>
                   </div>
