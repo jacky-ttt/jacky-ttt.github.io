@@ -5,6 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import websiteConfig from "../config/config"
 import { graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image"
+import { XMarkIcon } from '@heroicons/react/24/solid'
 
 type BigTitleProps = {
   children: React.ReactNode,
@@ -145,10 +146,10 @@ type ProjectModalProps = {
   setOpen: React.Dispatch<React.SetStateAction<number>>
 }
 const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
-
+  const onCloseHandler = () => setOpen(INVALID_PROJECT_ID)
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[999999]" onClose={() => setOpen(INVALID_PROJECT_ID)}>
+      <Dialog as="div" className="relative z-[999999]" onClose={onCloseHandler}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -174,6 +175,9 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-800 shadow-xl transition-all w-full max-w-4xl">
                 <div>
+                  <div className="absolute inset-0 z-10 ml-auto mt-4 mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900/80 cursor-pointer" onClick={onCloseHandler}>
+                    <XMarkIcon className="h-6 w-6 text-neutral-100/80" aria-hidden="true" />
+                  </div>
                   {project != undefined && getImage(project.fullImage) &&
                     <GatsbyImage className="bg-neutral-500" image={getImage(project.fullImage)} alt={project.name} />}
 
