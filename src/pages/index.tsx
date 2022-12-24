@@ -88,8 +88,8 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
   }
   const onClickHandler = () => { setOpen(current => checkId(current)) }
   return (
-    <div className="group cursor-pointer" onClick={onClickHandler}>
-      <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
+    <div className="group perspective cursor-pointer" onClick={onClickHandler}>
+      {/* <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
         <div className={`w-full h-full rounded-lg overflow-hidden translate3d-z-20`} style={{ backgroundColor: bgColor }}>
           <GatsbyImage className="bg-neutral-500 before:bg-black/80 before:absolute before:inset-0 before:z-10" image={getImage(image)} alt={title} />
           <div className="px-4 py-4">
@@ -100,6 +100,14 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
         </div>
         <div className="absolute inset-0 flex items-center rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
           <p className="text-sm font-sans font-light text-white">{backDescription}</p>
+        </div>
+      </div> */}
+      <div className={`w-full h-full shadow-lg rounded-lg overflow-hidden group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200`} style={{ backgroundColor: bgColor }}>
+        <GatsbyImage className="bg-neutral-500 before:bg-black/80 before:absolute before:inset-0 before:z-10" image={getImage(image)} alt={title} />
+        <div className="px-4 py-4">
+          <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
+          <p className="text-sm font-sans font-light text-white">{subtitle}</p>
+          <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
         </div>
       </div>
     </div>
@@ -149,7 +157,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
   const onCloseHandler = () => setOpen(INVALID_PROJECT_ID)
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[999999]" onClose={onCloseHandler}>
+      <Dialog as="div" className="relative z-50" onClose={onCloseHandler}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
