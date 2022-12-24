@@ -91,14 +91,14 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
     <div className="group cursor-pointer" onClick={onClickHandler}>
       <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
         <div className={`w-full h-full rounded-lg overflow-hidden translate3d-z-20`} style={{ backgroundColor: bgColor }}>
-          <GatsbyImage image={getImage(image)} alt={title} />
+          <GatsbyImage className="bg-neutral-500 before:absolute before:inset-0 before:z-10" image={getImage(image)} alt={title} />
           <div className="px-4 py-4">
             <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
             <p className="text-sm font-sans font-light text-white">{subtitle}</p>
             <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
           </div>
         </div>
-        <div className="absolute inset-0 flex items-center rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
+        <div className="absolute inset-0 flex items-center rounded-lg bg-black/[.98] px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
           <p className="text-sm font-sans font-light text-white">{backDescription}</p>
         </div>
       </div>
@@ -176,7 +176,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-800 shadow-xl transition-all w-full max-w-4xl">
                 <div>
                   {project != undefined && getImage(project.fullImage) &&
-                    <GatsbyImage image={getImage(project.fullImage)} alt={project.name} />}
+                    <GatsbyImage className="bg-neutral-500" image={getImage(project.fullImage)} alt={project.name} />}
 
                   <div className="mt-3 sm:my-6 w-96 justify-center mx-auto">
                     <Dialog.Title as="h3" className="text-3xl uppercase font-mono font-medium text-white">
