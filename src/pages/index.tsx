@@ -175,7 +175,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-800 shadow-xl transition-all w-full max-w-4xl">
                 <div>
-                  <div className="absolute inset-0 z-10 ml-auto mt-4 mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900/80 cursor-pointer" onClick={onCloseHandler}>
+                  <div className="absolute inset-0 z-10 ml-auto mt-4 mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900/60 cursor-pointer" onClick={onCloseHandler}>
                     <XMarkIcon className="h-6 w-6 text-neutral-100/80" aria-hidden="true" />
                   </div>
                   {project != undefined && getImage(project.fullImage) &&
