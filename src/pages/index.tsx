@@ -91,7 +91,7 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
     <div className="group cursor-pointer" onClick={onClickHandler}>
       <div className="relate w-full h-full preserve-3d group-hover:rotate3d-x-180 duration-500">
         <div className={`w-full h-full rounded-lg overflow-hidden translate3d-z-20`} style={{ backgroundColor: bgColor }}>
-          <GatsbyImage className="bg-neutral-500 before:absolute before:inset-0 before:z-10" image={getImage(image)} alt={title} />
+          <GatsbyImage className="bg-neutral-500 before:bg-black/80 before:absolute before:inset-0 before:z-10" image={getImage(image)} alt={title} />
           <div className="px-4 py-4">
             <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
             <p className="text-sm font-sans font-light text-white">{subtitle}</p>
