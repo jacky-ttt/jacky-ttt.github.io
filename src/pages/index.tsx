@@ -149,7 +149,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setOpen(INVALID_PROJECT_ID)}>
+      <Dialog as="div" className="relative z-[9999] " onClose={() => setOpen(INVALID_PROJECT_ID)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -162,7 +162,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
           <div className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center">
             <Transition.Child
               as={Fragment}
@@ -229,7 +229,7 @@ const IndexPage = () => {
   const bgColors = getBgColors(projects)
 
   return (
-    <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex z-50">
+    <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex">
       <div className="w-full xl:w-[88rem]">
         <div className="animate-in fade-in slide-in-from-top-14 duration-1000">
           <BigTitle>
