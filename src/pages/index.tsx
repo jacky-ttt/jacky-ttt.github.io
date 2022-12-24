@@ -148,7 +148,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[9999] " onClose={() => setOpen(INVALID_PROJECT_ID)}>
+      <Dialog as="div" className="relative z-[999999]" onClose={() => setOpen(INVALID_PROJECT_ID)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
