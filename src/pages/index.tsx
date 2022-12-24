@@ -163,7 +163,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -178,7 +178,7 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
                   {project != undefined && getImage(project.fullImage) &&
                     <GatsbyImage className="bg-neutral-500" image={getImage(project.fullImage)} alt={project.name} />}
 
-                  <div className="mt-3 sm:my-6 w-96 justify-center mx-auto">
+                  <div className="my-6 sm:w-96 justify-center mx-auto">
                     <Dialog.Title as="h3" className="text-3xl uppercase font-mono font-medium text-white">
                       {project?.name ?? ""}
                     </Dialog.Title>
