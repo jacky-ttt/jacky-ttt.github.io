@@ -98,7 +98,7 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
             <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
           </div>
         </div>
-        <div className="absolute inset-0 flex items-center rounded-lg bg-black/[.98] px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
+        <div className="absolute inset-0 flex items-center rounded-lg bg-black/90 px-4 py-4 text-slate-200 rotate3d-x-180 backface-hidden overflow-hidden">
           <p className="text-sm font-sans font-light text-white">{backDescription}</p>
         </div>
       </div>
