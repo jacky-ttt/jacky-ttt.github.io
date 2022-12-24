@@ -103,7 +103,7 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
         </div>
       </div> */}
       <div className={`w-full h-full shadow-lg rounded-lg overflow-hidden group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200`} style={{ backgroundColor: bgColor }}>
-        <GatsbyImage className="bg-neutral-500 before:bg-black/80 before:absolute before:inset-0 before:z-10" image={getImage(image)} alt={title} />
+        <GatsbyImage className="bg-neutral-500" image={getImage(image)} alt={title} />
         <div className="px-4 py-4">
           <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
           <p className="text-sm font-sans font-light text-white">{subtitle}</p>
