@@ -173,33 +173,24 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-800 px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-800 px-4 pt-5 pb-4 shadow-xl transition-all sm:my-8 w-full max-w-4xl sm:p-6">
                 <div>
-                  {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    <Dino />
-                    <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
-                  </div> */}
-                  {/* <Dino /> */}
-                  {/* {image} */}
-                  {/* <StaticImage src={imageSrc} alt={description} /> */}
                   {project != undefined && getImage(project.fullImage) &&
                     <GatsbyImage image={getImage(project.fullImage)} alt={project.name} />}
 
-                  <div className="mt-3 sm:mt-5">
-                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-white">
+                  <div className="mt-3 sm:mt-5 w-96 justify-center mx-auto">
+                    <Dialog.Title as="h3" className="text-3xl uppercase font-mono font-medium text-white">
                       {project?.name ?? ""}
                     </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-white">
-                        {project?.year ?? ""}
-                      </p>
-                      <p className="text-sm text-white">
-                        {project?.description ?? ""}
-                      </p>
-                      <p className="text-sm text-white">
-                        {project?.skill ?? ""}
-                      </p>
-                    </div>
+                    <p className="text-lg font-sans font-light text-white leading-3">
+                      {project?.year ?? ""}
+                    </p>
+                    <p className="text-lg font-sans font-light text-white mt-6">
+                      {project?.description ?? ""}
+                    </p>
+                    <p className="text-lg font-sans font-light text-white mt-4">
+                      {project?.skill ?? ""}
+                    </p>
                   </div>
                 </div>
                 {/* <div className="mt-5 sm:mt-6">
