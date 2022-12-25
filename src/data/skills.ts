@@ -14,6 +14,8 @@ export const skills = [
   "javascript es6",
   "react",
   "react native",
+  "next.js",
+  "gatsby.js",
   "html5",
   "css",
   "ethers.js",
