@@ -296,23 +296,14 @@ const IndexPage = () => {
 export default IndexPage
 
 export const Head: HeadFC = () => {
-  const imageUrl = `${websiteConfig.siteUrl}${websiteConfig.siteLogo}`
-
   return (
     <>
       <title>{websiteConfig.siteTitle}</title>
       <meta name="description" content={websiteConfig.siteDescription} />
-      <meta name="image" content={imageUrl} />
       <meta property="og:title" content={websiteConfig.siteTitle} />
       <meta property="og:url" content={websiteConfig.siteUrl} />
       <meta property="og:description" content={websiteConfig.siteDescription} />
-      <meta property="og:image" content={imageUrl} />
       <meta property="og:type" content="website" />
-      <meta property="og:image:alt" content={websiteConfig.siteDescription} />
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-      <link rel="shortcut icon" href="/favicon.ico" />
     </>
   )
 }
