@@ -33,7 +33,7 @@ type LinkCardProps = {
 const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   <div className="group perspective cursor-pointer">
     <a href={link} target="_blank" rel="noopener noreferrer"
-      className={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 ${gradientBg}`} >
+      className={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 bg-gradient-to-r ${gradientBg}`} >
       <div className={`w-full h-full `}>
         <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
         <div className="opacity-75 font-sans text-sm md:text-base">{subtitle}</div>
@@ -290,17 +290,17 @@ const IndexPage = () => {
             title="LinkedIn"
             subtitle="There records my career path, my skills, my language, my whole."
             link="https://www.linkedin.com/in/jacky-tsang-93646a193/"
-            gradientBg="bg-gradient-to-r from-blue-800 to-cyan-500" />
+            gradientBg="from-blue-800 to-cyan-500" />
           <LinkCard
             title="GitHub"
             subtitle="A developer needs a Github to support him somewhere in his life."
             link="https://github.com/jacky-ttt/"
-            gradientBg="bg-gradient-to-r from-neutral-800 to-zinc-500" />
+            gradientBg="from-neutral-800 to-zinc-500" />
           <LinkCard
             title="Medium"
             subtitle="I post articles on Medium now and then. Mostly about the dev I used in my work."
             link="https://jacky-ttt.medium.com/"
-            gradientBg="bg-gradient-to-r from-green-800 to-emerald-500" />
+            gradientBg="from-green-800 to-emerald-500" />
         </div>
 
 
