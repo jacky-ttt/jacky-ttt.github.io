@@ -295,13 +295,15 @@ const IndexPage = () => {
         </div>
 
 
-        <p className="mt-20 mb-4 text-2xl font-sans text-white">Skills</p>
-        <div className="flex flex-wrap gap-4 text-white">
-          {skills.map((skill: string, index: number) =>
-            <div
-              className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2"
-              style={{ backgroundColor: skillPillBgColors[index] }}>{skill}</div>
-          )}
+        <div className="animate-in fade-in slide-in-from-top-6 duration-1000">
+          <p className="mt-20 mb-4 text-2xl font-sans text-white">Skills</p>
+          <div className="flex flex-wrap gap-4 text-white">
+            {skills.map((skill: string, index: number) =>
+              <div
+                className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2"
+                style={{ backgroundColor: skillPillBgColors[index] }}>{skill}</div>
+            )}
+          </div>
         </div>
 
         <div className="animate-in fade-in slide-in-from-top-6 duration-1000">
