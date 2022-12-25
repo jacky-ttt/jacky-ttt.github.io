@@ -265,13 +265,9 @@ const SkillCard = ({ name, bgColor }: SkillCardProps) => {
 }
 
 const IndexPage = () => {
-  const [openModal, setOpenModal] = useState(false)
   const [selectedProjectId, setSelectedProjectId] = useState(INVALID_PROJECT_ID)
 
   const projectsData = useStaticQuery(projectsQuery)
-  // console.log(projectsData);
-  // console.log(projectsData.allProjectsJson.nodes[0].image);
-  // const imageSrc = getImage(projectsData.allProjectsJson.nodes[1].image)
 
   const projects = projectsData.allProjectsJson.nodes
 
