@@ -6,6 +6,7 @@ import websiteConfig from "../config/config"
 import { graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image"
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { IoLogoGithub } from 'react-icons/io'
 
 type BigTitleProps = {
   children: React.ReactNode,
@@ -343,6 +344,13 @@ const IndexPage = () => {
               />
             ))}
           </div>
+        </div>
+
+        <div className="mt-20 flex">
+          <a href={"https://github.com/jacky-ttt/jacky-ttt.github.io/tree/dev"} target="_blank" rel="noopener noreferrer"
+            className={`mx-auto text-base sm:text-lg lg:text-xl no-underline rounded-lg text-white/80`} >
+            <IoLogoGithub className="inline mr-1" />source
+          </a>
         </div>
 
         <Modal
