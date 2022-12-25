@@ -129,7 +129,7 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
         <div className="px-4 py-4">
           <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
           <p className="text-sm font-sans font-light text-white leading-3">{subtitle}</p>
-          <p className="mt-4 text-sm font-sans font-light text-white">{description}</p>
+          <p className="mt-4 text-sm font-sans text-white/80">{description}</p>
         </div>
       </div>
     </div>
