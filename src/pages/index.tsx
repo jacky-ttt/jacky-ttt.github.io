@@ -42,12 +42,12 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   </div>
 )
 
-const getBgColors = (projects: ProjectData[]): string[] => {
-  return projects.map((project: ProjectData, index: number) => {
+const getBgColors = (projects: any[], startColor: string, endColor: string): string[] => {
+  return projects.map((_: any, index: number) => {
     const percentage = Math.pow(index / (projects.length - 1), 2)
 
-    const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor("#7f1d1d")
-    const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor("#ea580c")
+    const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor(startColor)
+    const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor(endColor)
 
     const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
     const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
@@ -217,6 +217,40 @@ const INVALID_PROJECT_ID = -1
 
 type ProjectData = { name: string; year: string; description: string; skill: string; image: ImageDataLike, fullImage: ImageDataLike }
 
+const skills = [
+  "kotlin",
+  "android",
+  "dagger 2",
+  "coroutines",
+  "snapshot test",
+  "compose",
+  "dagger hilt",
+  "retrofit",
+  "mockk",
+  "mockito",
+  "git",
+  "typescript",
+  "javascript es6",
+  "react",
+  "react native",
+  "html5",
+  "css",
+  "ethers.js",
+  "web3.js",
+  "aws lambda",
+  "serverless framework",
+  "hardhat",
+  "solidity",
+  "java",
+  "spring framework",
+  "c++",
+  "matlab",
+  "matlab",
+  "opencv",
+  "vtk",
+  "processing",
+]
+
 const IndexPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [selectedProjectId, setSelectedProjectId] = useState(INVALID_PROJECT_ID)
@@ -228,7 +262,8 @@ const IndexPage = () => {
 
   const projects = projectsData.allProjectsJson.nodes
 
-  const bgColors = getBgColors(projects)
+  const bgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
+  const skillPillBgColors = getBgColors(skills, "#5b21b6", "#d946ef")
 
   return (
     <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex">
@@ -257,6 +292,16 @@ const IndexPage = () => {
             subtitle="I post articles on Medium now and then. Mostly about the dev I used in my work."
             link="https://jacky-ttt.medium.com/"
             gradientBg="bg-gradient-to-r from-green-800 to-emerald-500" />
+        </div>
+
+
+        <p className="mt-20 mb-4 text-2xl font-sans text-white">Skills</p>
+        <div className="flex flex-wrap gap-4 text-white">
+          {skills.map((skill: string, index: number) =>
+            <div
+              className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2"
+              style={{ backgroundColor: skillPillBgColors[index] }}>{skill}</div>
+          )}
         </div>
 
         <div className="animate-in fade-in slide-in-from-top-6 duration-1000">
