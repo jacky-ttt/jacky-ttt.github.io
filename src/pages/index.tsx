@@ -251,6 +251,19 @@ const skills = [
   "processing",
 ]
 
+type SkillCardProps = {
+  name: string
+  bgColor: string
+}
+
+const SkillCard = ({ name, bgColor }: SkillCardProps) => {
+  return (
+    <div
+      className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2"
+      style={{ backgroundColor: bgColor }}>{name}</div>
+  )
+}
+
 const IndexPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [selectedProjectId, setSelectedProjectId] = useState(INVALID_PROJECT_ID)
@@ -299,9 +312,7 @@ const IndexPage = () => {
           <p className="mt-20 mb-4 text-2xl font-sans text-white">Skills</p>
           <div className="flex flex-wrap gap-4 text-white">
             {skills.map((skill: string, index: number) =>
-              <div
-                className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2"
-                style={{ backgroundColor: skillPillBgColors[index] }}>{skill}</div>
+              <SkillCard name={skill} bgColor={skillPillBgColors[index]} />
             )}
           </div>
         </div>
