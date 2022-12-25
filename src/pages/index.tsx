@@ -286,7 +286,7 @@ const IndexPage = () => {
             title="GitHub"
             subtitle="A developer needs a Github to support him somewhere in his life."
             link="https://github.com/jacky-ttt/"
-            gradientBg="bg-gradient-to-r from-violet-800 to-fuchsia-500" />
+            gradientBg="bg-gradient-to-r from-neutral-800 to-zinc-500" />
           <LinkCard
             title="Medium"
             subtitle="I post articles on Medium now and then. Mostly about the dev I used in my work."
