@@ -218,12 +218,12 @@ const INVALID_PROJECT_ID = -1
 type ProjectData = { name: string; year: string; description: string; skill: string; image: ImageDataLike, fullImage: ImageDataLike }
 
 const skills = [
-  "kotlin",
   "android",
-  "dagger 2",
+  "kotlin",
+  "compose",
   "coroutines",
   "snapshot test",
-  "compose",
+  "dagger 2",
   "dagger hilt",
   "retrofit",
   "mockk",
