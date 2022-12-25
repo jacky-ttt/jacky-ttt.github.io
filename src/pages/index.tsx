@@ -252,7 +252,7 @@ const IndexPage = () => {
           <p className="mt-20 mb-4 text-2xl font-sans text-white">Skills</p>
           <div className="flex flex-wrap gap-4 text-white">
             {skills.map((skill: string, index: number) =>
-              <SkillCard name={skill} bgColor={skillPillBgColors[index]} />
+              <SkillCard key={index} name={skill} bgColor={skillPillBgColors[index]} />
             )}
           </div>
         </div>
