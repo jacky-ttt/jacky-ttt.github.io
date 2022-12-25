@@ -24,7 +24,7 @@ const config: GatsbyConfig = {
         background_color: websiteConfig.backgroundColor,
         theme_color: websiteConfig.themeColor,
         display: 'standalone',
-        icon: "src/static/logo.jpg",
+        icon: "src/images/logo.jpg",
       }
     },
     'gatsby-plugin-postcss',
