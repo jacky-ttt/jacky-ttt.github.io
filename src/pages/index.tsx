@@ -218,8 +218,13 @@ const IndexPage = () => {
   const projectsData = useStaticQuery(projectsQuery)
   const projects = projectsData.allProjectsJson.nodes
 
-  const bgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
+  const linkBgColors = [
+    "from-blue-800 to-cyan-500",
+    "from-neutral-800 to-zinc-500",
+    "from-green-800 to-emerald-500",
+  ]
   const skillPillBgColors = getBgColors(skills, "#5b21b6", "#d946ef")
+  const bgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
 
   return (
     <main className="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex">
@@ -233,12 +238,13 @@ const IndexPage = () => {
         </div>
 
         <div className="grid lg:grid-rows-1 lg:grid-cols-3 gap-4 mt-20 animate-in fade-in slide-in-from-top-10 duration-1000">
-          {links.map((link) =>
+          {links.map((link, index: number) =>
             <LinkCard
+              key={index}
               title={link.name}
               subtitle={link.description}
               link={link.link}
-              gradientBg={link.gradientBg} />
+              gradientBg={linkBgColors[index]} />
           )}
         </div>
 
