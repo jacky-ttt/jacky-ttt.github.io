@@ -7,6 +7,9 @@ import { graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image"
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { IoLogoGithub } from 'react-icons/io'
+import { links } from "../data/links"
+import { skills } from "../data/skills"
+import { getBgColors } from "../color/backgroundColor"
 
 type BigTitleProps = {
   children: React.ReactNode,
@@ -25,26 +28,6 @@ export const Subtitle = ({ children }: SubtitleProps) => (<h1 className="text-2x
   {children}
 </h1>)
 
-const links = [
-  {
-    name: "LinkedIn",
-    description: "There records my career path, my skills, my origin, my whole.",
-    link: "https://www.linkedin.com/in/jacky-tsang-93646a193/",
-    gradientBg: "from-blue-800 to-cyan-500",
-  },
-  {
-    name: "GitHub",
-    description: "A developer needs a Github to support him somewhere in his life.",
-    link: "https://github.com/jacky-ttt/",
-    gradientBg: "from-neutral-800 to-zinc-500",
-  },
-  {
-    name: "Medium",
-    description: "I post articles on Medium now and then. Mostly about the dev I used in my work.",
-    link: "https://jacky-ttt.medium.com/",
-    gradientBg: "from-green-800 to-emerald-500",
-  },
-]
 
 type LinkCardProps = {
   title: string
@@ -64,32 +47,9 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
   </div>
 )
 
-const getBgColors = (projects: any[], startColor: string, endColor: string): string[] => {
-  return projects.map((_: any, index: number) => {
-    const percentage = Math.pow(index / (projects.length - 1), 2)
 
-    const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor(startColor)
-    const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor(endColor)
-
-    const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
-    const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
-    const bgColorBlue: number = Math.floor(startColorB + percentage * Math.abs((startColorB - endColorB)))
-    const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
-
-    return newBgColor
-  })
-}
-
-const getRGBColor = (hex: string) => {
-  let color = hex.replace(/#/g, "")
-  // rgb values
-  var r = parseInt(color.substring(0, 2), 16)
-  var g = parseInt(color.substring(2, 4), 16)
-  var b = parseInt(color.substring(4, 6), 16)
-
-  return { r, g, b }
-}
-
+type ProjectData = { name: string; year: string; description: string; skill: string; image: ImageDataLike, fullImage: ImageDataLike }
+const INVALID_PROJECT_ID = -1
 type ProjectCardProps = {
   id: number
   title: string
@@ -136,38 +96,20 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
   )
 }
 
-const projectsQuery = graphql`
-  query Projects {
-    allProjectsJson {
-      nodes {
-        name
-        year
-        description
-        skill
-        image {
-          childImageSharp {
-            gatsbyImageData(
-              placeholder: BLURRED
-              formats: [AUTO, WEBP, AVIF]
-              layout: FULL_WIDTH
-              aspectRatio: 2
-              transformOptions: {cropFocus: ATTENTION}
-            )
-          }
-        }
-        fullImage: image {
-          childImageSharp {
-            gatsbyImageData(
-              placeholder: BLURRED
-              formats: [AUTO, WEBP, AVIF]
-              layout: FULL_WIDTH
-            )
-          }
-        }
-      }
-    }
-  }
-`
+
+
+
+type SkillCardProps = {
+  name: string
+  bgColor: string
+}
+const SkillCard = ({ name, bgColor }: SkillCardProps) => {
+  return (
+    <div
+      className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2"
+      style={{ backgroundColor: bgColor }}>{name}</div>
+  )
+}
 
 
 type ProjectModalProps = {
@@ -235,62 +177,45 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
   )
 }
 
-const INVALID_PROJECT_ID = -1
 
-type ProjectData = { name: string; year: string; description: string; skill: string; image: ImageDataLike, fullImage: ImageDataLike }
+const projectsQuery = graphql`
+  query Projects {
+    allProjectsJson {
+      nodes {
+        name
+        year
+        description
+        skill
+        image {
+          childImageSharp {
+            gatsbyImageData(
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+              layout: FULL_WIDTH
+              aspectRatio: 2
+              transformOptions: {cropFocus: ATTENTION}
+            )
+          }
+        }
+        fullImage: image {
+          childImageSharp {
+            gatsbyImageData(
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+              layout: FULL_WIDTH
+            )
+          }
+        }
+      }
+    }
+  }
+`
 
-const skills = [
-  "android",
-  "kotlin",
-  "compose",
-  "coroutines",
-  "snapshot test",
-  "dagger 2",
-  "dagger hilt",
-  "retrofit",
-  "mockk",
-  "mockito",
-  "git",
-  "typescript",
-  "javascript es6",
-  "react",
-  "react native",
-  "html5",
-  "css",
-  "ethers.js",
-  "web3.js",
-  "aws lambda",
-  "serverless framework",
-  "hardhat",
-  "solidity",
-  "java",
-  "spring framework",
-  "c++",
-  "matlab",
-  "matlab",
-  "opencv",
-  "vtk",
-  "processing",
-]
-
-type SkillCardProps = {
-  name: string
-  bgColor: string
-}
-
-const SkillCard = ({ name, bgColor }: SkillCardProps) => {
-  return (
-    <div
-      className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2"
-      style={{ backgroundColor: bgColor }}>{name}</div>
-  )
-}
 
 const IndexPage = () => {
   const [selectedProjectId, setSelectedProjectId] = useState(INVALID_PROJECT_ID)
 
   const projectsData = useStaticQuery(projectsQuery)
-
   const projects = projectsData.allProjectsJson.nodes
 
   const bgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
@@ -316,7 +241,6 @@ const IndexPage = () => {
               gradientBg={link.gradientBg} />
           )}
         </div>
-
 
         <div className="animate-in fade-in slide-in-from-top-6 duration-1000">
           <p className="mt-20 mb-4 text-2xl font-sans text-white">Skills</p>
