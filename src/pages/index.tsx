@@ -5,7 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import websiteConfig from "../config/config"
 import { graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image"
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { XMarkIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import { IoLogoGithub } from 'react-icons/io'
 import { links } from "../data/links"
 import { skills } from "../data/skills"
@@ -40,7 +40,10 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
     <a href={link} target="_blank" rel="noopener noreferrer"
       className={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 bg-gradient-to-r ${gradientBg}`} >
       <div className={`w-full h-full `}>
-        <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
+        <div className="flex items-center">
+          <div className="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">{title}</div>
+          <ArrowTopRightOnSquareIcon className="h-6 w-6 text-neutral-100/80 ml-1 sm:ml-2 collapse group-hover:visible duration-2000" aria-hidden="true" />
+        </div>
         <div className="opacity-75 font-sans text-sm md:text-base">{subtitle}</div>
       </div>
     </a>
