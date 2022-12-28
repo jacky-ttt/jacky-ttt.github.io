@@ -3,6 +3,7 @@
     "name": "HSBC",
     "year": "2022",
     "description": "International payment module of HSBC mobile banking application",
+    "fullDescription": "Main maintainer of an international payment module in an app which provided $18.9bn reported profits in 2021. Managed a team of 20+ people. Reviewed hundreds of lines of pull requests daily to ensure code quality. Optimized pipeline build and testing time by 33%. Performed app architecture design. Refactored legacy code to increase readability. Collaborated with offshore teams. Released and deployed module regularly. Documented tooling and procedures. Onboarded new incomers.",
     "skill": "Android, kotlin, Coroutines, MVP, MVVM, Retrofit, Jenkins, SonarQube",
     "image": "../images/hsbc.png"
   },
@@ -10,6 +11,7 @@
     "name": "Daily Journal",
     "year": "2022",
     "description": "On-chain NFT that holds daily journals",
+    "fullDescription": "Creator of a Non-Fungible Token project on Polygon network. Developed a token that carries the morning, afternoon, and night event of a specific day. Implemented an automated pipeline to generate token daily. Embedded on-chain image for visual presentation.",
     "skill": "Typescript, Solidity, Hardhat, Serverless, Ethers.js, AWS lambda",
     "image": "../images/daily_journal.png"
   },
@@ -17,6 +19,7 @@
     "name": "Hase",
     "year": "2019",
     "description": "Hong Kong Hang Seng Bank application",
+    "fullDescription": "Developed an android application in MVP pattern. Mainly participated in testing and bug fixing tasks. Collaborated with a remote team.",
     "skill": "Android, Kotlin, MVP, Retrofit",
     "image": "../images/hase.png"
   },
@@ -24,6 +27,7 @@
     "name": "Cruzr",
     "year": "2019",
     "description": "A navigation app that lives on a robot",
+    "fullDescription": "Developed an on-device navigation application where users can interact to get direction of a predefined area. Utilized provided SDK to perform navigation tasks. Added speech-to-text and text-to-speech functionality to improve user experience.",
     "skill": "Google Cloud speech-to-text, DialogFlow, Google text-to-speech",
     "image": "../images/cruzr.png"
   },
@@ -31,6 +35,7 @@
     "name": "Stay focused",
     "year": "2019",
     "description": "Interactive 3D model viewer",
+    "fullDescription": "Developed an interactive 3D model viewer. Set up camera perspective, lighting direction, and texture display in WebGL. Added collision detection and gravity to make the 3d objects realistic. Implemented drag-and-drop and swipe-to-rotate gestures.",
     "skill": "React Native, Expo, Javascript, Three.js",
     "image": "../images/stay_focused.png"
   },
@@ -38,6 +43,7 @@
     "name": "Volumetric lighting",
     "year": "2018",
     "description": "Artistic visualization installation",
+    "fullDescription": "Set up multiple installations of volumetric lighting. Published multiple academic papers. Implemented various algorithms for mesh manipulation and segmentation.",
     "skill": "C++, OpenCV, VTK, Rhinoceros 3D",
     "image": "../images/volumetric_lighting.png"
   },
@@ -45,6 +51,7 @@
     "name": "Web Scrapper",
     "year": "2017",
     "description": "Automated web scrapper",
+    "fullDescription": "Developed multiple web scraping programs for various sit for academic purposes. Performed data cleanup tasks.",
     "skill": "Python, Scrapy, Selenium, Beautiful Soup, Javascript, Puppeteer, Playwright",
     "image": "../images/web_scrappers.png"
   },
@@ -52,6 +59,7 @@
     "name": "Greyed out",
     "year": "2015",
     "description": "Android all grey icon pack",
+    "fullDescription": "Developed an icon pack android application that converts all application icons to grayscale programmatically.",
     "skill": "Android, Java",
     "image": "../images/greyed_out.png"
   },
@@ -59,21 +67,24 @@
     "name": "HKJC data grid",
     "year": "2015",
     "description": "Data visualization desktop application",
-    "skill": "Javascript, Electron, Ag-grid",
+    "fullDescription": "Developed a desktop visualization tool for showing HKJC race information. Created a web scraping program to scrap data from HKJC website.",
+    "skill": "React, Javascript, Electron, Ag-grid",
     "image": "../images/hkjc_data_grid.png"
   },
   {
     "name": "HK G-Share",
     "year": "2014",
     "description": "Second hand trading platform",
-    "skill": "Android, Java",
+    "fullDescription": "Developed a second-hand trading application for Hong Kong Green Building Council. Manipulated data from the provided API for text and image display.",
+    "skill": "Android, Java, SQLite",
     "image": "../images/hk_g-share.png"
   },
   {
     "name": "UNI Match",
     "year": "2014",
     "description": "Networking and events promotion platform exclusively for universities",
-    "skill": "Android, Java",
+    "fullDescription": "Developed a networking and events promotion platform exclusively for university students.",
+    "skill": "Android, Java, Retrofit, Realm",
     "image": "../images/uni_match.png"
   }
 ]

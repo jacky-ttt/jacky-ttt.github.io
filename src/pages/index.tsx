@@ -51,7 +51,7 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
 )
 
 
-type ProjectData = { name: string; year: string; description: string; skill: string; image: ImageDataLike, fullImage: ImageDataLike }
+type ProjectData = { name: string; year: string; description: string; fullDescription: string; skill: string; image: ImageDataLike, fullImage: ImageDataLike }
 const INVALID_PROJECT_ID = -1
 type ProjectCardProps = {
   id: number
@@ -156,18 +156,18 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
                   {project != undefined && getImage(project.fullImage) &&
                     <GatsbyImage className="bg-neutral-500" image={getImage(project.fullImage)} alt={project.name} />}
 
-                  <div className="my-6 sm:w-96 justify-center mx-auto">
+                  <div className="my-6 justify-center mx-auto px-6 sm:px-32">
                     <Dialog.Title as="h3" className="text-3xl uppercase font-mono font-medium text-white">
                       {project?.name ?? ""}
                     </Dialog.Title>
-                    <p className="text-sm sm:text-base font-sans font-light text-white leading-3">
+                    <p className="text-sm sm:text-base font-sans font-light text-white/80 leading-3">
                       {project?.year ?? ""}
                     </p>
-                    <p className="text-base sm:text-lg font-sans font-light text-white mt-6">
-                      {project?.description ?? ""}
-                    </p>
-                    <p className="text-base sm:text-lg font-sans font-light text-white mt-4">
+                    <p className="text-sm sm:text-base italic font-sans font-light text-white/80 mt-4">
                       {project?.skill ?? ""}
+                    </p>
+                    <p className="text-base sm:text-lg text-justify font-sans font-normal text-white mt-4">
+                      {project?.fullDescription ?? ""}
                     </p>
                   </div>
                 </div>
@@ -188,6 +188,7 @@ const projectsQuery = graphql`
         name
         year
         description
+        fullDescription
         skill
         image {
           childImageSharp {
