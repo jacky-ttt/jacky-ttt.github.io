@@ -109,7 +109,7 @@ type SkillCardProps = {
 const SkillCard = ({ name, bgColor }: SkillCardProps) => {
   return (
     <div
-      className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2 hover:scale-110 duration-200 select-all"
+      className="rounded-lg bg-violet-800 leading-5 font-mono uppercase text-sm md:text-base px-4 py-2 hover:scale-110 duration-200"
       style={{ backgroundColor: bgColor }}>{name}</div>
   )
 }
