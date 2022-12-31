@@ -12,7 +12,7 @@
     "year": "2022",
     "description": "On-chain NFT that holds daily journals",
     "fullDescription": "Creator of a Non-Fungible Token project on Polygon network. Developed a token that carries the morning, afternoon, and night event of a specific day. Implemented an automated pipeline to generate token daily. Embedded on-chain image for visual presentation.",
-    "skill": "Typescript, Solidity, Hardhat, Serverless, Ethers.js, AWS lambda",
+    "skill": "Solidity, Hardhat, Typescript, Next.js, Serverless, Ethers.js, AWS lambda",
     "image": "../images/daily_journal.png"
   },
   {
