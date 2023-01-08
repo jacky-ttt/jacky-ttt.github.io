@@ -28,7 +28,6 @@ export const skills = [
   "spring framework",
   "c++",
   "matlab",
-  "matlab",
   "opencv",
   "vtk",
   "processing",
