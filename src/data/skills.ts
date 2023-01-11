@@ -9,6 +9,7 @@ export const skills = [
   "retrofit",
   "mockk",
   "mockito",
+  "TDD",
   "git",
   "typescript",
   "javascript es6",
