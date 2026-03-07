@@ -21,7 +21,7 @@ const nameChars = nameText.split("")
 const nameColors = getBgColors(nameChars, "#ea580c", "#fef9c3")
 
 export const BigTitle = ({ children }: BigTitleProps) => (
-  <h1 className="text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
+  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
     <div>Hello,</div>
     <div className="inline sm:inline-block whitespace-pre">I'm </div>
     <span className="group inline sm:inline-block hover:cursor-pointer">
