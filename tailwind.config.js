@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin')
+const plugin = require("tailwindcss/plugin")
 
 const cardFlipPlugin = plugin(function ({ addUtilities }) {
   addUtilities({
@@ -24,31 +24,31 @@ const cardFlipPlugin = plugin(function ({ addUtilities }) {
     ".perspective": {
       perspective: "1000px",
     },
-    '.backface-visible': {
-      'backface-visibility': 'visible',
-      '-moz-backface-visibility': 'visible',
-      '-webkit-backface-visibility': 'visible',
-      '-ms-backface-visibility': 'visible'
+    ".backface-visible": {
+      "backface-visibility": "visible",
+      "-moz-backface-visibility": "visible",
+      "-webkit-backface-visibility": "visible",
+      "-ms-backface-visibility": "visible",
     },
-    '.backface-hidden': {
-      'backface-visibility': 'hidden',
-      '-moz-backface-visibility': 'hidden',
-      '-webkit-backface-visibility': 'hidden',
-      '-ms-backface-visibility': 'hidden'
-    }
+    ".backface-hidden": {
+      "backface-visibility": "hidden",
+      "-moz-backface-visibility": "hidden",
+      "-webkit-backface-visibility": "hidden",
+      "-ms-backface-visibility": "hidden",
+    },
   })
-});
+})
 
 const textShadowPlugin = plugin(function ({ addUtilities }) {
   addUtilities({
     ".text-shadow-white": {
-      'text-shadow': "2px 2px #ef4444"
+      "text-shadow": "2px 2px #ef4444",
     },
     ".text-shadow-blue": {
-      'text-shadow': "3px 3px #06b6d4"
-    }
+      "text-shadow": "3px 3px #06b6d4",
+    },
   })
-});
+})
 
 module.exports = {
   content: [
@@ -58,9 +58,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [
-    cardFlipPlugin,
-    textShadowPlugin,
-    require("tailwindcss-animate"),
-  ],
+  plugins: [cardFlipPlugin, textShadowPlugin, require("tailwindcss-animate")],
 }

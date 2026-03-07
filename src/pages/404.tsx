@@ -9,10 +9,15 @@ const NotFoundPage = () => {
     <main className="min-h-screen bg-neutral-800 text-white">
       <div className="mx-auto flex min-h-screen w-full max-w-6xl items-center px-8 py-16 md:px-16">
         <div className="w-full md:p-12">
-          <p className="font-mono text-sm uppercase tracking-[0.22em] text-cyan-300">Error 404</p>
-          <h1 className="mt-4 text-5xl font-medium tracking-wide md:text-6xl">Page Not Found</h1>
+          <p className="font-mono text-sm uppercase tracking-[0.22em] text-cyan-300">
+            Error 404
+          </p>
+          <h1 className="mt-4 text-5xl font-medium tracking-wide md:text-6xl">
+            Page Not Found
+          </h1>
           <p className="mt-6 max-w-2xl text-lg text-white/75">
-            The page you requested does not exist or has been moved. Let&apos;s get you back to somewhere useful.
+            The page you requested does not exist or has been moved. Let&apos;s
+            get you back to somewhere useful.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
@@ -47,6 +52,9 @@ export default NotFoundPage
 export const Head: HeadFC = () => (
   <>
     <title>404 | Page Not Found</title>
-    <meta name="description" content="The page you are looking for cannot be found." />
+    <meta
+      name="description"
+      content="The page you are looking for cannot be found."
+    />
   </>
 )

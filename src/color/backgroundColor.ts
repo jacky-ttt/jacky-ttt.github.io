@@ -1,13 +1,27 @@
-export const getBgColors = (projects: any[], startColor: string, endColor: string): string[] => {
+export const getBgColors = (
+  projects: any[],
+  startColor: string,
+  endColor: string,
+): string[] => {
   return projects.map((_: any, index: number) => {
     const percentage = Math.pow(index / (projects.length - 1), 2)
 
-    const { r: startColorR, g: startColorG, b: startColorB } = getRGBColor(startColor)
+    const {
+      r: startColorR,
+      g: startColorG,
+      b: startColorB,
+    } = getRGBColor(startColor)
     const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor(endColor)
 
-    const bgColorRed: number = Math.floor(startColorR + percentage * Math.abs((startColorR - endColorR)))
-    const bgColorGreen: number = Math.floor(startColorG + percentage * Math.abs((startColorG - endColorG)))
-    const bgColorBlue: number = Math.floor(startColorB + percentage * Math.abs((startColorB - endColorB)))
+    const bgColorRed: number = Math.floor(
+      startColorR + percentage * Math.abs(startColorR - endColorR),
+    )
+    const bgColorGreen: number = Math.floor(
+      startColorG + percentage * Math.abs(startColorG - endColorG),
+    )
+    const bgColorBlue: number = Math.floor(
+      startColorB + percentage * Math.abs(startColorB - endColorB),
+    )
     const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
 
     return newBgColor

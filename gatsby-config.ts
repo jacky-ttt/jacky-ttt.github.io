@@ -1,12 +1,11 @@
-import type { GatsbyConfig } from "gatsby";
+import type { GatsbyConfig } from "gatsby"
 import websiteConfig from "./src/config/config"
 const path = require(`path`)
-
 
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Tsang Sze Chun`,
-    siteUrl: `https://tsangszechun.com`
+    siteUrl: `https://tsangszechun.com`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
@@ -15,7 +14,7 @@ const config: GatsbyConfig = {
   plugins: [
     "gatsby-plugin-sitemap",
     {
-      resolve: 'gatsby-plugin-manifest',
+      resolve: "gatsby-plugin-manifest",
       options: {
         name: websiteConfig.siteTitle,
         short_name: websiteConfig.siteTitleShort,
@@ -23,11 +22,11 @@ const config: GatsbyConfig = {
         start_url: "/",
         background_color: websiteConfig.backgroundColor,
         theme_color: websiteConfig.themeColor,
-        display: 'standalone',
+        display: "standalone",
         icon: "src/images/logo.jpg",
-      }
+      },
     },
-    'gatsby-plugin-postcss',
+    "gatsby-plugin-postcss",
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`, // Needed for dynamic images
@@ -45,7 +44,7 @@ const config: GatsbyConfig = {
         path: path.join(__dirname, `src`, `data`),
       },
     },
-  ]
-};
+  ],
+}
 
-export default config;
+export default config
