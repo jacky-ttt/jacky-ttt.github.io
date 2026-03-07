@@ -7,6 +7,7 @@ import { graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image"
 import { XMarkIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import { IoLogoGithub } from 'react-icons/io'
+import { FaAndroid } from 'react-icons/fa'
 import { links } from "../data/links"
 import { skills } from "../data/skills"
 import { getBgColors } from "../color/backgroundColor"
@@ -241,7 +242,10 @@ const IndexPage = () => {
           <BigTitle>
           </BigTitle>
           <Subtitle>
-            Android Developer. Blogger.😊
+            <span className="inline-flex items-center gap-2">
+              Android Developer.
+              <FaAndroid aria-hidden="true" className="text-[#3DDC84]" />
+            </span>
           </Subtitle>
         </div>
 
