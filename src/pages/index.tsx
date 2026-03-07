@@ -353,10 +353,13 @@ const IndexPage = () => {
             href={"https://github.com/jacky-ttt/jacky-ttt.github.io/tree/dev"}
             target="_blank"
             rel="noopener noreferrer"
-            className={`mx-auto text-base sm:text-lg lg:text-xl no-underline rounded-lg text-white/80`}
+            className="group mx-auto inline-flex items-center text-base sm:text-lg lg:text-xl no-underline rounded-lg text-white/80"
           >
             <IoLogoGithub className="inline mr-1" />
-            source
+            Source
+            <span className="ml-1 inline-flex w-0 overflow-hidden opacity-0 transition-all duration-200 group-hover:w-4 group-hover:opacity-100">
+              <ArrowTopRightOnSquareIcon className="h-4 w-4" aria-hidden="true" />
+            </span>
           </a>
         </div>
 
