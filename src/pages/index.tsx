@@ -52,7 +52,7 @@ type SubtitleProps = {
   children: React.ReactNode
 }
 export const Subtitle = ({ children }: SubtitleProps) => (
-  <h1 className="text-2xl lg:text-4xl font-sans text-white mt-8 xxl:w-3/4">
+  <h1 className="text-xl sm:text-2xl lg:text-4xl font-sans text-white mt-8 xxl:w-3/4">
     {children}
   </h1>
 )
