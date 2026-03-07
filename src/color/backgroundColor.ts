@@ -1,10 +1,13 @@
-export const getBgColors = (
-  projects: any[],
+export const getBgColors = <T>(
+  projects: T[],
   startColor: string,
   endColor: string,
 ): string[] => {
-  return projects.map((_: any, index: number) => {
-    const percentage = Math.pow(index / (projects.length - 1), 2)
+  if (projects.length === 0) return []
+
+  return projects.map((_: T, index: number) => {
+    const percentage =
+      projects.length === 1 ? 0 : Math.pow(index / (projects.length - 1), 2)
 
     const {
       r: startColorR,
@@ -14,26 +17,28 @@ export const getBgColors = (
     const { r: endColorR, g: endColorG, b: endColorB } = getRGBColor(endColor)
 
     const bgColorRed: number = Math.floor(
-      startColorR + percentage * Math.abs(startColorR - endColorR),
+      startColorR + percentage * (endColorR - startColorR),
     )
     const bgColorGreen: number = Math.floor(
-      startColorG + percentage * Math.abs(startColorG - endColorG),
+      startColorG + percentage * (endColorG - startColorG),
     )
     const bgColorBlue: number = Math.floor(
-      startColorB + percentage * Math.abs(startColorB - endColorB),
+      startColorB + percentage * (endColorB - startColorB),
     )
-    const newBgColor: string = `#${bgColorRed.toString(16) + bgColorGreen.toString(16) + bgColorBlue.toString(16)}`
+    const newBgColor: string = `#${bgColorRed.toString(16).padStart(2, "0")}${bgColorGreen
+      .toString(16)
+      .padStart(2, "0")}${bgColorBlue.toString(16).padStart(2, "0")}`
 
     return newBgColor
   })
 }
 
 export const getRGBColor = (hex: string) => {
-  let color = hex.replace(/#/g, "")
+  const color = hex.replace(/#/g, "")
   // rgb values
-  var r = parseInt(color.substring(0, 2), 16)
-  var g = parseInt(color.substring(2, 4), 16)
-  var b = parseInt(color.substring(4, 6), 16)
+  const r = parseInt(color.substring(0, 2), 16)
+  const g = parseInt(color.substring(2, 4), 16)
+  const b = parseInt(color.substring(4, 6), 16)
 
   return { r, g, b }
 }
