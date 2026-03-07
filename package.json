@@ -6,6 +6,9 @@
   "keywords": [
     "gatsby"
   ],
+  "engines": {
+    "node": ">=18 <26"
+  },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
@@ -37,9 +40,11 @@
     "lint:ci": "yarn lint --format junit -o results/eslint/result.xml"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
     "@types/node": "^25.3.5",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "ajv": "^8.18.0",
     "autoprefixer": "^10.4.27",
     "gatsby-plugin-postcss": "^6.16.0",
     "gh-pages": "^6.3.0",

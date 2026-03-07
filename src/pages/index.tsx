@@ -12,7 +12,7 @@ import { skills } from "../data/skills"
 import { getBgColors } from "../color/backgroundColor"
 
 type BigTitleProps = {
-  children: React.ReactNode,
+  children?: React.ReactNode,
 };
 export const BigTitle = ({ children }: BigTitleProps) => (<h1 className="text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
   <div>Hello,</div>
@@ -22,7 +22,7 @@ export const BigTitle = ({ children }: BigTitleProps) => (<h1 className="text-5x
 </h1>)
 
 type SubtitleProps = {
-  children: JSX.Element | string,
+  children: React.ReactNode,
 };
 export const Subtitle = ({ children }: SubtitleProps) => (<h1 className="text-2xl lg:text-4xl font-sans text-white mt-8 xxl:w-3/4">
   {children}
@@ -64,6 +64,7 @@ type ProjectCardProps = {
   setOpen: React.Dispatch<React.SetStateAction<number>>
 }
 const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColor, image, setOpen }: ProjectCardProps) => {
+  const cardImage = getImage(image)
   const checkId = (current: number): number => {
     if (current == id) {
       return INVALID_PROJECT_ID
@@ -88,7 +89,9 @@ const ProjectCard = ({ id, title, subtitle, description, backDescription, bgColo
         </div>
       </div> */}
       <div className={`w-full h-full shadow-lg rounded-lg overflow-hidden group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200`} style={{ backgroundColor: bgColor }}>
-        <GatsbyImage className="bg-neutral-500 before:bg-black/80 before:absolute before:inset-0 before:z-10" image={getImage(image)} alt={title} />
+        {cardImage && (
+          <GatsbyImage className="bg-neutral-500 before:bg-black/80 before:absolute before:inset-0 before:z-10" image={cardImage} alt={title} />
+        )}
         <div className="px-4 py-4">
           <h3 className="text-lg uppercase font-mono font-medium text-white">{title}</h3>
           <p className="text-sm font-sans font-light text-white leading-3">{subtitle}</p>
@@ -122,6 +125,7 @@ type ProjectModalProps = {
 }
 const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
   const onCloseHandler = () => setOpen(INVALID_PROJECT_ID)
+  const fullImage = project ? getImage(project.fullImage) : undefined
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onCloseHandler}>
@@ -153,8 +157,8 @@ const Modal = ({ project, open, setOpen }: ProjectModalProps) => {
                   <div className="absolute inset-0 z-10 ml-auto mt-4 mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900/60 cursor-pointer" onClick={onCloseHandler}>
                     <XMarkIcon className="h-6 w-6 text-neutral-100/80" aria-hidden="true" />
                   </div>
-                  {project != undefined && getImage(project.fullImage) &&
-                    <GatsbyImage className="bg-neutral-500" image={getImage(project.fullImage)} alt={project.name} />}
+                  {project != undefined && fullImage &&
+                    <GatsbyImage className="bg-neutral-500" image={fullImage} alt={project.name} />}
 
                   <div className="my-6 justify-center mx-auto px-6 sm:px-32">
                     <Dialog.Title as="h3" className="text-3xl uppercase font-mono font-medium text-white">
