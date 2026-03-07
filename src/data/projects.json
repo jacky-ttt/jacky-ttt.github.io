@@ -1,5 +1,21 @@
 [
   {
+    "name": "Ring",
+    "year": "2024",
+    "description": "Organization-wide Android design system",
+    "fullDescription": "Built reusable Android UI components and shared patterns used across teams to improve consistency, development speed, and maintainability.",
+    "skill": "Android, Compose, kotlin, Coroutines, MVVM, Retrofit, Jenkins",
+    "image": "../images/ring.png"
+  },
+  {
+    "name": "Dyson",
+    "year": "2023",
+    "description": "Innovation team focused on AR and on-device AI integration",
+    "fullDescription": "Evaluated and validated new product ideas, prototyped technical approaches, and provided implementation feedback to product and engineering teams.",
+    "skill": "Android, Compose, kotlin, Coroutines, MVVM, Retrofit, Jenkins",
+    "image": "../images/dyson.webp"
+  },
+  {
     "name": "HSBC",
     "year": "2022",
     "description": "International payment module of HSBC mobile banking application",
