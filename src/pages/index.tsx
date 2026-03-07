@@ -58,8 +58,7 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200"
-      style={{ backgroundImage: gradientBg }}
+      className={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse preserve-3d group-hover:rotate3d-x-10 2xl:group-hover:rotate3d-x-5 duration-200 bg-gradient-to-r ${gradientBg}`}
     >
       <div className={`w-full h-full `}>
         <div className="flex items-center">
@@ -296,9 +295,9 @@ const IndexPage = () => {
   const projects = projectsData.allProjectsJson.nodes
 
   const linkBgColors = [
-    "linear-gradient(90deg, #1e40af 0%, #06b6d4 100%)",
-    "linear-gradient(90deg, #262626 0%, #71717a 100%)",
-    "linear-gradient(90deg, #166534 0%, #10b981 100%)",
+    "from-blue-800 to-cyan-500",
+    "from-neutral-800 to-zinc-500",
+    "from-green-800 to-emerald-500",
   ]
   const skillPillBgColors = getBgColors(skills, "#5b21b6", "#d946ef")
   const bgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
