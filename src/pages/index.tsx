@@ -55,7 +55,7 @@ const LinkCard = ({ title, subtitle, link, gradientBg }: LinkCardProps) => (
             {title}
           </div>
           <ArrowTopRightOnSquareIcon
-            className="h-6 w-6 text-neutral-100/80 ml-1 sm:ml-2 collapse group-hover:visible duration-2000"
+            className="h-6 w-6 text-neutral-100/80 ml-1 sm:ml-2 collapse group-hover:visible"
             aria-hidden="true"
           />
         </div>
