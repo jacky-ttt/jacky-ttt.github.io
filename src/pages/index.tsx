@@ -20,20 +20,31 @@ const nameText = "Tsang Sze Chun"
 const nameChars = nameText.split("")
 const nameColors = getBgColors(nameChars, "#ea580c", "#fef9c3")
 
+const NameText = () => (
+  <span className="group inline sm:inline-block hover:cursor-pointer">
+    <span className="inline-block transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-0.5 group-hover:drop-shadow-[0_4px_14px_rgba(251,146,60,0.45)]">
+      {nameChars.map((char, index) => (
+        <span key={`${char}-${index}`} style={{ color: nameColors[index] }}>
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </span>
+  </span>
+)
+
 export const BigTitle = ({ children }: BigTitleProps) => (
   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
-    <div>Hello,</div>
-    <div className="inline sm:inline-block whitespace-pre">I'm </div>
-    <span className="group inline sm:inline-block hover:cursor-pointer">
-      <span className="inline-block transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-0.5 group-hover:drop-shadow-[0_4px_14px_rgba(251,146,60,0.45)]">
-        {nameChars.map((char, index) => (
-          <span key={`${char}-${index}`} style={{ color: nameColors[index] }}>
-            {char === " " ? "\u00A0" : char}
-          </span>
-        ))}
-      </span>
-    </span>
-    .{children}
+    <div className="hidden min-[440px]:block">Hello,</div>
+    <div className="hidden min-[440px]:block">
+      <span className="inline whitespace-pre">I'm </span>
+      <NameText />.
+    </div>
+
+    <div className="block min-[440px]:hidden">Hello, I&apos;m</div>
+    <div className="block min-[440px]:hidden">
+      <NameText />
+    </div>
+    {children}
   </h1>
 )
 
