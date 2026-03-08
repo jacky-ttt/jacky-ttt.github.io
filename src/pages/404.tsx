@@ -6,7 +6,7 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid"
 
 const NotFoundPage = () => {
   return (
-    <main className="min-h-screen bg-neutral-800 text-white">
+    <main className="min-h-screen bg-[#171717] text-white">
       <div className="mx-auto flex min-h-screen w-full max-w-6xl items-center px-8 py-16 md:px-16">
         <div className="w-full md:p-12">
           <p className="font-mono text-sm uppercase tracking-[0.22em] text-cyan-300">
