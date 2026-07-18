@@ -29,7 +29,7 @@ export default function Html({
         {headComponents}
         <script
           type="text/javascript"
-          src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=357cc44421e708337dce7d51ed66c4860dc51510"
+          src="https://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=357cc44421e708337dce7d51ed66c4860dc51510"
         />
       </head>
       <body {...bodyAttributes}>
