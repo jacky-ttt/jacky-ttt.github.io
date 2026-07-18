@@ -406,6 +406,10 @@ export const Head: HeadFC = () => {
       <meta property="og:url" content={websiteConfig.siteUrl} />
       <meta property="og:description" content={websiteConfig.siteDescription} />
       <meta property="og:type" content="website" />
+      <script
+        type="text/javascript"
+        src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=357cc44421e708337dce7d51ed66c4860dc51510"
+      />
     </>
   )
 }
