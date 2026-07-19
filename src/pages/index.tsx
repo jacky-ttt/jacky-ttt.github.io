@@ -406,6 +406,15 @@ export const Head: HeadFC = () => {
       <meta property="og:url" content={websiteConfig.siteUrl} />
       <meta property="og:description" content={websiteConfig.siteDescription} />
       <meta property="og:type" content="website" />
+      {/*
+        impact.com site ownership verification. Remove once approved.
+        Their snippet uses a non-standard `value` attribute rather than
+        `content`, so it is spread in to satisfy React's meta element types.
+      */}
+      <meta
+        name="impact-site-verification"
+        {...{ value: "c4286378-bbc3-4c61-810e-fdcf93120405" }}
+      />
     </>
   )
 }
