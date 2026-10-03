@@ -23,6 +23,25 @@ const linkBgColors = [
 ]
 const skillPillBgColors = getBgColors(skills, "#5b21b6", "#d946ef")
 const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Tsang Sze Chun",
+    alternateName: websiteConfig.siteTitleAlt,
+    url: websiteConfig.siteUrl,
+    jobTitle: "Android Developer",
+    sameAs: links.map((link) => link.link),
+    knowsAbout: skills,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: websiteConfig.siteTitle,
+    url: websiteConfig.siteUrl,
+  },
+]
 ---
 
 <Layout
@@ -30,6 +49,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
   description={websiteConfig.siteDescription}
   og
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
   <main class="w-full px-6 py-12 sm:p-12 md:p-24 lg:p-36 justify-center items-center flex">
     <div class="w-full xl:w-[88rem]">
       <div class="animate-in fade-in slide-in-from-top-14 duration-1000">

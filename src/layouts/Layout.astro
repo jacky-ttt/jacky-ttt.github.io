@@ -9,6 +9,8 @@ type Props = {
   og?: boolean
 }
 const { title, description, og = false } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site).href
+const ogImage = new URL("/og.jpg", Astro.site).href
 ---
 
 <!doctype html>
@@ -21,10 +23,16 @@ const { title, description, og = false } = Astro.props
     <meta name="description" content={description} />
     {og && (
       <>
+        <link rel="canonical" href={canonical} />
         <meta property="og:title" content={title} />
-        <meta property="og:url" content={websiteConfig.siteUrl} />
+        <meta property="og:url" content={canonical} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={websiteConfig.siteTitleAlt} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
       </>
     )}
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -32,6 +40,7 @@ const { title, description, og = false } = Astro.props
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <slot name="head" />
   </head>
   <body>
     <Background />

@@ -1,7 +1,7 @@
 {
   "name": "Tsang Sze Chun",
   "short_name": "Jacky Tsang",
-  "description": "Personal website of Tsang Sze Chun",
+  "description": "Jacky Tsang (Tsang Sze Chun) is an Android developer working in Kotlin and Jetpack Compose. Projects include apps for Ring, Dyson, HSBC and Hang Seng Bank.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#171717",
