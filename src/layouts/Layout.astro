@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css"
 import websiteConfig from "../config/config"
+import Background from "../components/Background.astro"
 
 type Props = {
   title: string
@@ -33,6 +34,7 @@ const { title, description, og = false } = Astro.props
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
   </head>
   <body>
+    <Background />
     <slot />
   </body>
 </html>

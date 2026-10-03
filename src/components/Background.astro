@@ -1,0 +1,48 @@
+<!-- Animated mesh-gradient backdrop. Falls back to the plain html background if WebGL is unavailable. -->
+<div
+  id="background"
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 -z-10"
+></div>
+
+<script>
+  import {
+    ShaderMount,
+    ShaderFitOptions,
+    defaultPatternSizing,
+    getShaderColorFromString,
+    meshGradientFragmentShader,
+  } from "@paper-design/shaders"
+
+  // Mostly the page's #171717 with dark violet and burnt-orange pools, so text stays readable.
+  const colors = ["#171717", "#2e1065", "#171717", "#431407", "#1e1b4b"]
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  try {
+    new ShaderMount(
+      document.getElementById("background")!,
+      meshGradientFragmentShader,
+      {
+        u_colors: colors.map(getShaderColorFromString),
+        u_colorsCount: colors.length,
+        u_distortion: 0.8,
+        u_swirl: 0.2,
+        u_grainMixer: 0,
+        u_grainOverlay: 0.15,
+        u_fit: ShaderFitOptions.cover,
+        u_scale: defaultPatternSizing.scale,
+        u_rotation: defaultPatternSizing.rotation,
+        u_originX: defaultPatternSizing.originX,
+        u_originY: defaultPatternSizing.originY,
+        u_offsetX: defaultPatternSizing.offsetX,
+        u_offsetY: defaultPatternSizing.offsetY,
+        u_worldWidth: defaultPatternSizing.worldWidth,
+        u_worldHeight: defaultPatternSizing.worldHeight,
+      },
+      undefined,
+      reduceMotion ? 0 : 0.15,
+    )
+  } catch {
+    // No WebGL: keep the solid background.
+  }
+</script>
