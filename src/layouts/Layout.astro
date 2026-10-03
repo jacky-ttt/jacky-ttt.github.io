@@ -1,0 +1,38 @@
+---
+import "../styles/global.css"
+import websiteConfig from "../config/config"
+
+type Props = {
+  title: string
+  description: string
+  og?: boolean
+}
+const { title, description, og = false } = Astro.props
+---
+
+<!doctype html>
+<html lang={websiteConfig.siteLanguage}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={websiteConfig.themeColor} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {og && (
+      <>
+        <meta property="og:title" content={title} />
+        <meta property="og:url" content={websiteConfig.siteUrl} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+      </>
+    )}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

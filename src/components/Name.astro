@@ -1,0 +1,16 @@
+---
+import { getBgColors } from "../color/backgroundColor"
+
+const chars = "Tsang Sze Chun".split("")
+const colors = getBgColors(chars, "#ea580c", "#fef9c3")
+---
+
+<span class="group inline sm:inline-block hover:cursor-pointer">
+  <span class="inline-block transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-0.5 group-hover:drop-shadow-[0_4px_14px_rgba(251,146,60,0.45)]">
+    {chars.map((char, index) => (
+      <span style={{ color: colors[index] }}>
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ))}
+  </span>
+</span>

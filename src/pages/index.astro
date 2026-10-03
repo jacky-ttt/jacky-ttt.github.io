@@ -1,0 +1,214 @@
+---
+import { getCollection } from "astro:content"
+import { Picture } from "astro:assets"
+import Layout from "../layouts/Layout.astro"
+import Name from "../components/Name.astro"
+import websiteConfig from "../config/config"
+import { links } from "../data/links"
+import { skills } from "../data/skills"
+import { getBgColors } from "../color/backgroundColor"
+import AndroidIcon from "../icons/android.svg"
+import GitHubIcon from "../icons/github.svg"
+import XMarkIcon from "../icons/xmark.svg"
+import ExternalIcon from "../icons/external.svg"
+
+const projects = (await getCollection("projects"))
+  .sort((a, b) => Number(a.id) - Number(b.id))
+  .map((entry) => entry.data)
+
+const linkBgColors = [
+  "from-blue-800 to-cyan-500",
+  "from-neutral-800 to-zinc-500",
+  "from-green-800 to-emerald-500",
+]
+const skillPillBgColors = getBgColors(skills, "#5b21b6", "#d946ef")
+const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
+---
+
+<Layout
+  title={websiteConfig.siteTitle}
+  description={websiteConfig.siteDescription}
+  og
+>
+  <main class="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex">
+    <div class="w-full xl:w-[88rem]">
+      <div class="animate-in fade-in slide-in-from-top-14 duration-1000">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
+          <div class="hidden min-[440px]:block">Hello,</div>
+          <div class="hidden min-[440px]:block">
+            <span class="inline whitespace-pre">I'm </span>
+            <Name />.
+          </div>
+          <div class="block min-[440px]:hidden">Hello, I'm</div>
+          <div class="block min-[440px]:hidden">
+            <Name />
+          </div>
+        </h1>
+        <p class="text-xl sm:text-2xl lg:text-4xl font-sans text-white mt-8">
+          <span class="inline-flex items-center gap-2">
+            Android Developer.
+            <AndroidIcon aria-hidden="true" class="size-[1em] text-[#3DDC84]" />
+          </span>
+        </p>
+      </div>
+
+      <div class="grid lg:grid-rows-1 lg:grid-cols-3 gap-4 mt-20 animate-in fade-in slide-in-from-top-10 duration-1000">
+        {links.map((link, index) => (
+          <div class="group perspective-[1000px]">
+            <a
+              href={link.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse transform-3d group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200 bg-linear-to-r ${linkBgColors[index]}`}
+            >
+              <div class="flex items-center">
+                <div class="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">
+                  {link.name}
+                </div>
+                <ExternalIcon
+                  aria-hidden="true"
+                  class="size-6 text-neutral-100/80 ml-1 sm:ml-2 invisible group-hover:visible"
+                />
+              </div>
+              <div class="opacity-75 font-sans text-sm md:text-base">
+                {link.description}
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <div class="animate-in fade-in slide-in-from-top-6 duration-1000">
+        <h2 class="mt-20 mb-4 text-2xl font-sans text-white">Skills</h2>
+        <ul class="flex flex-wrap gap-2 sm:gap-3 text-white">
+          {skills.map((skill, index) => (
+            <li
+              class="rounded-lg leading-5 font-mono uppercase text-sm md:text-base px-4 py-2 hover:scale-110 duration-200"
+              style={{ backgroundColor: skillPillBgColors[index] }}
+            >
+              {skill}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="animate-in fade-in slide-in-from-top-6 duration-1000">
+        <h2 class="mt-20 mb-4 text-2xl font-sans text-white">Projects</h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {projects.map((project, index) => (
+            <button
+              type="button"
+              data-dialog={`project-${index}`}
+              class="group perspective-[1000px] cursor-pointer text-left"
+            >
+              <div
+                class="w-full h-full shadow-lg rounded-lg overflow-hidden group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200"
+                style={{ backgroundColor: projectBgColors[index] }}
+              >
+                <Picture
+                  src={project.image}
+                  alt={project.name}
+                  formats={["avif"]}
+                  fallbackFormat="webp"
+                  layout="constrained"
+                  width={800}
+                  height={400}
+                  fit="cover"
+                  position="attention"
+                  class="block aspect-2/1 w-full bg-neutral-500 object-cover brightness-20"
+                />
+                <div class="px-4 py-4">
+                  <h3 class="text-lg uppercase font-mono font-medium text-white">
+                    {project.name}
+                  </h3>
+                  <p class="text-sm font-sans font-light text-white leading-3">
+                    {project.year}
+                  </p>
+                  <p class="mt-4 text-sm font-sans text-white/80">
+                    {project.description}
+                  </p>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-20 flex">
+        <a
+          href="https://github.com/jacky-ttt/jacky-ttt.github.io/tree/dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group mx-auto inline-flex items-center text-base sm:text-lg lg:text-xl no-underline rounded-lg text-white/80"
+        >
+          <GitHubIcon aria-hidden="true" class="inline size-[1em] mr-1" />
+          Source
+          <span class="ml-1 inline-flex w-0 overflow-hidden opacity-0 transition-all duration-200 group-hover:w-4 group-hover:opacity-100">
+            <ExternalIcon aria-hidden="true" class="size-4 shrink-0" />
+          </span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  {projects.map((project, index) => (
+    <dialog
+      id={`project-${index}`}
+      aria-labelledby={`project-${index}-title`}
+      class="m-auto w-[calc(100%-2rem)] max-w-4xl overflow-y-auto rounded-lg bg-neutral-800 p-0 text-white shadow-xl"
+    >
+      <form method="dialog">
+        <button
+          aria-label="Close"
+          class="absolute top-4 right-4 z-10 flex size-12 items-center justify-center rounded-full bg-neutral-900/60 cursor-pointer"
+        >
+          <XMarkIcon aria-hidden="true" class="size-6 text-neutral-100/80" />
+        </button>
+      </form>
+      <Picture
+        src={project.image}
+        alt={project.name}
+        formats={["avif"]}
+        fallbackFormat="webp"
+        layout="constrained"
+        width={896}
+        class="block w-full bg-neutral-500"
+      />
+      <div class="my-6 mx-auto px-6 sm:px-32">
+        <h3
+          id={`project-${index}-title`}
+          class="text-3xl uppercase font-mono font-medium"
+        >
+          {project.name}
+        </h3>
+        <p class="text-sm sm:text-base font-sans font-light text-white/80 leading-3">
+          {project.year}
+        </p>
+        <p class="text-sm sm:text-base italic font-sans font-light text-white/80 mt-4">
+          {project.skill}
+        </p>
+        <p class="text-base sm:text-lg text-justify font-sans mt-4">
+          {project.fullDescription}
+        </p>
+      </div>
+    </dialog>
+  ))}
+</Layout>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLElement>(
+    "[data-dialog]",
+  )) {
+    const dialog = document.getElementById(
+      button.dataset.dialog!,
+    ) as HTMLDialogElement
+    button.addEventListener("click", () => dialog.showModal())
+  }
+  // Clicks on the backdrop land on the <dialog> itself, so close on those.
+  for (const dialog of document.querySelectorAll("dialog")) {
+    dialog.addEventListener(
+      "click",
+      (event) => event.target === dialog && dialog.close(),
+    )
+  }
+</script>

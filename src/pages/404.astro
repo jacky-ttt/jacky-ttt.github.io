@@ -1,0 +1,50 @@
+---
+import Layout from "../layouts/Layout.astro"
+import HomeIcon from "../icons/home.svg"
+import GitHubIcon from "../icons/github.svg"
+import ExternalIcon from "../icons/external.svg"
+---
+
+<Layout
+  title="404 | Page Not Found"
+  description="The page you are looking for cannot be found."
+>
+  <main class="min-h-screen bg-[#171717] text-white">
+    <div class="mx-auto flex min-h-screen w-full max-w-6xl items-center px-8 py-16 md:px-16">
+      <div class="w-full md:p-12">
+        <p class="font-mono text-sm uppercase tracking-[0.22em] text-cyan-300">
+          Error 404
+        </p>
+        <h1 class="mt-4 text-5xl font-medium tracking-wide md:text-6xl">
+          Page Not Found
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg text-white/75">
+          The page you requested does not exist or has been moved. Let's get you
+          back to somewhere useful.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href="/"
+            class="inline-flex h-12 items-center gap-2 rounded-lg bg-linear-to-r from-blue-800 to-cyan-500 px-5 font-mono leading-none uppercase tracking-wide text-white no-underline shadow-lg duration-200 hover:scale-105"
+          >
+            <HomeIcon aria-hidden="true" class="size-5" />
+            Back Home
+          </a>
+          <a
+            href="https://github.com/jacky-ttt/jacky-ttt.github.io/tree/dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex h-12 items-center rounded-lg border border-white/20 bg-neutral-800/70 px-5 font-mono leading-none uppercase tracking-wide text-white/90 no-underline shadow-lg duration-200 hover:scale-105"
+          >
+            <GitHubIcon aria-hidden="true" class="size-5" />
+            <span class="ml-2">Source</span>
+            <span class="ml-1 inline-flex w-0 overflow-hidden transition-all duration-200 group-hover:w-4">
+              <ExternalIcon aria-hidden="true" class="size-4 shrink-0" />
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

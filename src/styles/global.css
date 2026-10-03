@@ -1,8 +1,39 @@
-@config "../../tailwind.config.js";
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @layer base {
   html {
     background-color: #171717;
+  }
+
+  /* Project dialog: fade and scale in/out, including the backdrop. */
+  dialog,
+  dialog::backdrop {
+    transition:
+      opacity 300ms ease-out,
+      transform 300ms ease-out,
+      overlay 300ms allow-discrete,
+      display 300ms allow-discrete;
+    opacity: 0;
+  }
+  dialog {
+    transform: translateY(1rem) scale(0.95);
+  }
+  dialog[open],
+  dialog[open]::backdrop {
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    dialog[open],
+    dialog[open]::backdrop {
+      opacity: 0;
+    }
+    dialog[open] {
+      transform: translateY(1rem) scale(0.95);
+    }
+  }
+  dialog::backdrop {
+    background-color: rgb(17 24 39 / 0.75);
   }
 }
