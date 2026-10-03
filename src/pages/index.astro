@@ -207,16 +207,28 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     card.style.setProperty("--spot-y", `${event.clientY - rect.top}px`)
   })
 
-  // Runs `update` as a view transition where the image `from` morphs into `to`.
-  const morph = (update: () => void, from: HTMLElement, to: HTMLElement) => {
+  // Shared-element transition: the card image box grows into the dialog image box (or shrinks
+  // back). Only the dialog's full image is drawn while it moves (see global.css), so there is
+  // one picture, not a cross-fade between the cropped card image and the full one.
+  const morph = (
+    direction: "open" | "close",
+    update: () => void,
+    from: HTMLElement,
+    to: HTMLElement,
+  ) => {
     if (!document.startViewTransition || reduceMotion.matches) return update()
+    const root = document.documentElement
+    root.dataset.morph = direction
     from.style.viewTransitionName = "project-image"
     const transition = document.startViewTransition(() => {
       from.style.viewTransitionName = ""
       to.style.viewTransitionName = "project-image"
       update()
     })
-    transition.finished.finally(() => (to.style.viewTransitionName = ""))
+    transition.finished.finally(() => {
+      to.style.viewTransitionName = ""
+      delete root.dataset.morph
+    })
   }
 
   for (const button of document.querySelectorAll<HTMLElement>(
@@ -227,11 +239,29 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     ) as HTMLDialogElement
     const cardImage = button.querySelector("img")!
     const dialogImage = dialog.querySelector("img")!
-    const close = () => morph(() => dialog.close(), dialogImage, cardImage)
+    // The card image is hidden while its dialog is open: it has "moved" into the dialog.
+    const open = () =>
+      morph(
+        "open",
+        () => {
+          dialog.showModal()
+          cardImage.style.visibility = "hidden"
+        },
+        cardImage,
+        dialogImage,
+      )
+    const close = () =>
+      morph(
+        "close",
+        () => {
+          dialog.close()
+          cardImage.style.visibility = ""
+        },
+        dialogImage,
+        cardImage,
+      )
 
-    button.addEventListener("click", () =>
-      morph(() => dialog.showModal(), cardImage, dialogImage),
-    )
+    button.addEventListener("click", open)
     // Backdrop clicks land on the <dialog> itself.
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) close()

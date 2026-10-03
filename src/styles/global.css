@@ -43,10 +43,23 @@
   animation-duration: 450ms;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+/* Draw only the dialog's full image as the box moves: the new snapshot when opening, the old
+   one when closing. Without this the browser cross-fades it with the differently-cropped card
+   image and two pictures appear to move at once. */
 ::view-transition-old(project-image),
 ::view-transition-new(project-image) {
   height: 100%;
   object-fit: cover;
+  animation: none;
+}
+[data-morph="open"]::view-transition-old(project-image),
+[data-morph="close"]::view-transition-new(project-image) {
+  opacity: 0;
+}
+/* The view transition animates the dialog; skip its own fade/scale so they don't stack. */
+[data-morph] dialog,
+[data-morph] dialog::backdrop {
+  transition: none;
 }
 
 /* Cursor-following glow on cards; position comes from --spot-x/--spot-y (index.astro). */
