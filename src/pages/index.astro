@@ -118,7 +118,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
                   position="attention"
                   class="block aspect-2/1 w-full bg-neutral-500 object-cover brightness-50 transition-[filter] duration-300 group-hover:brightness-100 group-focus-visible:brightness-100"
                 />
-                <div class="px-4 py-4">
+                <div data-card-text class="px-4 py-4">
                   <h3 class="text-lg uppercase font-mono font-medium text-white">
                     {project.name}
                   </h3>
@@ -223,6 +223,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     update: () => void,
     pairs: Pair[],
     color: string,
+    done?: () => void,
   ) => {
     if (!document.startViewTransition || reduceMotion.matches) return update()
     const root = document.documentElement
@@ -239,6 +240,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     })
     transition.finished.finally(() => {
       for (const [, to] of pairs) if (to) to.style.viewTransitionName = ""
+      done?.()
       delete root.dataset.morph
     })
   }
@@ -254,7 +256,11 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     // The scroll container, not the <img>: its snapshot is the visible, clipped part of a tall image.
     const dialogImage = dialog.querySelector<HTMLElement>("[data-image]")!
     const closeButton = dialog.querySelector<HTMLElement>("[data-close]")!
+    const cardText = card.querySelector<HTMLElement>("[data-card-text]")!
     const color = card.style.backgroundColor
+    cardText.addEventListener("animationend", () =>
+      cardText.removeAttribute("data-enter"),
+    )
 
     // While open, the card's grid slot stays in place but empty (data-expanded, global.css).
     const open = () =>
@@ -287,6 +293,8 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
           [closeButton, null, "project-close"],
         ],
         color,
+        // Once the box has landed, bring the small card's text in (fade + slide up).
+        () => cardText.toggleAttribute("data-enter", true),
       )
 
     button.addEventListener("click", open)

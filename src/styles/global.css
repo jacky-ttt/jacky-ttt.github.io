@@ -39,12 +39,18 @@
 }
 
 /* Card -> dialog morph (container transform; see the script in index.astro).
-   project-card: the card box grows into the dialog. The group itself is painted in the card's
-   colour (--morph-color), so the box stays solid while the old content fades out quickly and
-   the new content fades in once there is room. Contents are never scaled, only clipped.
-   project-image: only the dialog's full image is drawn while it moves, never cross-faded with
-   the differently-cropped card image (that showed two pictures moving at once).
-   project-close: the X fades in after the card lands, and out first when closing. */
+   project-card: the card box. The group itself is painted in the card's colour (--morph-color),
+   so the box stays solid while its contents fade. Contents are never scaled, only clipped.
+   project-image: only the big image is drawn while it moves (cross-fading it with the
+   differently-cropped card image showed two pictures moving at once).
+   project-close: the X.
+
+   Open (450ms, decelerate): box and image grow and settle; the expanded content and the X fade
+   in once there is room.
+   Close (300ms, accelerate): expanded content and X fade out at once; box and image shrink and
+   land decisively. The small card's content stays hidden until it has landed, then its text
+   fades in and slides up (data-enter) -- so the shrinking box is never compared against the
+   small card's layout. The image cross-fades to the card's own crop in the last 100ms. */
 @keyframes morph-fade-in {
   from {
     opacity: 0;
@@ -60,23 +66,30 @@
   animation-duration: 450ms;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+[data-morph="close"]::view-transition-group(project-card),
+[data-morph="close"]::view-transition-group(project-image) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15);
+}
 ::view-transition-group(project-card) {
   background-color: var(--morph-color);
   border-radius: 0.5rem;
   overflow: hidden;
 }
-/* Contents keep their natural size (pinned top-left, clipped by the growing box) instead of
-   being stretched with it, so text never scales as a blurry bitmap. */
 ::view-transition-old(project-card),
 ::view-transition-new(project-card) {
   width: auto;
   height: auto;
 }
 ::view-transition-old(project-card) {
-  animation: morph-fade-out 120ms ease-out both;
+  animation: morph-fade-out 100ms ease-out both;
 }
-::view-transition-new(project-card) {
+[data-morph="open"]::view-transition-new(project-card) {
   animation: morph-fade-in 250ms 200ms ease-in both;
+}
+[data-morph="close"]::view-transition-new(project-card) {
+  animation: none;
+  opacity: 0;
 }
 ::view-transition-old(project-image),
 ::view-transition-new(project-image) {
@@ -84,15 +97,33 @@
   object-fit: cover;
   animation: none;
 }
-[data-morph="open"]::view-transition-old(project-image),
-[data-morph="close"]::view-transition-new(project-image) {
+[data-morph="open"]::view-transition-old(project-image) {
   opacity: 0;
+}
+[data-morph="close"]::view-transition-old(project-image) {
+  animation: morph-fade-out 100ms 200ms linear both;
+}
+[data-morph="close"]::view-transition-new(project-image) {
+  animation: morph-fade-in 100ms 200ms linear both;
 }
 ::view-transition-new(project-close) {
   animation: morph-fade-in 200ms 350ms ease-out both;
 }
 ::view-transition-old(project-close) {
   animation: morph-fade-out 100ms ease-out both;
+}
+/* Small card's text after closing: hidden while the box lands, then fades in sliding up. */
+@keyframes card-text-enter {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+[data-morph="close"] [data-card-text] {
+  opacity: 0;
+}
+[data-card-text][data-enter] {
+  animation: card-text-enter 250ms ease-out both;
 }
 /* The view transition animates the dialog; skip its own fade/scale so they don't stack. */
 [data-morph] dialog,
