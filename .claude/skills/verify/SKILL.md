@@ -18,7 +18,12 @@ that the source looks right.
 ```
 npm run check                        # astro check (types in .astro + .ts)
 rm -rf dist && npm run build         # ~10s; never skip the rm
+npm run test:visual                  # screenshot tests, desktop + mobile (~15s)
 ```
+
+If a screenshot test fails, open `playwright-report/index.html` (or the `*-diff.png` files in
+`test-results/`) and decide: regression, so fix it; or intended change, so
+`npm run test:visual:update` and review the new PNGs before committing.
 
 Then assert on the output. Check whatever the change was supposed to affect:
 
@@ -63,7 +68,7 @@ plus Node's built-in `WebSocket`); `Input.dispatchMouseEvent` on a card, then ch
 
 ## Comparing against the deployed site
 
-Useful for proving a change is the *only* difference, and for telling a real
+Useful for proving a change is the _only_ difference, and for telling a real
 regression apart from a pre-existing condition:
 
 ```

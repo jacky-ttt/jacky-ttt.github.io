@@ -12,9 +12,25 @@ npm run check                    # astro check: types in .astro and .ts
 rm -rf dist && npm run build     # clean production build into dist/
 npm run preview                  # serve dist/
 npm run format                   # prettier (with prettier-plugin-astro)
+npm run test:visual              # Playwright screenshot tests, desktop + mobile (builds first)
+npm run test:visual:update       # regenerate every baseline after an intended visual change
+npx playwright test -g "close"   # run one test by name
 ```
 
-There are no tests. To check a change, use the `verify` project skill (`.claude/skills/verify`): check, clean build, then assert on `dist/*.html` and screenshot it.
+## Screenshot tests
+
+`tests/site.spec.ts` covers every page, hover/focus state, and animation (page-load entrance, card expand and collapse frame by frame, reduced motion), in two Playwright projects: `desktop` (1440×900) and `mobile` (390×844 @2x). Baselines live in `tests/__screenshots__/<platform>/` and are committed. They're macOS-rendered, so on another OS run the update script first.
+
+How they stay deterministic (keep this when adding tests):
+
+- The shader background is hidden; it has its own non-screenshot test (renders, animates, still under reduced motion).
+- Animations are frozen and seeked with the Web Animations API (`startAndFreeze` / `seekTransition`), and the page-load entrance by setting Chromium's animation playback rate to 0 before navigation.
+- Cards are opened with `openCard()`, which lets the hover transitions settle before clicking.
+- Settled screenshots allow zero differing pixels. Frozen view-transition frames allow 250, because GPU snapshot scaling varies slightly. A real regression is thousands of pixels.
+
+After an intended visual change, run the update script and _look at_ the changed PNGs before committing. In its default "changed" mode, `--update-snapshots` only rewrites images that fail, which can leave a wrong baseline in place.
+
+For changes outside what the tests cover, use the `verify` project skill (`.claude/skills/verify`).
 
 TypeScript is pinned to 6.x because `@astrojs/check` doesn't support TypeScript 7 yet.
 
