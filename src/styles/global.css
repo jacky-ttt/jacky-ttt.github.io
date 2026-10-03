@@ -37,3 +37,14 @@
     background-color: rgb(17 24 39 / 0.75);
   }
 }
+
+/* Card image -> dialog image morph (see the script in index.astro). */
+::view-transition-group(project-image) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+::view-transition-old(project-image),
+::view-transition-new(project-image) {
+  height: 100%;
+  object-fit: cover;
+}
