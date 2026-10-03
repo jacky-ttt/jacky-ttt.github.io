@@ -59,7 +59,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
               href={link.link}
               target="_blank"
               rel="noopener noreferrer"
-              class={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white group-hover:animate-pulse transform-3d group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200 bg-linear-to-r ${linkBgColors[index]}`}
+              class={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white spotlight transform-3d group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200 bg-linear-to-r ${linkBgColors[index]}`}
             >
               <div class="flex items-center">
                 <div class="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">
@@ -102,7 +102,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
               class="group perspective-[1000px] cursor-pointer text-left"
             >
               <div
-                class="w-full h-full shadow-lg rounded-lg overflow-hidden group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200"
+                class="spotlight relative w-full h-full shadow-lg rounded-lg overflow-hidden group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200"
                 style={{ backgroundColor: projectBgColors[index] }}
               >
                 <Picture
@@ -197,6 +197,15 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
 
 <script>
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)")
+
+  // Spotlight: feed the pointer position to the card's radial-gradient glow (global.css).
+  document.addEventListener("pointermove", (event) => {
+    const card = (event.target as Element).closest<HTMLElement>(".spotlight")
+    if (!card) return
+    const rect = card.getBoundingClientRect()
+    card.style.setProperty("--spot-x", `${event.clientX - rect.left}px`)
+    card.style.setProperty("--spot-y", `${event.clientY - rect.top}px`)
+  })
 
   // Runs `update` as a view transition where the image `from` morphs into `to`.
   const morph = (update: () => void, from: HTMLElement, to: HTMLElement) => {

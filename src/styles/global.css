@@ -48,3 +48,24 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* Cursor-following glow on cards; position comes from --spot-x/--spot-y (index.astro). */
+@media (hover: hover) {
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      320px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgb(255 255 255 / 0.18),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+}
