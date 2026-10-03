@@ -36,8 +36,9 @@ TypeScript is pinned to 6.x because `@astrojs/check` doesn't support TypeScript 
 
 ## Branches and deploy
 
-- **`dev` is the source branch.** Pushing to it runs `.github/workflows/deploy-from-dev.yml`: `withastro/action` builds, `actions/deploy-pages` publishes. The repo's Pages source must be set to "GitHub Actions".
-- `master` is the old gh-pages output branch from the Gatsby era. Nothing writes to it any more, so don't commit to it. The `github-pages` environment must allow deployments from `dev`.
+- **`main` is the only branch.** It holds the source, and pushing to it runs `.github/workflows/deploy.yml`: `withastro/action` builds, `actions/deploy-pages` publishes. There is no build-output branch.
+- Repo settings this relies on: Pages source is "GitHub Actions", and the `github-pages` environment allows deployments from `main`.
+- The old Gatsby build output (formerly the `master` branch) is kept as the tag `archive/gatsby-build`.
 
 ## Architecture
 

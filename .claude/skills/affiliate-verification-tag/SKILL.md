@@ -90,7 +90,7 @@ For non-standard attributes (impact.com uses `value=` instead of `content=` on i
    "
    ```
 
-5. **Commit and push to `dev`.** The GitHub Action builds and deploys to GitHub
+5. **Commit and push to `main`.** The GitHub Action builds and deploys to GitHub
    Pages in a few minutes. Nothing verifies until it is live.
 
 6. **Confirm on the live site** before triggering their check:

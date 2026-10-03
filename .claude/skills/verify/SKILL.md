@@ -90,10 +90,9 @@ screenshot. Convert with `sips -s format bmp` and read bytes in Python.
 
 ## Deploy facts
 
-- `dev` is the source branch. Work here.
-- Pushing to `dev` triggers `.github/workflows/deploy-from-dev.yml`, which builds
-  with `withastro/action` and publishes via `actions/deploy-pages`. `master` is no
-  longer written to.
+- `main` is the only branch: source lives here, and there is no build-output branch.
+- Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds
+  with `withastro/action` and publishes via `actions/deploy-pages`.
 - Deployment is not verification. Confirm the live site afterwards:
   ```
   curl -s https://tsangszechun.com/ | grep -o 'WHATEVER_CHANGED'

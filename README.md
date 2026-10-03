@@ -26,15 +26,17 @@ npm run preview   # serve the build locally
 
 ## Deploy
 
-Pushing to `dev` runs `.github/workflows/deploy-from-dev.yml`: it builds the site with
-`withastro/action` and publishes it to GitHub Pages with `actions/deploy-pages`. There is no
-manual deploy step, and nothing is pushed to `master` (that branch holds the old Gatsby build
-output and is no longer used).
+`main` is the only branch. Pushing to it runs `.github/workflows/deploy.yml`: it builds the
+site with `withastro/action` and publishes it to GitHub Pages with `actions/deploy-pages`.
+There is no manual deploy step and no branch of generated files.
 
 The workflow needs two repository settings:
 
 - **Settings → Pages → Source:** GitHub Actions
-- **Settings → Environments → `github-pages` → Deployment branches:** includes `dev`
+- **Settings → Environments → `github-pages` → Deployment branches:** includes `main`
 
-To re-run a deploy without a new commit, open the `deploy-from-dev.yml` workflow under **Actions** and click **Run workflow**
-(`workflow_dispatch`), or `gh run rerun <run-id>`.
+To re-run a deploy without a new commit, open the `deploy.yml` workflow under **Actions**
+and click **Run workflow** (`workflow_dispatch`), or use `gh run rerun <run-id>`.
+
+The old Gatsby build output (previously the `master` branch) is kept as the tag
+`archive/gatsby-build`.
