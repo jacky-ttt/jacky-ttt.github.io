@@ -263,6 +263,9 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
         () => {
           dialog.showModal()
           button.toggleAttribute("data-expanded", true)
+          // Tall images scroll; start at the middle, where the brand/logo sits.
+          dialogImage.scrollTop =
+            (dialogImage.scrollHeight - dialogImage.clientHeight) / 2
         },
         [
           [card, dialog, "project-card"],
