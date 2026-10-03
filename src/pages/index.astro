@@ -49,7 +49,11 @@ const schema = [
   description={websiteConfig.siteDescription}
   og
 >
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+  />
   <main class="w-full px-6 py-12 sm:p-12 md:p-24 lg:p-36 justify-center items-center flex">
     <div class="w-full xl:w-[88rem]">
       <div class="animate-in fade-in slide-in-from-top-14 duration-1000">
