@@ -102,6 +102,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
               class="group perspective-[1000px] cursor-pointer text-left"
             >
               <div
+                data-card
                 class="spotlight relative w-full h-full shadow-lg rounded-lg overflow-hidden group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200"
                 style={{ backgroundColor: projectBgColors[index] }}
               >
@@ -151,14 +152,17 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     </div>
   </main>
 
+  {/* Each dialog is the expanded form of its card: same colour, image on top, more detail. */}
   {projects.map((project, index) => (
     <dialog
       id={`project-${index}`}
       aria-labelledby={`project-${index}-title`}
-      class="m-auto w-[calc(100%-2rem)] max-w-4xl overflow-y-auto rounded-lg bg-neutral-800 p-0 text-white shadow-xl"
+      class="m-auto w-[calc(100%-2rem)] max-w-4xl overflow-y-auto rounded-lg p-0 text-white shadow-2xl max-sm:m-0 max-sm:h-dvh max-sm:max-h-none max-sm:w-full max-sm:max-w-none max-sm:rounded-none"
+      style={{ backgroundColor: projectBgColors[index] }}
     >
       <form method="dialog">
         <button
+          data-close
           aria-label="Close"
           class="absolute top-4 right-4 z-10 flex size-12 items-center justify-center rounded-full bg-neutral-900/60 cursor-pointer"
         >
@@ -174,20 +178,20 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
         width={896}
         class="block w-full bg-neutral-500"
       />
-      <div class="my-6 mx-auto px-6 sm:px-32">
+      <div class="px-6 py-6 sm:px-10 sm:py-8">
         <h3
           id={`project-${index}-title`}
-          class="text-3xl uppercase font-mono font-medium"
+          class="text-2xl sm:text-3xl uppercase font-mono font-medium"
         >
           {project.name}
         </h3>
-        <p class="text-sm sm:text-base font-sans font-light text-white/80 leading-3">
+        <p class="text-sm sm:text-base font-sans font-light text-white/80">
           {project.year}
         </p>
-        <p class="text-sm sm:text-base italic font-sans font-light text-white/80 mt-4">
+        <p class="mt-4 text-sm sm:text-base italic font-sans font-light text-white/80">
           {project.skill}
         </p>
-        <p class="text-base sm:text-lg font-sans mt-4">
+        <p class="mt-4 text-base sm:text-lg font-sans">
           {project.fullDescription}
         </p>
       </div>
@@ -207,26 +211,31 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     card.style.setProperty("--spot-y", `${event.clientY - rect.top}px`)
   })
 
-  // Shared-element transition: the card image box grows into the dialog image box (or shrinks
-  // back). Only the dialog's full image is drawn while it moves (see global.css), so there is
-  // one picture, not a cross-fade between the cropped card image and the full one.
+  // Container transform: the whole card grows into its dialog (and shrinks back). Each pair is
+  // [element before, element after, view-transition-name]; null means it only exists on one side.
+  // Timings and which snapshots are drawn live in global.css under "Card -> dialog morph".
+  type Pair = [HTMLElement | null, HTMLElement | null, string]
   const morph = (
     direction: "open" | "close",
     update: () => void,
-    from: HTMLElement,
-    to: HTMLElement,
+    pairs: Pair[],
+    color: string,
   ) => {
     if (!document.startViewTransition || reduceMotion.matches) return update()
     const root = document.documentElement
     root.dataset.morph = direction
-    from.style.viewTransitionName = "project-image"
+    root.style.setProperty("--morph-color", color)
+    for (const [from, , name] of pairs)
+      if (from) from.style.viewTransitionName = name
     const transition = document.startViewTransition(() => {
-      from.style.viewTransitionName = ""
-      to.style.viewTransitionName = "project-image"
+      for (const [from, to, name] of pairs) {
+        if (from) from.style.viewTransitionName = ""
+        if (to) to.style.viewTransitionName = name
+      }
       update()
     })
     transition.finished.finally(() => {
-      to.style.viewTransitionName = ""
+      for (const [, to] of pairs) if (to) to.style.viewTransitionName = ""
       delete root.dataset.morph
     })
   }
@@ -237,28 +246,40 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
     const dialog = document.getElementById(
       button.dataset.dialog!,
     ) as HTMLDialogElement
-    const cardImage = button.querySelector("img")!
+    const card = button.querySelector<HTMLElement>("[data-card]")!
+    const cardImage = card.querySelector("img")!
     const dialogImage = dialog.querySelector("img")!
-    // The card image is hidden while its dialog is open: it has "moved" into the dialog.
+    const closeButton = dialog.querySelector<HTMLElement>("[data-close]")!
+    const color = card.style.backgroundColor
+
+    // While open, the card's grid slot stays in place but empty (data-expanded, global.css).
     const open = () =>
       morph(
         "open",
         () => {
           dialog.showModal()
-          cardImage.style.visibility = "hidden"
+          button.toggleAttribute("data-expanded", true)
         },
-        cardImage,
-        dialogImage,
+        [
+          [card, dialog, "project-card"],
+          [cardImage, dialogImage, "project-image"],
+          [null, closeButton, "project-close"],
+        ],
+        color,
       )
     const close = () =>
       morph(
         "close",
         () => {
           dialog.close()
-          cardImage.style.visibility = ""
+          button.removeAttribute("data-expanded")
         },
-        dialogImage,
-        cardImage,
+        [
+          [dialog, card, "project-card"],
+          [dialogImage, cardImage, "project-image"],
+          [closeButton, null, "project-close"],
+        ],
+        color,
       )
 
     button.addEventListener("click", open)

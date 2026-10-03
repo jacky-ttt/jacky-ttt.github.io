@@ -38,14 +38,46 @@
   }
 }
 
-/* Card image -> dialog image morph (see the script in index.astro). */
+/* Card -> dialog morph (container transform; see the script in index.astro).
+   project-card: the card box grows into the dialog. The group itself is painted in the card's
+   colour (--morph-color), so the box stays solid while the old content fades out quickly and
+   the new content fades in once there is room. Contents are never scaled, only clipped.
+   project-image: only the dialog's full image is drawn while it moves, never cross-faded with
+   the differently-cropped card image (that showed two pictures moving at once).
+   project-close: the X fades in after the card lands, and out first when closing. */
+@keyframes morph-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes morph-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+::view-transition-group(project-card),
 ::view-transition-group(project-image) {
   animation-duration: 450ms;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-/* Draw only the dialog's full image as the box moves: the new snapshot when opening, the old
-   one when closing. Without this the browser cross-fades it with the differently-cropped card
-   image and two pictures appear to move at once. */
+::view-transition-group(project-card) {
+  background-color: var(--morph-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+/* Contents keep their natural size (pinned top-left, clipped by the growing box) instead of
+   being stretched with it, so text never scales as a blurry bitmap. */
+::view-transition-old(project-card),
+::view-transition-new(project-card) {
+  width: auto;
+  height: auto;
+}
+::view-transition-old(project-card) {
+  animation: morph-fade-out 120ms ease-out both;
+}
+::view-transition-new(project-card) {
+  animation: morph-fade-in 250ms 200ms ease-in both;
+}
 ::view-transition-old(project-image),
 ::view-transition-new(project-image) {
   height: 100%;
@@ -56,10 +88,26 @@
 [data-morph="close"]::view-transition-new(project-image) {
   opacity: 0;
 }
+::view-transition-new(project-close) {
+  animation: morph-fade-in 200ms 350ms ease-out both;
+}
+::view-transition-old(project-close) {
+  animation: morph-fade-out 100ms ease-out both;
+}
 /* The view transition animates the dialog; skip its own fade/scale so they don't stack. */
 [data-morph] dialog,
 [data-morph] dialog::backdrop {
   transition: none;
+}
+
+/* The card's grid slot while its dialog is open: kept in place, shown as a faint outline. */
+[data-expanded] {
+  outline: 1px dashed rgb(255 255 255 / 0.25);
+  outline-offset: -1px;
+  border-radius: 0.5rem;
+}
+[data-expanded] [data-card] {
+  visibility: hidden;
 }
 
 /* Cursor-following glow on cards; position comes from --spot-x/--spot-y (index.astro). */
