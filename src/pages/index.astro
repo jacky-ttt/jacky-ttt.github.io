@@ -286,6 +286,9 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
         () => {
           dialog.close()
           button.removeAttribute("data-expanded")
+          // Only when animating: keep this card's text hidden until the box has landed.
+          if (document.documentElement.dataset.morph)
+            cardText.style.opacity = "0"
         },
         [
           [dialog, card, "project-card"],
@@ -294,7 +297,10 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
         ],
         color,
         // Once the box has landed, bring the small card's text in (fade + slide up).
-        () => cardText.toggleAttribute("data-enter", true),
+        () => {
+          cardText.style.opacity = ""
+          cardText.toggleAttribute("data-enter", true)
+        },
       )
 
     button.addEventListener("click", open)

@@ -112,15 +112,13 @@
 ::view-transition-old(project-close) {
   animation: morph-fade-out 100ms ease-out both;
 }
-/* Small card's text after closing: hidden while the box lands, then fades in sliding up. */
+/* Small card's text after closing: hidden while the box lands (set on that one card by the
+   script), then fades in sliding up. */
 @keyframes card-text-enter {
   from {
     opacity: 0;
     translate: 0 8px;
   }
-}
-[data-morph="close"] [data-card-text] {
-  opacity: 0;
 }
 [data-card-text][data-enter] {
   animation: card-text-enter 250ms ease-out both;
