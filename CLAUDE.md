@@ -2,35 +2,39 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Personal site for https://tsangszechun.com — Gatsby 5, React 19, Tailwind CSS 4, TypeScript.
+Personal site for https://tsangszechun.com — Astro 7, Tailwind CSS 4, TypeScript. Fully static: no client framework, one small inline script.
 
 ## Commands
 
 ```bash
-npm run develop      # dev server (npm run dev also opens the browser)
-npm run typecheck    # tsc --noEmit
-npm run clean && npm run build   # clean production build into public/
-npm run serve        # serve the built public/
-npm run format       # prettier (format:check for CI-style check)
+npm run dev                      # dev server (opens browser)
+npm run check                    # astro check: types in .astro and .ts
+rm -rf dist && npm run build     # clean production build into dist/
+npm run preview                  # serve dist/
+npm run format                   # prettier (with prettier-plugin-astro)
 ```
 
-There are no tests. The `lint` scripts reference ESLint, but ESLint isn't installed or configured, so they don't run. To check a change, use the `verify` project skill (`.claude/skills/verify`): typecheck, clean build, then assert on `public/*.html`.
+There are no tests. To check a change, use the `verify` project skill (`.claude/skills/verify`): check, clean build, then assert on `dist/*.html` and screenshot it.
+
+TypeScript is pinned to 6.x because `@astrojs/check` doesn't support TypeScript 7 yet.
 
 ## Branches and deploy
 
-- **`dev` is the source branch. `master` holds only built output.** Never commit source to `master` or open PRs against it.
-- Pushing to `dev` triggers `.github/workflows/deploy-from-dev.yml`. It runs `npm run deploy` (`gatsby build`, writes `public/CNAME`, then `gh-pages -d public -b master`). The site is live about 4 minutes later.
+- **`dev` is the source branch.** Pushing to it runs `.github/workflows/deploy-from-dev.yml`: `withastro/action` builds, `actions/deploy-pages` publishes. The repo's Pages source must be set to "GitHub Actions".
+- `master` is the old gh-pages output branch from the Gatsby era. Nothing writes to it any more, so don't commit to it.
 
 ## Architecture
 
-- The whole site is basically one page, `src/pages/index.tsx`, plus `404.tsx`. Page `<head>` content goes in the Gatsby Head API export (`export const Head: HeadFC`). There's no `src/html.tsx`; it was deleted on purpose, so don't recreate it.
-- Content data lives in `src/data/`:
-  - `projects.json` is loaded through `gatsby-source-filesystem` + `gatsby-transformer-json` and queried as `allProjectsJson` in `index.tsx`. Each entry's `image` is a relative path (`../images/x.png`) that Gatsby resolves to a `File` node, so `childImageSharp` / `GatsbyImage` work. To add a project, add a JSON entry and drop the image in `src/images/`.
-  - `links.ts` and `skills.ts` are plain TS imports, not GraphQL.
-- Site-wide metadata and manifest colors are in `src/config/config.ts`, which `gatsby-config.ts` reads.
-- Tailwind v4 still uses the legacy JS config: `src/styles/global.css` pulls in `tailwind.config.js` via `@config`. That config defines custom utilities (3D card-flip and `text-shadow-*`) and `tailwindcss-animate`. Its `content` globs only cover `src/pages` and `src/components`.
+- `src/layouts/Layout.astro` owns `<head>` (meta, OG tags, icons, manifest) and imports `src/styles/global.css`. Both pages (`src/pages/index.astro`, `404.astro`) render through it.
+- Data lives in `src/data/`:
+  - `projects.json` is the `projects` content collection (`src/content.config.ts`). It's an ordered array without ids, so the loader's parser uses the array index as the id. `image` is a path relative to the JSON file, validated by `image()`, and rendered with `astro:assets` `<Picture>` (AVIF with a WebP fallback). To add a project, add an entry and drop the image in `src/images/`.
+  - `links.ts` and `skills.ts` are plain TS imports.
+- Project cards open a native `<dialog>` per project, wired up by the inline `<script>` at the bottom of `index.astro`. The open/close animation is in `global.css` (`@starting-style`).
+- Icons are SVG files in `src/icons/`, imported as components (`import X from "../icons/x.svg"`).
+- Tailwind 4 uses the CSS-first setup through `@tailwindcss/vite`. There's no `tailwind.config.js`. Animations come from `tw-animate-css`, and the 3D card tilt uses built-in utilities (`perspective-*`, `rotate-x-*`, `transform-3d`).
+- `public/` is copied verbatim: favicons, `manifest.webmanifest`, `CNAME`. Site-wide strings and colours are in `src/config/config.ts`, but the manifest duplicates them by hand.
 
 ## Project skills
 
-- `verify`: clean build plus checks on the served/built HTML before committing.
-- `affiliate-verification-tag`: adding or removing affiliate-network ownership tags. Gatsby rewrites these snippets, so always check the built bytes, not the source.
+- `verify`: clean build plus checks on the served/built HTML and screenshots before committing.
+- `affiliate-verification-tag`: adding or removing affiliate-network ownership tags. It covers how Astro rewrites snippets (use literal attributes and `is:inline`).

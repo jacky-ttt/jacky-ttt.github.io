@@ -4,36 +4,28 @@ Personal website source for [tsangszechun.com](https://tsangszechun.com/).
 
 ## Stack
 
-- Gatsby 5
-- React 19
+- Astro 7
 - Tailwind CSS 4
 - TypeScript
 
 ## Local Development
 
+Requires Node.js 22.12+.
+
 ```bash
 npm install
-npm run develop
+npm run dev
 ```
 
 ## Build
 
 ```bash
-npm run build
+npm run build     # outputs to dist/
+npm run preview   # serve the build locally
 ```
 
-## Deploy to GitHub Pages (master branch)
+## Deploy
 
-This project deploys with the `gh-pages` CLI via:
-
-```bash
-npm run deploy
-```
-
-The deploy script does three steps:
-
-1. Runs `gatsby build` to generate static files in `public/`
-2. Writes `public/CNAME` with `tsangszechun.com`
-3. Runs `gh-pages -d public -b master`
-
-`gh-pages` then pushes the contents of `public/` to the `master` branch (as the publish branch for GitHub Pages), not the source files from `dev`.
+Pushing to `dev` runs `.github/workflows/deploy-from-dev.yml`, which builds the site
+and publishes it to GitHub Pages with `actions/deploy-pages`. The repository's
+**Settings → Pages → Source** must be set to **GitHub Actions**.

@@ -8,70 +8,85 @@ description: Add, verify, or remove an affiliate network's site-ownership verifi
 Affiliate networks gate applications behind a site-ownership check: they issue an
 HTML snippet, you install it, their crawler fetches the page and looks for it.
 
-**The core hazard: this site is Gatsby/React, which rewrites third-party snippets on
-the way out.** The snippet you paste is not the snippet that gets served. Verification
-failures here are almost never "the tag is missing" — they are "the served bytes do
-not match what the network issued."
+**The core hazard: the snippet you paste is not necessarily the snippet that gets
+served.** Astro serializes the template, and some forms of a tag come out rewritten.
+Verification failures are almost never "the tag is missing" — they are "the served
+bytes do not match what the network issued."
 
-Always verify against the **built output**, never the source file.
+Always verify against the **built output** (`dist/`), never the source file.
 
 ## Where the tag goes
 
-Add it to the Head export in `src/pages/index.tsx`:
+`<head>` lives in `src/layouts/Layout.astro`, which both pages share. Networks
+normally only want the tag on the home page, so give the layout a named slot and
+fill it from `src/pages/index.astro`:
 
-```tsx
-export const Head: HeadFC = () => {
-  return (
-    <>
-      {/* ...existing meta... */}
-      {/* <network> site ownership verification. Remove once approved. */}
-      <meta name="..." content="..." />
-    </>
-  )
-}
+```astro
+<!-- Layout.astro, inside <head> -->
+<slot name="head" />
+
+<!-- index.astro, inside <Layout> -->
+<Fragment slot="head">
+  <!-- <network> site ownership verification. Remove once approved. -->
+  <meta name="..." content="..." />
+</Fragment>
 ```
 
-Networks normally only require the tag on the home page. Add it to
-`src/pages/404.tsx` only if they explicitly ask for site-wide.
+Put it directly in `Layout.astro` only if the network asks for site-wide.
 
-**Do not recreate `src/html.tsx`.** It was deleted deliberately (commit `ca0c75a`)
-because it only ever existed to host a verification tag and otherwise just duplicated
-Gatsby's default template. The Head API is the correct home for these tags. The one
-exception is a tag that must appear byte-identical with no Gatsby-added attributes —
-see "Gatsby adds data-gatsby-head" below.
+## How Astro rewrites snippets (tested on Astro 7.3)
+
+| Snippet form | Served as |
+|---|---|
+| Literal attribute `src="...?a=1&b=2"` | Unchanged — `&` stays literal |
+| Expression attribute `src={url}` | `&` escaped to `&amp;` — **avoid** |
+| Single-quoted attributes `content='x'` | Normalized to double quotes |
+| `<script>` without `is:inline` | Bundled/rewritten by Astro — **always add `is:inline`** |
+| `<meta value="...">` (non-standard attr) | Emitted as-is, but fails `astro check` |
+
+So: paste attributes as literals, never via `{...}` expressions, and add `is:inline`
+to every third-party `<script>`.
+
+For non-standard attributes (impact.com uses `value=` instead of `content=` on its
+`<meta>`), do **not** "correct" it to `content=` — their verifier may match on
+`value`. Spread it in to satisfy the type checker; the output is byte-identical:
+
+```astro
+<meta name="impact-site-verification" {...{ value: "..." }} />
+```
 
 ## Procedure
 
-1. **Add the tag** to the Head export, with a comment naming the network and saying
-   it is removable once approved.
+1. **Add the tag** as above, with a comment naming the network and saying it is
+   removable once approved.
 
-2. **Typecheck** — non-standard attributes fail here:
+2. **Type-check:**
    ```
-   npm run typecheck
+   npm run check
    ```
 
-3. **Clean build** — a stale `public/` will lie to you:
+3. **Clean build** — a stale `dist/` will lie to you:
    ```
-   npm run clean && npm run build
+   rm -rf dist && npm run build
    ```
 
 4. **Verify the built bytes** against what the network issued:
    ```
-   grep -o '<meta[^>]*NETWORK-MARKER[^>]*>' public/index.html
-   grep -o '<script[^>]*NETWORK-MARKER[^>]*></script>' public/index.html
+   grep -o '<meta[^>]*NETWORK-MARKER[^>]*>' dist/index.html
+   grep -o '<script[^>]*NETWORK-MARKER[^>]*></script>' dist/index.html
    ```
    Compare character by character with the snippet from their email. Check the
    token/UUID survived intact, and confirm it is inside `<head>`:
    ```
    python3 -c "
-   s=open('public/index.html').read()
+   s=open('dist/index.html').read()
    t=s.find('NETWORK-MARKER'); h=s.find('</head>')
    print('INSIDE HEAD' if 0 < t < h else 'PROBLEM', '| occurrences:', s.count('NETWORK-MARKER'))
    "
    ```
 
-5. **Commit and push to `dev`.** The GitHub Action builds and deploys to `master`
-   (gh-pages) in roughly 4 minutes. Nothing verifies until it is live.
+5. **Commit and push to `dev`.** The GitHub Action builds and deploys to GitHub
+   Pages in a few minutes. Nothing verifies until it is live.
 
 6. **Confirm on the live site** before triggering their check:
    ```
@@ -83,57 +98,19 @@ see "Gatsby adds data-gatsby-head" below.
 
 ## Known failure modes
 
-### React escapes `&` to `&amp;` in attributes
+### Escaped `&` in a URL
 
-This cost multiple wasted commits with AvantLink. Their tag contained
-`?mode=js&authResponse=...`; the served HTML had `?mode=js&amp;authResponse=...`.
-That is **valid HTML** — browsers decode it and the script runs — but their verifier
-did a literal string match and never found it.
+This cost multiple wasted commits with AvantLink on the old Gatsby site: their tag
+contained `?mode=js&authResponse=...` and the served HTML had
+`?mode=js&amp;authResponse=...`. That is **valid HTML** — browsers decode it — but
+their verifier did a literal string match and never found it.
 
-Symptom: an error about being unable to *locate* the tag, while the tag is plainly
-visible in the page source.
-
-Check:
+On Astro this only happens if the URL is passed as an `{expression}`. Use a literal
+attribute. Check:
 ```
 curl -s https://tsangszechun.com/ | grep -c 'ISSUED&SUBSTRING'      # want 1
 curl -s https://tsangszechun.com/ | grep -c 'ISSUED&amp;SUBSTRING'  # want 0
 ```
-
-Fix: React cannot be told to stop escaping, so rewrite it after the build. Add a
-script that rewrites the escaped ampersand back, **scoped to that one URL** so it
-cannot touch anything else, and wire it into `build` so CI cannot skip it:
-
-```jsonc
-"build": "gatsby build && node scripts/fix-<network>-tag.js",
-"deploy": "npm run build && echo tsangszechun.com > ./public/CNAME && gh-pages -d public -b master",
-```
-
-The script reads every `.html` under `public/`, replaces the escaped form with the
-literal form, and logs which files it patched. Delete it once approved.
-
-### Non-standard attributes fail typecheck
-
-impact.com's snippet uses `value=` on a `<meta>` rather than the standard `content=`.
-TypeScript rejects it: `Property 'value' does not exist on type MetaHTMLAttributes`.
-
-Do **not** "correct" it to `content=` — their verifier may be matching on `value`.
-Spread it in instead, then confirm React actually emitted it:
-
-```tsx
-<meta
-  name="impact-site-verification"
-  {...{ value: "..." }}
-/>
-```
-
-### Gatsby adds `data-gatsby-head="true"`
-
-Tags rendered through the Head API get this extra attribute, and React normalizes
-single quotes to double. Any real HTML parser is fine with both, but a byte-level
-matcher may not be.
-
-If verification fails and the tag is otherwise correct, this is the next suspect.
-Fix with the same post-build rewrite pattern as above.
 
 ### Protocol is rarely the problem
 
@@ -148,13 +125,9 @@ protocol.**
 Networks instruct removing the tag once confirmed. **Wait for final approval, not
 just automated verification** — staff review can take days and they may re-check.
 
-Remove in one commit:
-- the tag from the Head export
-- any `scripts/fix-<network>-tag.js` workaround
-- the `build`/`deploy` script changes that invoked it
-
-Then `npm run clean && npm run build` and confirm the marker is gone from
-`public/*.html`, plus `npm run typecheck`.
+Remove the tag (and the `head` slot if nothing else uses it) in one commit, then
+`rm -rf dist && npm run build`, confirm the marker is gone from `dist/*.html`, and
+run `npm run check`.
 
 ## Status
 
