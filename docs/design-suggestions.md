@@ -68,9 +68,9 @@ animations, `@starting-style`).
 
 ## Recommended order
 
-1. Small fixes and image dimming (item 6 and #3 under "holds it back").
-2. Animated background (#1).
-3. Card → dialog morph (#2).
-4. Spotlight cards (#3).
+1. ~~Small fixes and image dimming~~ — done (`586eeb6`).
+2. ~~Animated background (#1)~~ — done (`e6b2c22`).
+3. ~~Card → dialog morph (#2)~~ — done (`d936943`).
+4. ~~Spotlight cards (#3)~~ — done (`bb44f36`); also removed the link-card pulse.
 
 Then reassess before adding Motion-based items (#4, #6).
