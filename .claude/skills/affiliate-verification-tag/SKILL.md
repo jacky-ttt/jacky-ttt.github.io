@@ -36,13 +36,13 @@ Put it directly in `Layout.astro` only if the network asks for site-wide.
 
 ## How Astro rewrites snippets (tested on Astro 7.3)
 
-| Snippet form | Served as |
-|---|---|
-| Literal attribute `src="...?a=1&b=2"` | Unchanged — `&` stays literal |
-| Expression attribute `src={url}` | `&` escaped to `&amp;` — **avoid** |
-| Single-quoted attributes `content='x'` | Normalized to double quotes |
-| `<script>` without `is:inline` | Bundled/rewritten by Astro — **always add `is:inline`** |
-| `<meta value="...">` (non-standard attr) | Emitted as-is, but fails `astro check` |
+| Snippet form                             | Served as                                               |
+| ---------------------------------------- | ------------------------------------------------------- |
+| Literal attribute `src="...?a=1&b=2"`    | Unchanged — `&` stays literal                           |
+| Expression attribute `src={url}`         | `&` escaped to `&amp;` — **avoid**                      |
+| Single-quoted attributes `content='x'`   | Normalized to double quotes                             |
+| `<script>` without `is:inline`           | Bundled/rewritten by Astro — **always add `is:inline`** |
+| `<meta value="...">` (non-standard attr) | Emitted as-is, but fails `astro check`                  |
 
 So: paste attributes as literals, never via `{...}` expressions, and add `is:inline`
 to every third-party `<script>`.
@@ -61,22 +61,27 @@ For non-standard attributes (impact.com uses `value=` instead of `content=` on i
    removable once approved.
 
 2. **Type-check:**
+
    ```
    npm run check
    ```
 
 3. **Clean build** — a stale `dist/` will lie to you:
+
    ```
    rm -rf dist && npm run build
    ```
 
 4. **Verify the built bytes** against what the network issued:
+
    ```
    grep -o '<meta[^>]*NETWORK-MARKER[^>]*>' dist/index.html
    grep -o '<script[^>]*NETWORK-MARKER[^>]*></script>' dist/index.html
    ```
+
    Compare character by character with the snippet from their email. Check the
    token/UUID survived intact, and confirm it is inside `<head>`:
+
    ```
    python3 -c "
    s=open('dist/index.html').read()
@@ -89,6 +94,7 @@ For non-standard attributes (impact.com uses `value=` instead of `content=` on i
    Pages in a few minutes. Nothing verifies until it is live.
 
 6. **Confirm on the live site** before triggering their check:
+
    ```
    curl -s https://tsangszechun.com/ | grep -o '<meta[^>]*NETWORK-MARKER[^>]*>'
    ```
@@ -107,6 +113,7 @@ their verifier did a literal string match and never found it.
 
 On Astro this only happens if the URL is passed as an `{expression}`. Use a literal
 attribute. Check:
+
 ```
 curl -s https://tsangszechun.com/ | grep -c 'ISSUED&SUBSTRING'      # want 1
 curl -s https://tsangszechun.com/ | grep -c 'ISSUED&amp;SUBSTRING'  # want 0
@@ -115,7 +122,7 @@ curl -s https://tsangszechun.com/ | grep -c 'ISSUED&amp;SUBSTRING'  # want 0
 ### Protocol is rarely the problem
 
 Both `http://` and `https://` were tried against AvantLink before the real cause was
-found. An `http://` script on an `https://` page *is* blocked by browsers as mixed
+found. An `http://` script on an `https://` page _is_ blocked by browsers as mixed
 content, so it will not execute client-side — but if the verifier does server-side
 string matching, that is irrelevant. **Confirm the bytes match before touching the
 protocol.**
