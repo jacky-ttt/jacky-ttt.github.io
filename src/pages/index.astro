@@ -30,7 +30,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
   description={websiteConfig.siteDescription}
   og
 >
-  <main class="w-full p-12 md:p-24 lg:p-36 justify-center items-center flex">
+  <main class="w-full px-6 py-12 sm:p-12 md:p-24 lg:p-36 justify-center items-center flex">
     <div class="w-full xl:w-[88rem]">
       <div class="animate-in fade-in slide-in-from-top-14 duration-1000">
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-sans font-medium text-white mb-6 tracking-wide">
@@ -115,7 +115,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
                   height={400}
                   fit="cover"
                   position="attention"
-                  class="block aspect-2/1 w-full bg-neutral-500 object-cover brightness-20"
+                  class="block aspect-2/1 w-full bg-neutral-500 object-cover brightness-50 transition-[filter] duration-300 group-hover:brightness-100 group-focus-visible:brightness-100"
                 />
                 <div class="px-4 py-4">
                   <h3 class="text-lg uppercase font-mono font-medium text-white">
@@ -187,7 +187,7 @@ const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
         <p class="text-sm sm:text-base italic font-sans font-light text-white/80 mt-4">
           {project.skill}
         </p>
-        <p class="text-base sm:text-lg text-justify font-sans mt-4">
+        <p class="text-base sm:text-lg font-sans mt-4">
           {project.fullDescription}
         </p>
       </div>

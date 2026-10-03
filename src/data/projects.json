@@ -4,7 +4,7 @@
     "year": "2024",
     "description": "Organization-wide Android design system",
     "fullDescription": "Built reusable Android UI components and shared patterns used across teams to improve consistency, development speed, and maintainability.",
-    "skill": "Android, Compose, kotlin, Coroutines, MVVM, Retrofit, Jenkins",
+    "skill": "Android, Compose, Kotlin, Coroutines, MVVM, Retrofit, Jenkins",
     "image": "../images/ring.png"
   },
   {
@@ -12,7 +12,7 @@
     "year": "2023",
     "description": "Innovation team focused on AR and on-device AI integration",
     "fullDescription": "Evaluated and validated new product ideas, prototyped technical approaches, and provided implementation feedback to product and engineering teams.",
-    "skill": "Android, Compose, kotlin, Coroutines, MVVM, Retrofit, Jenkins",
+    "skill": "Android, Compose, Kotlin, Coroutines, MVVM, Retrofit, Jenkins",
     "image": "../images/dyson.webp"
   },
   {
@@ -20,7 +20,7 @@
     "year": "2022",
     "description": "International payment module of HSBC mobile banking application",
     "fullDescription": "Main maintainer of an international payment module in an app which provided $18.9bn reported profits in 2021. Managed a team of 20+ people. Reviewed hundreds of lines of pull requests daily to ensure code quality. Optimized pipeline build and testing time by 33%. Performed app architecture design. Refactored legacy code to increase readability. Collaborated with offshore teams. Released and deployed module regularly. Documented tooling and procedures. Onboarded new incomers.",
-    "skill": "Android, kotlin, Coroutines, MVP, MVVM, Retrofit, Jenkins, SonarQube",
+    "skill": "Android, Kotlin, Coroutines, MVP, MVVM, Retrofit, Jenkins, SonarQube",
     "image": "../images/hsbc.png"
   },
   {
@@ -28,7 +28,7 @@
     "year": "2022",
     "description": "On-chain NFT that holds daily journals",
     "fullDescription": "Creator of a Non-Fungible Token project on Polygon network. Developed a token that carries the morning, afternoon, and night event of a specific day. Implemented an automated pipeline to generate token daily. Embedded on-chain image for visual presentation.",
-    "skill": "Solidity, Hardhat, Typescript, Next.js, Serverless, Ethers.js, AWS lambda",
+    "skill": "Solidity, Hardhat, TypeScript, Next.js, Serverless, Ethers.js, AWS Lambda",
     "image": "../images/daily_journal.png"
   },
   {
@@ -52,7 +52,7 @@
     "year": "2019",
     "description": "Interactive 3D model viewer",
     "fullDescription": "Developed an interactive 3D model viewer. Set up camera perspective, lighting direction, and texture display in WebGL. Added collision detection and gravity to make the 3d objects realistic. Implemented drag-and-drop and swipe-to-rotate gestures.",
-    "skill": "React Native, Expo, Javascript, Three.js",
+    "skill": "React Native, Expo, JavaScript, Three.js",
     "image": "../images/stay_focused.png"
   },
   {
@@ -64,11 +64,11 @@
     "image": "../images/volumetric_lighting.png"
   },
   {
-    "name": "Web Scrapper",
+    "name": "Web Scraper",
     "year": "2017",
-    "description": "Automated web scrapper",
+    "description": "Automated web scraper",
     "fullDescription": "Developed multiple web scraping programs for various sit for academic purposes. Performed data cleanup tasks.",
-    "skill": "Python, Scrapy, Selenium, Beautiful Soup, Javascript, Puppeteer, Playwright",
+    "skill": "Python, Scrapy, Selenium, Beautiful Soup, JavaScript, Puppeteer, Playwright",
     "image": "../images/web_scrappers.png"
   },
   {
@@ -84,7 +84,7 @@
     "year": "2015",
     "description": "Data visualization desktop application",
     "fullDescription": "Developed a desktop visualization tool for showing HKJC race information. Created a web scraping program to scrap data from HKJC website.",
-    "skill": "React, Javascript, Electron, Ag-grid",
+    "skill": "React, JavaScript, Electron, AG Grid",
     "image": "../images/hkjc_data_grid.png"
   },
   {

@@ -8,7 +8,7 @@ export const links = [
   {
     name: "GitHub",
     description:
-      "A developer needs a Github to support him somewhere in his life.",
+      "A developer needs a GitHub to support him somewhere in his life.",
     link: "https://github.com/jacky-ttt/",
   },
   {
