@@ -19,6 +19,8 @@ const ogImage = new URL("/og.jpg", Astro.site).href
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content={websiteConfig.themeColor} />
+    <!-- Already dark: stop the Dark Reader extension from re-tinting it grey. -->
+    <meta name="darkreader-lock" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {og && (
