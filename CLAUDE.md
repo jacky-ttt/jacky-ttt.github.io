@@ -32,6 +32,19 @@ After an intended visual change, run the update script and _look at_ the changed
 
 For changes outside what the tests cover, use the `verify` project skill (`.claude/skills/verify`).
 
+## Quality bar
+
+Lighthouse must score 100 in all four categories (performance, accessibility, best practices, SEO) for `/` and `/404.html`, on mobile and desktop. Re-run it after any visual or markup change, against a clean build served by `npm run preview` (port 4321 by default):
+
+```bash
+npx lighthouse@12 http://localhost:4321/ --quiet --chrome-flags="--headless=new" --view                 # mobile
+npx lighthouse@12 http://localhost:4321/ --preset=desktop --quiet --chrome-flags="--headless=new" --view
+```
+
+Run `/404.html`, not a missing path: the 404 status makes Lighthouse refuse the page.
+
+Lighthouse can't measure text on gradients or inside closed dialogs, so check those by hand: text needs 4.5:1 contrast against the _lightest_ end of its background (link cards, skill pills, project cards and their dialogs).
+
 TypeScript is pinned to 6.x because `@astrojs/check` doesn't support TypeScript 7 yet.
 
 ## Branches and deploy

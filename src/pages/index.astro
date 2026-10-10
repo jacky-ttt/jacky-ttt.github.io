@@ -17,12 +17,12 @@ const projects = (await getCollection("projects"))
   .map((entry) => entry.data)
 
 const linkBgColors = [
-  "from-blue-800 to-cyan-500",
+  "from-blue-800 to-cyan-700",
   "from-neutral-800 to-zinc-500",
-  "from-green-800 to-emerald-500",
+  "from-green-800 to-emerald-700",
 ]
-const skillPillBgColors = getBgColors(skills, "#5b21b6", "#d946ef")
-const projectBgColors = getBgColors(projects, "#7f1d1d", "#ea580c")
+const skillPillBgColors = getBgColors(skills, "#5b21b6", "#c026d3")
+const projectBgColors = getBgColors(projects, "#7f1d1d", "#c2410c")
 
 const schema = [
   {
@@ -94,7 +94,7 @@ const schema = [
                   class="size-6 text-neutral-100/80 ml-1 sm:ml-2 invisible group-hover:visible"
                 />
               </div>
-              <div class="opacity-75 font-sans text-sm md:text-base">
+              <div class="font-sans text-sm md:text-base">
                 {link.description}
               </div>
             </a>
@@ -149,7 +149,7 @@ const schema = [
                   <p class="text-sm font-sans font-light text-white leading-3">
                     {project.year}
                   </p>
-                  <p class="mt-4 text-sm font-sans text-white/80">
+                  <p class="mt-4 text-sm font-sans text-white">
                     {project.description}
                   </p>
                 </div>
@@ -212,10 +212,10 @@ const schema = [
         >
           {project.name}
         </h3>
-        <p class="text-sm sm:text-base font-sans font-light text-white/80">
+        <p class="text-sm sm:text-base font-sans font-light text-white">
           {project.year}
         </p>
-        <p class="mt-4 text-sm sm:text-base italic font-sans font-light text-white/80">
+        <p class="mt-4 text-sm sm:text-base italic font-sans font-light text-white">
           {project.skill}
         </p>
         <p class="mt-4 text-base sm:text-lg font-sans">

@@ -5,7 +5,11 @@
   html {
     background-color: #171717;
   }
-  /* The page behind an open project dialog doesn't scroll. */
+  /* The page behind an open project dialog doesn't scroll. The gutter stays reserved, so
+     hiding a classic (Windows/Linux) scrollbar doesn't shift the page sideways. */
+  html {
+    scrollbar-gutter: stable;
+  }
   html:has(dialog[open]) {
     overflow: hidden;
   }
