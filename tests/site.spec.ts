@@ -1,4 +1,30 @@
-import { test, expect, type CDPSession, type Page } from "@playwright/test"
+import { test as base, expect, type Page } from "@playwright/test"
+
+/**
+ * textScale: the browser's default font size as a multiple of 16px (Chrome "Font size", Android text
+ * scaling). The *-200 projects use 2, so every test also runs at 200% (WCAG 1.4.4). It's set through
+ * CDP before the page loads; only a fullPage screenshot resets it, so no test uses fullPage.
+ */
+const test = base.extend<{ textScale: number }>({
+  textScale: [1, { option: true }],
+  page: async ({ page, textScale }, use) => {
+    if (textScale !== 1) {
+      const cdp = await page.context().newCDPSession(page)
+      await cdp.send("Page.enable")
+      await cdp.send("Page.setFontSizes", {
+        fontSizes: { standard: 16 * textScale, fixed: 13 * textScale },
+      })
+    }
+    await use(page)
+    // Guard: a silent reset would store a "200%" baseline that is really at 100%.
+    if (textScale !== 1 && page.url().startsWith("http"))
+      expect(
+        await page.evaluate(
+          () => getComputedStyle(document.documentElement).fontSize,
+        ),
+      ).toBe(`${16 * textScale}px`)
+  },
+})
 
 /*
  * Screenshot tests for every page, interaction and animation, on desktop and mobile
@@ -133,16 +159,22 @@ const shot = { animations: "allow", maxDiffPixels: 250 } as const
 const still = { animations: "disabled" } as const // settled states
 
 test.describe("pages", () => {
+  // Full height by growing the viewport, not fullPage (which resets the font-size setting).
+  const growToPage = async (page: Page) =>
+    page.setViewportSize({
+      width: page.viewportSize()!.width,
+      height: await page.evaluate(() => document.documentElement.scrollHeight),
+    })
+
   test("home, full page", async ({ page }) => {
     await load(page)
-    await expect(page).toHaveScreenshot("home.png", {
-      ...still,
-      fullPage: true,
-    })
+    await growToPage(page)
+    await expect(page).toHaveScreenshot("home.png", still)
   })
 
-  test("404", async ({ page }) => {
+  test("404, full page", async ({ page }) => {
     await load(page, "/404.html")
+    await growToPage(page)
     await expect(page).toHaveScreenshot("404.png", still)
   })
 })
@@ -245,7 +277,10 @@ test.describe("project card expand (open)", () => {
     await expect(page).toHaveScreenshot("open-done.png", still)
   })
 
-  test("square image starts centred, text visible", async ({ page }) => {
+  test("square image starts centred, text visible", async ({
+    page,
+    textScale,
+  }) => {
     await load(page)
     await openCard(page, RING)
     await page.evaluate(() => window.__vt?.finished)
@@ -255,9 +290,15 @@ test.describe("project card expand (open)", () => {
       max: el.scrollHeight - el.clientHeight,
     }))
     expect(Math.abs(scrollTop - max / 2)).toBeLessThanOrEqual(1)
-    await expect(dialog(page, RING).locator("p").last()).toBeInViewport({
+    // The image never pushes the text box off screen. At 200% a long write-up scrolls inside it,
+    // so only at 100% must the last paragraph be fully visible without scrolling.
+    await expect(dialog(page, RING).locator(".shrink-0")).toBeInViewport({
       ratio: 1,
     })
+    if (textScale === 1)
+      await expect(dialog(page, RING).locator("p").last()).toBeInViewport({
+        ratio: 1,
+      })
     await expect(page).toHaveScreenshot("open-square-centred.png", still)
   })
 
@@ -280,6 +321,17 @@ test.describe("project card expand (open)", () => {
     await expect(card(page, 7)).toHaveAttribute("data-expanded")
     await expect(page).toHaveScreenshot("open-empty-slot.png", still)
   })
+})
+
+// Long write-ups scroll inside the dialog (at 200% on phones, most of them do).
+test("dialog text scrolled to the end", async ({ page }) => {
+  await load(page)
+  await openCard(page, DYSON)
+  await page.evaluate(() => window.__vt?.finished)
+  await dialog(page, DYSON)
+    .locator(".shrink-0")
+    .evaluate((text) => (text.scrollTop = text.scrollHeight))
+  await expect(page).toHaveScreenshot("open-text-end.png", still)
 })
 
 test.describe("project card collapse (close)", () => {
@@ -369,94 +421,23 @@ test("page behind an open card doesn't scroll", async ({ page }) => {
   expect(await page.evaluate(() => scrollY)).toBe(before)
 })
 
-// WCAG 1.4.4: the browser's font-size setting at 200% (Chrome "Font size", Android text scaling).
-// Playwright's own screenshot and click calls reset this setting, so these tests click from inside
-// the page and capture with Chromium's Page.captureScreenshot instead of toHaveScreenshot.
-test.describe("200% text size", () => {
-  async function load200(page: Page, path: string) {
-    const cdp = await page.context().newCDPSession(page)
-    await cdp.send("Page.enable")
-    await cdp.send("Page.setFontSizes", {
-      fontSizes: { standard: 32, fixed: 26 },
-    })
-    await page.goto(path)
-    await page.addStyleTag({ content: "#background { display: none }" })
-    await page.evaluate(async () => {
-      const images = [...document.images]
-      for (const image of images) image.loading = "eager"
-      await Promise.all(images.map((image) => image.decode().catch(() => {})))
-      for (const animation of document.getAnimations()) animation.finish()
-    })
-    return cdp
+// WCAG 1.4.4 (meaningful in the *-200 projects, harmless at 100%): nothing scrolls sideways or clips.
+test("no sideways scroll or clipped text", async ({ page }) => {
+  for (const path of ["/", "/404.html"]) {
+    await load(page, path)
+    const result = await page.evaluate(() => ({
+      overflowX:
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+      clipped: [...document.querySelectorAll("h1, h2, h3, a, button")]
+        .filter(
+          (e) => e.scrollWidth > e.clientWidth + 1 && !e.closest("dialog"),
+        )
+        .filter((e) => getComputedStyle(e).overflowX === "hidden")
+        .map((e) => e.textContent!.trim()),
+    }))
+    expect(result).toEqual({ overflowX: 0, clipped: [] })
   }
-
-  /** Zero-tolerance image snapshot, like `still`; `fullPage` grows the viewport to the page. */
-  async function snapshot200(
-    page: Page,
-    cdp: CDPSession,
-    name: string,
-    { fullPage = false } = {},
-  ) {
-    if (fullPage)
-      await page.setViewportSize({
-        width: page.viewportSize()!.width,
-        height: await page.evaluate(
-          () => document.documentElement.scrollHeight,
-        ),
-      })
-    // Guard: a silent reset to 100% would otherwise pass as a "200%" baseline.
-    expect(
-      await page.evaluate(
-        () => getComputedStyle(document.documentElement).fontSize,
-      ),
-    ).toBe("32px")
-    const { data } = await cdp.send("Page.captureScreenshot", { format: "png" })
-    expect(Buffer.from(data, "base64")).toMatchSnapshot(name)
-  }
-
-  test("no sideways scroll or clipped text", async ({ page }) => {
-    for (const path of ["/", "/404.html"]) {
-      await load200(page, path)
-      const result = await page.evaluate(() => ({
-        root: getComputedStyle(document.documentElement).fontSize,
-        overflowX:
-          document.documentElement.scrollWidth -
-          document.documentElement.clientWidth,
-        clipped: [...document.querySelectorAll("h1, h2, h3, a, button")]
-          .filter(
-            (e) => e.scrollWidth > e.clientWidth + 1 && !e.closest("dialog"),
-          )
-          .filter((e) => getComputedStyle(e).overflowX === "hidden")
-          .map((e) => e.textContent!.trim()),
-      }))
-      expect(result).toEqual({ root: "32px", overflowX: 0, clipped: [] })
-    }
-  })
-
-  test("home, full page", async ({ page }) => {
-    const cdp = await load200(page, "/")
-    await snapshot200(page, cdp, "text-200-home.png", { fullPage: true })
-  })
-
-  test("404", async ({ page }) => {
-    const cdp = await load200(page, "/404.html")
-    await snapshot200(page, cdp, "text-200-404.png")
-  })
-
-  test("project dialog", async ({ page }) => {
-    const cdp = await load200(page, "/")
-    // Clicked from inside the page; then let the morph and dialog fade settle.
-    await page.evaluate(
-      (index) =>
-        document
-          .querySelector<HTMLElement>(`[data-dialog="project-${index}"]`)!
-          .click(),
-      DYSON,
-    )
-    await expect(dialog(page, DYSON)).toBeVisible()
-    await page.waitForTimeout(1000)
-    await snapshot200(page, cdp, "text-200-dialog.png")
-  })
 })
 
 test.describe("reduced motion", () => {

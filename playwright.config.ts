@@ -2,7 +2,15 @@ import { defineConfig } from "@playwright/test"
 
 const PORT = 4322
 
-export default defineConfig({
+const desktop = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 }
+const mobile = {
+  viewport: { width: 390, height: 844 },
+  deviceScaleFactor: 2,
+  isMobile: true,
+  hasTouch: true,
+}
+
+export default defineConfig<{ textScale: number }>({
   testDir: "tests",
   // Baselines are committed. Font rendering differs per OS, so the platform is in the path;
   // regenerate with `npm run test:visual:update` on a new machine.
@@ -17,19 +25,12 @@ export default defineConfig({
   },
   use: { baseURL: `http://localhost:${PORT}` },
   projects: [
-    {
-      name: "desktop",
-      use: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 },
-    },
-    {
-      name: "mobile",
-      use: {
-        viewport: { width: 390, height: 844 },
-        deviceScaleFactor: 2,
-        isMobile: true,
-        hasTouch: true,
-      },
-    },
+    { name: "desktop", use: desktop },
+    { name: "mobile", use: mobile },
+    // The same tests at the browser's 200% font-size setting (WCAG 1.4.4); see textScale in
+    // tests/site.spec.ts.
+    { name: "desktop-200", use: { ...desktop, textScale: 2 } },
+    { name: "mobile-200", use: { ...mobile, textScale: 2 } },
   ],
   webServer: {
     command: `npm run build && npx astro preview --port ${PORT} --ignore-lock`,

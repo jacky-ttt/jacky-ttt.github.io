@@ -19,14 +19,14 @@ npx playwright test -g "close"   # run one test by name
 
 ## Screenshot tests
 
-`tests/site.spec.ts` covers every page, hover/focus state, and animation (page-load entrance, card expand and collapse frame by frame, reduced motion), in two Playwright projects: `desktop` (1440×900) and `mobile` (390×844 @2x). Baselines live in `tests/__screenshots__/<platform>/` and are committed. They're macOS-rendered, so on another OS run the update script first.
+`tests/site.spec.ts` covers every page, hover/focus state, and animation (page-load entrance, card expand and collapse frame by frame, reduced motion), in four Playwright projects: `desktop` (1440×900) and `mobile` (390×844 @2x), plus `desktop-200` and `mobile-200`, which run every test again at the browser's 200% font-size setting (WCAG 1.4.4). Baselines live in `tests/__screenshots__/<platform>/` and are committed. They're macOS-rendered, so on another OS run the update script first.
 
 How they stay deterministic (keep this when adding tests):
 
 - The background is hidden; it has its own non-screenshot test (the wave runs, and doesn't under reduced motion).
 - Animations are frozen and seeked with the Web Animations API (`startAndFreeze` / `seekTransition`), and the page-load entrance by setting Chromium's animation playback rate to 0 before navigation.
 - Cards are opened with `openCard()`, which lets the hover transitions settle before clicking.
-- The `200% text size` tests set Chromium's font-size setting through CDP (`Page.setFontSizes`). Playwright's own `screenshot()` and `click()` silently reset it to 100%, so those tests click from inside the page and capture with `Page.captureScreenshot` + `toMatchSnapshot` (`text-200-*.png`), and assert the root font is 32px before every capture.
+- 200%: the `textScale` fixture sets Chromium's font size through CDP (`Page.setFontSizes`) before each page loads, and fails the test if it's no longer applied afterwards. A `fullPage` screenshot silently resets it, so full-page shots grow the viewport to the page height instead (`growToPage()`); never use `fullPage: true`.
 - Settled screenshots allow zero differing pixels. Frozen view-transition frames allow 250, because GPU snapshot scaling varies slightly. A real regression is thousands of pixels.
 
 After an intended visual change, run the update script and _look at_ the changed PNGs before committing. In its default "changed" mode, `--update-snapshots` only rewrites images that fail, which can leave a wrong baseline in place.
