@@ -10,6 +10,7 @@ import { getBgColors } from "../color/backgroundColor"
 import AndroidIcon from "../icons/android.svg"
 import GitHubIcon from "../icons/github.svg"
 import XMarkIcon from "../icons/xmark.svg"
+import WaveToggle from "../components/WaveToggle.astro"
 import ExternalIcon from "../icons/external.svg"
 
 const projects = (await getCollection("projects"))
@@ -159,12 +160,12 @@ const schema = [
         </div>
       </div>
 
-      <div class="mt-20 flex">
+      <div class="mt-20 flex flex-col items-center gap-3 text-base sm:text-lg lg:text-xl">
         <a
           href="https://github.com/jacky-ttt/jacky-ttt.github.io"
           target="_blank"
           rel="noopener noreferrer"
-          class="group mx-auto inline-flex items-center text-base sm:text-lg lg:text-xl no-underline rounded-lg text-white/80"
+          class="group inline-flex items-center no-underline rounded-lg text-white/80"
         >
           <GitHubIcon aria-hidden="true" class="inline size-[1em] mr-1" />
           Source
@@ -172,6 +173,7 @@ const schema = [
             <ExternalIcon aria-hidden="true" class="size-4 shrink-0" />
           </span>
         </a>
+        <WaveToggle class="rounded-lg text-white/80" />
       </div>
     </div>
   </main>

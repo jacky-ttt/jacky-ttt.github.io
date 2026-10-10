@@ -1,0 +1,51 @@
+---
+// Pauses the background dot wave (WCAG 2.2.2). Hidden under reduced motion, where there's no
+// wave. Each page places it and styles it to match its neighbours.
+import PauseIcon from "../icons/pause.svg"
+import PlayIcon from "../icons/play.svg"
+
+const { class: className } = Astro.props
+---
+
+<button
+  id="wave-toggle"
+  type="button"
+  class:list={[
+    "inline-flex cursor-pointer items-center gap-1 motion-reduce:hidden",
+    className,
+  ]}
+>
+  <!-- One icon per state, picked by data-paused on <html>. -->
+  <PauseIcon
+    aria-hidden="true"
+    class="size-[1em] shrink-0 in-data-paused:hidden"
+  />
+  <PlayIcon
+    aria-hidden="true"
+    class="hidden size-[1em] shrink-0 in-data-paused:inline"
+  />
+  <span data-label>Pause animation</span>
+</button>
+<script>
+  // Remembered per visitor; storage can be unavailable (private mode), so it's best effort.
+  const toggle = document.getElementById("wave-toggle")!
+  const label = toggle.querySelector("[data-label]")!
+  const root = document.documentElement
+  const render = () =>
+    (label.textContent = root.hasAttribute("data-paused")
+      ? "Play animation"
+      : "Pause animation")
+  try {
+    if (localStorage.getItem("wave-paused"))
+      root.toggleAttribute("data-paused", true)
+  } catch {}
+  render()
+  toggle.addEventListener("click", () => {
+    const paused = root.toggleAttribute("data-paused")
+    try {
+      if (paused) localStorage.setItem("wave-paused", "1")
+      else localStorage.removeItem("wave-paused")
+    } catch {}
+    render()
+  })
+</script>
