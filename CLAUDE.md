@@ -26,6 +26,7 @@ How they stay deterministic (keep this when adding tests):
 - The background is hidden; it has its own non-screenshot test (the wave runs, and doesn't under reduced motion).
 - Animations are frozen and seeked with the Web Animations API (`startAndFreeze` / `seekTransition`), and the page-load entrance by setting Chromium's animation playback rate to 0 before navigation.
 - Cards are opened with `openCard()`, which lets the hover transitions settle before clicking.
+- The `200% text size` tests set Chromium's font-size setting through CDP (`Page.setFontSizes`). Playwright's own `screenshot()` and `click()` silently reset it to 100%, so those tests click from inside the page and capture with `Page.captureScreenshot` + `toMatchSnapshot` (`text-200-*.png`), and assert the root font is 32px before every capture.
 - Settled screenshots allow zero differing pixels. Frozen view-transition frames allow 250, because GPU snapshot scaling varies slightly. A real regression is thousands of pixels.
 
 After an intended visual change, run the update script and _look at_ the changed PNGs before committing. In its default "changed" mode, `--update-snapshots` only rewrites images that fail, which can leave a wrong baseline in place.

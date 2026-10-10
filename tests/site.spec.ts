@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test"
+import { test, expect, type CDPSession, type Page } from "@playwright/test"
 
 /*
  * Screenshot tests for every page, interaction and animation, on desktop and mobile
@@ -370,29 +370,93 @@ test("page behind an open card doesn't scroll", async ({ page }) => {
 })
 
 // WCAG 1.4.4: the browser's font-size setting at 200% (Chrome "Font size", Android text scaling).
-// Not a screenshot test: Playwright screenshots and clicks reset this setting.
-test("200% text size: no sideways scroll or clipped text", async ({ page }) => {
-  const cdp = await page.context().newCDPSession(page)
-  await cdp.send("Page.enable")
-  await cdp.send("Page.setFontSizes", {
-    fontSizes: { standard: 32, fixed: 26 },
-  })
-  for (const path of ["/", "/404.html"]) {
+// Playwright's own screenshot and click calls reset this setting, so these tests click from inside
+// the page and capture with Chromium's Page.captureScreenshot instead of toHaveScreenshot.
+test.describe("200% text size", () => {
+  async function load200(page: Page, path: string) {
+    const cdp = await page.context().newCDPSession(page)
+    await cdp.send("Page.enable")
+    await cdp.send("Page.setFontSizes", {
+      fontSizes: { standard: 32, fixed: 26 },
+    })
     await page.goto(path)
-    const result = await page.evaluate(() => ({
-      root: getComputedStyle(document.documentElement).fontSize,
-      overflowX:
-        document.documentElement.scrollWidth -
-        document.documentElement.clientWidth,
-      clipped: [...document.querySelectorAll("h1, h2, h3, a, button")]
-        .filter(
-          (e) => e.scrollWidth > e.clientWidth + 1 && !e.closest("dialog"),
-        )
-        .filter((e) => getComputedStyle(e).overflowX === "hidden")
-        .map((e) => e.textContent!.trim()),
-    }))
-    expect(result).toEqual({ root: "32px", overflowX: 0, clipped: [] })
+    await page.addStyleTag({ content: "#background { display: none }" })
+    await page.evaluate(async () => {
+      const images = [...document.images]
+      for (const image of images) image.loading = "eager"
+      await Promise.all(images.map((image) => image.decode().catch(() => {})))
+      for (const animation of document.getAnimations()) animation.finish()
+    })
+    return cdp
   }
+
+  /** Zero-tolerance image snapshot, like `still`; `fullPage` grows the viewport to the page. */
+  async function snapshot200(
+    page: Page,
+    cdp: CDPSession,
+    name: string,
+    { fullPage = false } = {},
+  ) {
+    if (fullPage)
+      await page.setViewportSize({
+        width: page.viewportSize()!.width,
+        height: await page.evaluate(
+          () => document.documentElement.scrollHeight,
+        ),
+      })
+    // Guard: a silent reset to 100% would otherwise pass as a "200%" baseline.
+    expect(
+      await page.evaluate(
+        () => getComputedStyle(document.documentElement).fontSize,
+      ),
+    ).toBe("32px")
+    const { data } = await cdp.send("Page.captureScreenshot", { format: "png" })
+    expect(Buffer.from(data, "base64")).toMatchSnapshot(name)
+  }
+
+  test("no sideways scroll or clipped text", async ({ page }) => {
+    for (const path of ["/", "/404.html"]) {
+      await load200(page, path)
+      const result = await page.evaluate(() => ({
+        root: getComputedStyle(document.documentElement).fontSize,
+        overflowX:
+          document.documentElement.scrollWidth -
+          document.documentElement.clientWidth,
+        clipped: [...document.querySelectorAll("h1, h2, h3, a, button")]
+          .filter(
+            (e) => e.scrollWidth > e.clientWidth + 1 && !e.closest("dialog"),
+          )
+          .filter((e) => getComputedStyle(e).overflowX === "hidden")
+          .map((e) => e.textContent!.trim()),
+      }))
+      expect(result).toEqual({ root: "32px", overflowX: 0, clipped: [] })
+    }
+  })
+
+  test("home, full page", async ({ page }) => {
+    const cdp = await load200(page, "/")
+    await snapshot200(page, cdp, "text-200-home.png", { fullPage: true })
+  })
+
+  test("404", async ({ page }) => {
+    const cdp = await load200(page, "/404.html")
+    await snapshot200(page, cdp, "text-200-404.png")
+  })
+
+  test("project dialog", async ({ page }) => {
+    const cdp = await load200(page, "/")
+    // Clicked from inside the page; then let the morph and dialog fade settle.
+    await page.evaluate(
+      (index) =>
+        document
+          .querySelector<HTMLElement>(`[data-dialog="project-${index}"]`)!
+          .click(),
+      DYSON,
+    )
+    await expect(dialog(page, DYSON)).toBeVisible()
+    await page.waitForTimeout(1000)
+    await snapshot200(page, cdp, "text-200-dialog.png")
+  })
 })
 
 test.describe("reduced motion", () => {

@@ -84,15 +84,15 @@ const schema = [
               href={link.link}
               target="_blank"
               rel="noopener noreferrer"
-              class={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white spotlight transform-3d group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200 bg-linear-to-r ${linkBgColors[index]}`}
+              class={`w-full h-full block shadow-lg relative no-underline rounded-lg px-[min(2rem,9vw)] py-8 lg:py-24 text-white spotlight transform-3d group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200 bg-linear-to-r ${linkBgColors[index]}`}
             >
               <div class="flex items-center">
-                <div class="min-w-0 wrap-break-word text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">
+                <div class="min-w-0 wrap-break-word text-white uppercase text-[min(1.5rem,9vw)]/[calc(2/1.5)] md:text-3xl xl:text-4xl tracking-wide font-mono">
                   {link.name}
                 </div>
                 <ExternalIcon
                   aria-hidden="true"
-                  class="size-6 shrink-0 text-neutral-100/80 ml-1 sm:ml-2 invisible group-hover:visible"
+                  class="size-6 shrink-0 text-neutral-100/80 ml-1 sm:ml-2 invisible group-hover:visible [@media(hover:none)]:hidden"
                 />
               </div>
               <div class="font-sans text-sm md:text-base">
@@ -207,7 +207,7 @@ const schema = [
           class="block w-full bg-neutral-500"
         />
       </div>
-      <div class="max-h-[60dvh] shrink-0 overflow-y-auto px-6 py-6 sm:px-10 sm:py-8">
+      <div class="max-h-[60dvh] shrink-0 overflow-y-auto px-6 py-6 max-sm:max-h-none max-sm:min-h-0 max-sm:flex-1 sm:px-10 sm:py-8">
         <h3
           id={`project-${index}-title`}
           class="text-2xl sm:text-3xl uppercase font-mono font-medium"
