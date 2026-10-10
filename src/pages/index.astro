@@ -22,6 +22,10 @@ const linkBgColors = [
   "from-neutral-800 to-zinc-500",
   "from-green-800 to-emerald-700",
 ]
+const widthsUpTo = (max: number, original: number) => [
+  ...new Set([max / 2, max].map((width) => Math.min(width, original))),
+]
+
 const skillPillBgColors = getBgColors(skills, "#5b21b6", "#c026d3")
 const projectBgColors = getBgColors(projects, "#7f1d1d", "#c2410c")
 
@@ -139,6 +143,7 @@ const schema = [
                   layout="constrained"
                   width={800}
                   height={400}
+                  widths={widthsUpTo(800, project.image.width)}
                   fit="cover"
                   position="attention"
                   class="block aspect-2/1 w-full bg-neutral-500 object-cover brightness-50 transition-[filter] duration-300 group-hover:brightness-100 group-focus-visible:brightness-100"
@@ -204,6 +209,7 @@ const schema = [
           fallbackFormat="webp"
           layout="constrained"
           width={896}
+          widths={widthsUpTo(896, project.image.width)}
           class="block w-full bg-neutral-500"
         />
       </div>
