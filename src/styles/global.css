@@ -5,6 +5,10 @@
   html {
     background-color: #171717;
   }
+  /* The page behind an open project dialog doesn't scroll. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
 
   /* Project dialog: fade and scale in/out, including the backdrop. */
   dialog,

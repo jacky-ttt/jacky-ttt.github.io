@@ -318,6 +318,20 @@ test.describe("project card collapse (close)", () => {
   })
 })
 
+test("page behind an open card doesn't scroll", async ({ page }) => {
+  await load(page)
+  await openCard(page, DYSON)
+  await expect(dialog(page, DYSON)).toBeVisible()
+  const before = await page.evaluate(() => scrollY)
+  // Over the backdrop (desktop), then over the dialog text, which chains to the page on mobile.
+  await page.mouse.move(5, 5)
+  await page.mouse.wheel(0, 1000)
+  await dialog(page, DYSON).locator(".shrink-0").hover()
+  await page.mouse.wheel(0, 2000)
+  await page.waitForTimeout(300)
+  expect(await page.evaluate(() => scrollY)).toBe(before)
+})
+
 test.describe("reduced motion", () => {
   test.use({ reducedMotion: "reduce" })
 
