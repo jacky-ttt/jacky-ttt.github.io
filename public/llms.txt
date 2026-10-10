@@ -1,0 +1,32 @@
+# Tsang Sze Chun (Jacky Tsang)
+
+> Personal site of Tsang Sze Chun (Jacky Tsang), an Android developer working in Kotlin and Jetpack Compose. Projects include apps for Ring, Dyson, HSBC and Hang Seng Bank.
+
+The site is a single page: an introduction, links to profiles, a list of skills, and project cards that open into short write-ups.
+
+## Profiles
+
+- [LinkedIn](https://www.linkedin.com/in/jacky-tsang-93646a193/): career history and skills
+- [GitHub](https://github.com/jacky-ttt/): code
+- [Medium](https://jacky-ttt.medium.com/): articles about the tools used at work
+
+## Projects
+
+- Ring (2024): organization-wide Android design system. Android, Compose, Kotlin, Coroutines, MVVM
+- Dyson (2023): innovation team focused on AR and on-device AI integration. Android, Compose, Kotlin
+- HSBC (2022): international payment module of the HSBC mobile banking app. Android, Kotlin, MVP, MVVM
+- Daily Journal (2022): on-chain NFT that holds daily journals. Solidity, Hardhat, TypeScript, Next.js
+- Hang Seng Bank (2019): Hong Kong Hang Seng Bank app. Android, Kotlin, MVP
+- Cruzr (2019): navigation app that runs on a robot. Speech-to-text, DialogFlow, text-to-speech
+- Stay Focused (2019): interactive 3D model viewer. React Native, Expo, Three.js
+- Volumetric Lighting (2018): artistic visualization installation. C++, OpenCV, VTK
+- Web Scraper (2017): automated web scraper. Python, Scrapy, Selenium, Puppeteer
+- Greyed Out (2015): all-grey Android icon pack. Android, Java
+- HKJC Data Grid (2015): data visualization desktop app. React, Electron, AG Grid
+- HK G-Share (2014): second-hand trading platform. Android, Java, SQLite
+- UNI Match (2014): networking and events platform for universities. Android, Java
+
+## Optional
+
+- [Source code of this site](https://github.com/jacky-ttt/jacky-ttt.github.io)
+- [Sitemap](https://tsangszechun.com/sitemap-index.xml)
