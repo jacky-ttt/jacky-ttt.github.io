@@ -79,7 +79,7 @@ const schema = [
 
       <div class="grid lg:grid-rows-1 lg:grid-cols-3 gap-4 mt-20 animate-in fade-in slide-in-from-top-10 duration-1000">
         {links.map((link, index) => (
-          <div class="group perspective-[1000px]">
+          <div class="group min-w-0 perspective-[1000px]">
             <a
               href={link.link}
               target="_blank"
@@ -87,12 +87,12 @@ const schema = [
               class={`w-full h-full block shadow-lg relative no-underline rounded-lg px-8 py-8 lg:py-24 text-white spotlight transform-3d group-hover:rotate-x-10 2xl:group-hover:rotate-x-5 duration-200 bg-linear-to-r ${linkBgColors[index]}`}
             >
               <div class="flex items-center">
-                <div class="text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">
+                <div class="min-w-0 wrap-break-word text-white uppercase text-2xl md:text-3xl xl:text-4xl tracking-wide font-mono">
                   {link.name}
                 </div>
                 <ExternalIcon
                   aria-hidden="true"
-                  class="size-6 text-neutral-100/80 ml-1 sm:ml-2 invisible group-hover:visible"
+                  class="size-6 shrink-0 text-neutral-100/80 ml-1 sm:ml-2 invisible group-hover:visible"
                 />
               </div>
               <div class="font-sans text-sm md:text-base">
@@ -144,7 +144,7 @@ const schema = [
                   class="block aspect-2/1 w-full bg-neutral-500 object-cover brightness-50 transition-[filter] duration-300 group-hover:brightness-100 group-focus-visible:brightness-100"
                 />
                 <div data-card-text class="px-4 py-4">
-                  <h3 class="text-lg uppercase font-mono font-medium text-white">
+                  <h3 class="text-lg uppercase font-mono font-medium text-white hyphens-auto wrap-break-word">
                     {project.name}
                   </h3>
                   <p class="text-sm font-sans font-light text-white leading-3">

@@ -369,6 +369,32 @@ test("page behind an open card doesn't scroll", async ({ page }) => {
   expect(await page.evaluate(() => scrollY)).toBe(before)
 })
 
+// WCAG 1.4.4: the browser's font-size setting at 200% (Chrome "Font size", Android text scaling).
+// Not a screenshot test: Playwright screenshots and clicks reset this setting.
+test("200% text size: no sideways scroll or clipped text", async ({ page }) => {
+  const cdp = await page.context().newCDPSession(page)
+  await cdp.send("Page.enable")
+  await cdp.send("Page.setFontSizes", {
+    fontSizes: { standard: 32, fixed: 26 },
+  })
+  for (const path of ["/", "/404.html"]) {
+    await page.goto(path)
+    const result = await page.evaluate(() => ({
+      root: getComputedStyle(document.documentElement).fontSize,
+      overflowX:
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+      clipped: [...document.querySelectorAll("h1, h2, h3, a, button")]
+        .filter(
+          (e) => e.scrollWidth > e.clientWidth + 1 && !e.closest("dialog"),
+        )
+        .filter((e) => getComputedStyle(e).overflowX === "hidden")
+        .map((e) => e.textContent!.trim()),
+    }))
+    expect(result).toEqual({ root: "32px", overflowX: 0, clipped: [] })
+  }
+})
+
 test.describe("reduced motion", () => {
   test.use({ reducedMotion: "reduce" })
 
