@@ -269,6 +269,10 @@ const schema = [
     })
   }
 
+  // An open card owns a history entry, so Back (or iOS swipe-back) closes it instead of leaving
+  // the site. A reload keeps the entry's state but not the open dialog, so clear it.
+  if (history.state?.dialog) history.replaceState(null, "")
+
   for (const button of document.querySelectorAll<HTMLElement>(
     "[data-dialog]",
   )) {
@@ -304,7 +308,13 @@ const schema = [
         ],
         color,
       )
-    const close = () =>
+    // instant: the browser already animated the page (iOS swipe-back), so don't morph on top.
+    const close = (instant = false) => {
+      if (instant) {
+        dialog.close()
+        button.removeAttribute("data-expanded")
+        return
+      }
       morph(
         "close",
         () => {
@@ -326,20 +336,30 @@ const schema = [
           cardText.toggleAttribute("data-enter", true)
         },
       )
+    }
+    // Every close goes through history, so the entry open() pushed is always consumed.
+    const requestClose = () =>
+      history.state?.dialog === dialog.id ? history.back() : close()
 
-    button.addEventListener("click", open)
+    button.addEventListener("click", () => {
+      open()
+      history.pushState({ dialog: dialog.id }, "")
+    })
+    addEventListener("popstate", (event) => {
+      if (dialog.open) close(event.hasUAVisualTransition)
+    })
     // Backdrop clicks land on the <dialog> itself.
     dialog.addEventListener("click", (event) => {
-      if (event.target === dialog) close()
+      if (event.target === dialog) requestClose()
     })
     // The X button (form method="dialog") and Escape both close with the morph.
     dialog.querySelector("form")!.addEventListener("submit", (event) => {
       event.preventDefault()
-      close()
+      requestClose()
     })
     dialog.addEventListener("cancel", (event) => {
       event.preventDefault()
-      close()
+      requestClose()
     })
   }
 </script>

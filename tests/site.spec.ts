@@ -307,6 +307,28 @@ test.describe("project card collapse (close)", () => {
     await expect(dialog(page, DYSON)).toBeHidden()
   })
 
+  test("Back closes the card and stays on the page", async ({ page }) => {
+    await load(page)
+    await openCard(page, DYSON)
+    await page.evaluate(() => window.__vt?.finished)
+    await page.goBack()
+    await page.evaluate(() => window.__vt?.finished)
+    await expect(dialog(page, DYSON)).toBeHidden()
+    expect(new URL(page.url()).pathname).toBe("/")
+  })
+
+  test("closing with X consumes the history entry", async ({ page }) => {
+    await load(page)
+    const length = await page.evaluate(() => history.length)
+    await openCard(page, DYSON)
+    await page.evaluate(() => window.__vt?.finished)
+    await dialog(page, DYSON).locator("[data-close]").click()
+    await expect(dialog(page, DYSON)).toBeHidden()
+    // The entry is still in the forward stack, but we're back on the original one.
+    expect(await page.evaluate(() => history.state)).toBeNull()
+    expect(await page.evaluate(() => history.length)).toBe(length + 1)
+  })
+
   test("backdrop click closes", async ({ page, isMobile }) => {
     test.skip(isMobile, "the mobile sheet has no visible backdrop")
     await load(page)
@@ -363,11 +385,26 @@ test.describe("animated background", () => {
     expect(await waveRunning(page)).toBe(true)
   })
 
+  test("pause button stops the wave, and is remembered", async ({ page }) => {
+    await page.goto("/")
+    const toggle = page.locator("#wave-toggle")
+    await toggle.click()
+    await expect(toggle).toHaveText("Play animation")
+    expect(await waveRunning(page)).toBe(false)
+    await page.reload()
+    await expect(toggle).toHaveText("Play animation")
+    expect(await waveRunning(page)).toBe(false)
+    await toggle.click()
+    await expect(toggle).toHaveText("Pause animation")
+    expect(await waveRunning(page)).toBe(true)
+  })
+
   test.describe("with reduced motion", () => {
     test.use({ reducedMotion: "reduce" })
-    test("no wave", async ({ page }) => {
+    test("no wave, no pause button", async ({ page }) => {
       await page.goto("/")
       expect(await waveRunning(page)).toBe(false)
+      await expect(page.locator("#wave-toggle")).toBeHidden()
     })
   })
 })
