@@ -64,7 +64,7 @@ TypeScript is pinned to 6.x because `@astrojs/check` doesn't support TypeScript 
 - All motion must respect `prefers-reduced-motion`. `docs/design-suggestions.md` tracks which design ideas are done and which are still open.
 - Icons are SVG files in `src/icons/`, imported as components (`import X from "../icons/x.svg"`). Interface icons come only from [Heroicons](https://heroicons.com) 24 solid; brand logos (GitHub, Android) only from [Simple Icons](https://simpleicons.org). Copy the file from the npm package rather than drawing or retyping paths; keep `viewBox="0 0 24 24"` and `fill="currentColor"`.
 - Tailwind 4 uses the CSS-first setup through `@tailwindcss/vite`. There's no `tailwind.config.js`. Animations come from `tw-animate-css`, and the 3D card tilt uses built-in utilities (`perspective-*`, `rotate-x-*`, `transform-3d`).
-- `public/` is copied verbatim: favicons, `manifest.webmanifest`, `CNAME`. Site-wide strings and colours are in `src/config/config.ts`, but the manifest duplicates them by hand.
+- `public/` is copied verbatim: `manifest.webmanifest`, `og.jpg`, `robots.txt`, `llms.txt`, `CNAME`. Site icons are not in it: `src/images/favicon.svg` is the only icon source, and `favicon.ico` plus the home-screen PNGs are rendered from it with `sharp` at build time (`src/images/favicon.ts`, `src/pages/favicon.*.ts`, `src/pages/[icon].png.ts`). Never commit generated icons to `public/`: a file there silently wins over the endpoint. `src/images/avatar.png` is the old Androidify mascot, kept but unpublished. Site-wide strings and colours are in `src/config/config.ts`, but the manifest duplicates them by hand.
 
 ## Project skills
 
