@@ -167,3 +167,36 @@
     opacity: 1;
   }
 }
+
+/* Dialog text that scrolls fades out at the bottom while there's more below. The fade height is
+   driven by the element's own scroll position (scroll-driven animation): full fade at the top,
+   gone at the end. Not scrollable, or no animation-timeline support: no fade. */
+@property --scroll-fade {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes scroll-fade {
+  from,
+  85% {
+    --scroll-fade: 3rem;
+  }
+  to {
+    --scroll-fade: 0px;
+  }
+}
+[data-scroll-fade] {
+  mask-image: linear-gradient(
+    to bottom,
+    black calc(100% - var(--scroll-fade)),
+    transparent
+  );
+  animation: scroll-fade linear both;
+}
+/* Separate block: the CSS minifier would otherwise fold animation-timeline into the animation
+   shorthand, which Chrome rejects (dropping the whole animation). */
+@supports (animation-timeline: scroll()) {
+  [data-scroll-fade] {
+    animation-timeline: scroll(self);
+  }
+}

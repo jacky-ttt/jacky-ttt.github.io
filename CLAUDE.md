@@ -19,7 +19,7 @@ npx playwright test -g "close"   # run one test by name
 
 ## Screenshot tests
 
-`tests/site.spec.ts` covers every page, hover/focus state, and animation (page-load entrance, card expand and collapse frame by frame, reduced motion), in four Playwright projects: `desktop` (1440×900) and `mobile` (390×844 @2x), plus `desktop-200` and `mobile-200`, which run every test again at the browser's 200% font-size setting (WCAG 1.4.4). Baselines live in `tests/__screenshots__/<platform>/` and are committed. They're macOS-rendered, so on another OS run the update script first.
+`tests/site.spec.ts` covers every page, hover/focus state, and animation (page-load entrance, card expand and collapse frame by frame, reduced motion), in four Playwright projects: `desktop` (1440×900) and `mobile` (390×844 @2x), plus `desktop-200` and `mobile-200`, which run every test again at the browser's 200% font-size setting (WCAG 1.4.4). Baselines live in `tests/__screenshots__/<platform>/` and are committed through Git LFS (`.gitattributes`). To restore one, use `git restore <path>`; `git show HEAD:<path> > <path>` writes the 130-byte LFS pointer instead of the image. They're macOS-rendered, so on another OS run the update script first.
 
 How they stay deterministic (keep this when adding tests):
 

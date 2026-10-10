@@ -334,6 +334,28 @@ test("dialog text scrolled to the end", async ({ page }) => {
   await expect(page).toHaveScreenshot("open-text-end.png", still)
 })
 
+// Scrollable dialog text fades out at the bottom until the end is reached (scroll-driven, so
+// `still` would finish it away: this screenshot leaves animations running).
+test("dialog text fades while there is more below", async ({ page }) => {
+  await load(page)
+  await openCard(page, DYSON)
+  await page.evaluate(() => window.__vt?.finished)
+  const text = dialog(page, DYSON).locator("[data-scroll-fade]")
+  const state = () =>
+    text.evaluate((el) => ({
+      scrollable: el.scrollHeight > el.clientHeight,
+      fade: parseFloat(getComputedStyle(el).getPropertyValue("--scroll-fade")),
+    }))
+  const top = await state()
+  if (top.scrollable) expect(top.fade).toBeGreaterThan(0)
+  else expect(top.fade).toBe(0)
+  await expect(page).toHaveScreenshot("open-text-fade.png", {
+    animations: "allow",
+  })
+  await text.evaluate((el) => (el.scrollTop = el.scrollHeight))
+  await expect.poll(async () => (await state()).fade).toBe(0)
+})
+
 test.describe("project card collapse (close)", () => {
   test("frames via the X button", async ({ page }) => {
     await load(page)
