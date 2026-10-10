@@ -5,8 +5,8 @@ import { test, expect, type Page } from "@playwright/test"
  * (projects in playwright.config.ts).
  *
  * Determinism:
- * - The WebGL shader background changes every frame, so it is hidden (the page falls back to
- *   its solid colour). It has its own non-screenshot test at the bottom.
+ * - The dot-grid background's wave loops forever, so the background is hidden (the page falls
+ *   back to its solid colour). It has its own non-screenshot test at the bottom.
  * - Animations are frozen at exact times: view-transition and CSS animations are paused and
  *   seeked with the Web Animations API, so "mid-animation" frames are identical every run.
  * - All images are loaded eagerly and decoded before any screenshot.
@@ -22,7 +22,7 @@ declare global {
 const RING = 0
 const DYSON = 1
 
-async function load(page: Page, path = "/", { background = false } = {}) {
+async function load(page: Page, path = "/") {
   // Expose each view transition so tests can wait for it and freeze it.
   await page.addInitScript(() => {
     window.__vt = null
@@ -35,8 +35,7 @@ async function load(page: Page, path = "/", { background = false } = {}) {
     }) as typeof document.startViewTransition
   })
   await page.goto(path)
-  if (!background)
-    await page.addStyleTag({ content: "#background { display: none }" })
+  await page.addStyleTag({ content: "#background { display: none }" })
   await page.evaluate(async () => {
     const images = [...document.images]
     for (const image of images) image.loading = "eager"
@@ -332,27 +331,29 @@ test.describe("reduced motion", () => {
 })
 
 test.describe("animated background", () => {
-  // Not a screenshot test: the shader output depends on time.
-  const region = { x: 0, y: 0, width: 300, height: 120 }
+  // Not a screenshot test: the wave loops forever, so check the animation itself.
+  const waveRunning = (page: Page) =>
+    page.evaluate(() =>
+      document
+        .getAnimations()
+        .some(
+          (a) =>
+            (a as CSSAnimation).animationName === "dot-wave" &&
+            a.playState === "running",
+        ),
+    )
 
-  test("renders and animates", async ({ page }) => {
-    await load(page, "/", { background: true })
-    await expect(page.locator("#background canvas")).toHaveCount(1)
-    const a = await page.screenshot({ clip: region })
-    await page.waitForTimeout(1500)
-    const b = await page.screenshot({ clip: region })
-    expect(a.equals(b)).toBe(false)
+  // Plain goto: load() finishes every animation, which throws on the infinite wave.
+  test("wave runs", async ({ page }) => {
+    await page.goto("/")
+    expect(await waveRunning(page)).toBe(true)
   })
 
   test.describe("with reduced motion", () => {
     test.use({ reducedMotion: "reduce" })
-    test("holds still", async ({ page }) => {
-      await load(page, "/", { background: true })
-      await page.waitForTimeout(500)
-      const a = await page.screenshot({ clip: region })
-      await page.waitForTimeout(1500)
-      const b = await page.screenshot({ clip: region })
-      expect(a.equals(b)).toBe(true)
+    test("no wave", async ({ page }) => {
+      await page.goto("/")
+      expect(await waveRunning(page)).toBe(false)
     })
   })
 })

@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Personal site for https://tsangszechun.com — Astro 7, Tailwind CSS 4, TypeScript. Fully static, with no client framework. The only JavaScript is the page script and the shader background.
+Personal site for https://tsangszechun.com — Astro 7, Tailwind CSS 4, TypeScript. Fully static, with no client framework. The only JavaScript is the page script.
 
 ## Commands
 
@@ -23,7 +23,7 @@ npx playwright test -g "close"   # run one test by name
 
 How they stay deterministic (keep this when adding tests):
 
-- The shader background is hidden; it has its own non-screenshot test (renders, animates, still under reduced motion).
+- The background is hidden; it has its own non-screenshot test (the wave runs, and doesn't under reduced motion).
 - Animations are frozen and seeked with the Web Animations API (`startAndFreeze` / `seekTransition`), and the page-load entrance by setting Chromium's animation playback rate to 0 before navigation.
 - Cards are opened with `openCard()`, which lets the hover transitions settle before clicking.
 - Settled screenshots allow zero differing pixels. Frozen view-transition frames allow 250, because GPU snapshot scaling varies slightly. A real regression is thousands of pixels.
@@ -47,7 +47,7 @@ TypeScript is pinned to 6.x because `@astrojs/check` doesn't support TypeScript 
   - `projects.json` is the `projects` content collection (`src/content.config.ts`). It's an ordered array without ids, so the loader's parser uses the array index as the id. `image` is a path relative to the JSON file, validated by `image()`, and rendered with `astro:assets` `<Picture>` (AVIF with a WebP fallback). To add a project, add an entry and drop the image in `src/images/`.
   - `links.ts` and `skills.ts` are plain TS imports.
 - Project cards open a native `<dialog>` per project, wired up by the `<script>` at the bottom of `index.astro`. Opening and closing morph the card image into the dialog image with the View Transitions API (`morph()`); the dialog fade uses `@starting-style` in `global.css`. The same script feeds `--spot-x`/`--spot-y` to the `.spotlight` cursor glow.
-- `src/components/Background.astro` mounts a Paper Shaders mesh gradient behind every page (`@paper-design/shaders`, pinned exactly because it's pre-1.0). It pauses when off screen and holds still under `prefers-reduced-motion`.
+- `src/components/Background.astro` is a pure-CSS backdrop behind every page: a dot grid fading out from the top, a violet glow behind the heading, and a brighter band of dots sweeping down on a loop (`--wave`, registered with `@property` so it animates without wrapping). The wave is off under `prefers-reduced-motion`.
 - All motion must respect `prefers-reduced-motion`. `docs/design-suggestions.md` tracks which design ideas are done and which are still open.
 - Icons are SVG files in `src/icons/`, imported as components (`import X from "../icons/x.svg"`).
 - Tailwind 4 uses the CSS-first setup through `@tailwindcss/vite`. There's no `tailwind.config.js`. Animations come from `tw-animate-css`, and the 3D card tilt uses built-in utilities (`perspective-*`, `rotate-x-*`, `transform-3d`).

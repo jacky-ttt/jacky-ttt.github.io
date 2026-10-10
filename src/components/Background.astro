@@ -1,48 +1,70 @@
-<!-- Animated mesh-gradient backdrop. Falls back to the plain html background if WebGL is unavailable. -->
+<!-- Dot grid that fades out from the top, with a soft violet glow behind the heading, and a brighter
+     band of dots that sweeps down it on a loop. Pure CSS. -->
 <div
   id="background"
   aria-hidden="true"
   class="pointer-events-none fixed inset-0 -z-10"
 ></div>
 
-<script>
-  import {
-    ShaderMount,
-    ShaderFitOptions,
-    defaultPatternSizing,
-    getShaderColorFromString,
-    meshGradientFragmentShader,
-  } from "@paper-design/shaders"
-
-  // Mostly the page's #171717 with dark violet and burnt-orange pools, so text stays readable.
-  const colors = ["#171717", "#2e1065", "#171717", "#431407", "#1e1b4b"]
-  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches
-
-  try {
-    new ShaderMount(
-      document.getElementById("background")!,
-      meshGradientFragmentShader,
-      {
-        u_colors: colors.map(getShaderColorFromString),
-        u_colorsCount: colors.length,
-        u_distortion: 0.8,
-        u_swirl: 0.2,
-        u_grainMixer: 0,
-        u_grainOverlay: 0,
-        u_fit: ShaderFitOptions.cover,
-        u_scale: defaultPatternSizing.scale,
-        u_rotation: defaultPatternSizing.rotation,
-        u_originX: defaultPatternSizing.originX,
-        u_originY: defaultPatternSizing.originY,
-        u_offsetX: defaultPatternSizing.offsetX,
-        u_offsetY: defaultPatternSizing.offsetY,
-        u_worldWidth: defaultPatternSizing.worldWidth,
-        u_worldHeight: defaultPatternSizing.worldHeight,
-      },
-      undefined,
-      reduceMotion ? 0 : 0.15,
-    )
-  } catch {
-    // No WebGL: keep the solid background.
+<style>
+  #background {
+    background: radial-gradient(
+      50rem 32rem at 25% 0%,
+      rgb(124 58 237 / 0.35),
+      transparent 70%
+    );
   }
-</script>
+  #background::before,
+  #background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle,
+        rgb(255 255 255 / 0.22) 1px,
+        transparent 1.5px
+      )
+      0 0 / 24px 24px;
+    mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 0%,
+      black 30%,
+      transparent 100%
+    );
+  }
+  /* The wave: the same dots, brighter, shown only inside a band that moves top to bottom. */
+  #background::after {
+    background-image: radial-gradient(
+      circle,
+      rgb(196 181 253 / 0.9) 1px,
+      transparent 1.5px
+    );
+    mask-image:
+      linear-gradient(
+        transparent calc(var(--wave) - 10%),
+        black var(--wave),
+        transparent calc(var(--wave) + 10%)
+      ),
+      linear-gradient(black 40%, transparent);
+    mask-composite: intersect;
+    animation: dot-wave 6s linear infinite;
+  }
+  /* Band centre, registered so it can be animated. Starts and ends fully off screen. */
+  @property --wave {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: -20%;
+  }
+  @keyframes dot-wave {
+    from {
+      --wave: -20%;
+    }
+    to {
+      --wave: 120%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #background::after {
+      display: none;
+    }
+  }
+</style>

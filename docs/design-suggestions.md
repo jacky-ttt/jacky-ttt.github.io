@@ -62,14 +62,14 @@ animations, `@starting-style`).
 ### Guardrails
 
 - Every animation is disabled under `prefers-reduced-motion: reduce`.
-- The shader background pauses when the tab is hidden or the canvas is offscreen.
 - Check against `verify` after each item: no layout shift, and the page still loads
   no JS files beyond what each feature strictly needs.
 
 ## Recommended order
 
 1. ~~Small fixes and image dimming~~ — done (`586eeb6`).
-2. ~~Animated background (#1)~~ — done (`e6b2c22`).
+2. ~~Animated background (#1)~~ — done (`e6b2c22`). Later replaced with a pure-CSS dot grid,
+   violet glow and looping dot wave; Paper Shaders removed.
 3. ~~Card → dialog morph (#2)~~ — done (`d936943`).
 4. ~~Spotlight cards (#3)~~ — done (`bb44f36`); also removed the link-card pulse.
 
