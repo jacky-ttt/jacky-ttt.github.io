@@ -1,6 +1,6 @@
 ---
 // Pauses the background dot wave (WCAG 2.2.2). Hidden under reduced motion, where there's no
-// wave. Each page places it and styles it to match its neighbours.
+// wave. A small pill; each page only decides where it goes.
 import PauseIcon from "../icons/pause.svg"
 import PlayIcon from "../icons/play.svg"
 
@@ -11,7 +11,7 @@ const { class: className } = Astro.props
   id="wave-toggle"
   type="button"
   class:list={[
-    "inline-flex cursor-pointer items-center gap-1 motion-reduce:hidden",
+    "inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-neutral-900/80 px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-white/90 motion-reduce:hidden",
     className,
   ]}
 >
