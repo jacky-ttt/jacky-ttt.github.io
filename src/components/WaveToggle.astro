@@ -11,7 +11,7 @@ const { class: className } = Astro.props
   id="wave-toggle"
   type="button"
   class:list={[
-    "inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-neutral-900/80 px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-white/90 motion-reduce:hidden",
+    "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-transparent bg-neutral-900/80 px-3 py-1.5 transition-colors duration-200 hover:border-white/30 font-mono text-xs uppercase tracking-wide text-white/90 motion-reduce:hidden",
     className,
   ]}
 >

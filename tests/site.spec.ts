@@ -209,6 +209,21 @@ test.describe("hover and focus (pointer devices)", () => {
     await expect(source).toHaveScreenshot("hover-source-link.png", still)
   })
 
+  test("wave toggle shows a border", async ({ page }) => {
+    await load(page)
+    const toggle = page.locator("#wave-toggle")
+    await toggle.hover()
+    await page.evaluate(() =>
+      Promise.all(
+        document
+          .getAnimations()
+          .filter((a) => a instanceof CSSTransition)
+          .map((a) => a.finished),
+      ),
+    )
+    await expect(toggle).toHaveScreenshot("hover-wave-toggle.png", still)
+  })
+
   test("project card keyboard focus", async ({ page }) => {
     await load(page)
     await page.keyboard.press("Tab")
